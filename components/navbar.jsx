@@ -1,12 +1,10 @@
 import React from 'react';
-import useAvatar from '../lib/hooks/useAvatar';
 export default () => {
-    let avatar = useAvatar();
     return <div className="py-6">
         <div className="flex">
             <div className="">
                 <a href="/">
-                    <img src={avatar} alt="avatar" width="50" />
+                    <img src="/me.svg" alt="avatar" width="50" />
                 </a>
             </div>
             <div className="flex-1" />
