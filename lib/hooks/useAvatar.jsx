@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const useAvatar = () => {
     let [avatar, setAvatar] = useState("");

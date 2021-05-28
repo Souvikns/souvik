@@ -1,3 +1,4 @@
+import React from 'react';
 import useAvatar from '../lib/hooks/useAvatar';
 export default () => {
     let avatar = useAvatar();
