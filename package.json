@@ -1,0 +1,34 @@
+{
+  "name": "souvik",
+  "version": "1.0.0",
+  "description": "My portfolio website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Souvikns/souvik.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Souvikns/souvik/issues"
+  },
+  "homepage": "https://github.com/Souvikns/souvik#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "next": "^10.2.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.2.6",
+    "postcss": "^8.3.0",
+    "tailwindcss": "^2.1.2"
+  }
+}
