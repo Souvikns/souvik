@@ -7,8 +7,9 @@ import HSpacing from '../components/hspacing';
 export default () => {
     return <div className="sm:px-20">
         <Navbar />
-        <Landing />
         <HSpacing />
+        <Landing />
+        <HSpacing section />
         <Aboutme />
     </div>
 }

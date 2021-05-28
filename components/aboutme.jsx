@@ -1,5 +1,5 @@
 import React from 'react';
-
+import HSpacing from './hspacing';
 
 export default () => {
     return <div className="">
@@ -9,7 +9,7 @@ export default () => {
             </center>
         </div>
 
-        <div className="mt-10" />
+        <HSpacing />
 
         <div className="mx-32 py-4 px-6 my-4 shadow">
             <ul className="list-disc list-inside text-xl font-mono text-gray-600">
