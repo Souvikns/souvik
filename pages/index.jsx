@@ -1,8 +1,8 @@
 import React from 'react';
 import Navbar from '../components/navbar';
 import Landing from '../components/landing';
-import HSpacing from '../components/hspacing';
 import Education from '../components/education';
+import Footer from '../components/footer';
 
 export default () => {
     return <div>
@@ -10,9 +10,15 @@ export default () => {
             <div>
                 <Navbar />
             </div>
-            <div className="my-20">
+            <div className="my-32">
                 <Landing />
             </div>
+            <div className="my-12">
+                <Education />
+            </div>
+        </div>
+        <div className="mt-12">
+            <Footer />
         </div>
     </div>
 
