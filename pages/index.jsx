@@ -14,9 +14,6 @@ export default () => {
             <div className="my-32">
                 <Landing />
             </div>
-            <div className="my-12">
-                <Education />
-            </div>
             <div className="my-24">
                 <Aboutme />
             </div>
