@@ -1,7 +1,7 @@
 import React from 'react';
 export default () => {
 
-    return <div className="py-12">
+    return <div className="">
         <div className="flex">
             <div className="self-center">
                 <div className="">
