@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../components/navbar';
 import Landing from '../components/landing';
 import Education from '../components/education';
+import Aboutme from '../components/aboutme';
 import Footer from '../components/footer';
 
 export default () => {
@@ -15,6 +16,9 @@ export default () => {
             </div>
             <div className="my-12">
                 <Education />
+            </div>
+            <div className="my-24">
+                <Aboutme />
             </div>
         </div>
         <div className="mt-12">
