@@ -7,7 +7,7 @@ import Footer from '../components/footer';
 
 export default () => {
     return <div>
-        <div className="px-12 md:px-20 lg:px-64">
+        <div className="px-12 md:px-20 lg:px-56">
             <div>
                 <Navbar />
             </div>
