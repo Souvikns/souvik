@@ -11,7 +11,7 @@ export default () => {
             <div>
                 <Navbar />
             </div>
-            <div className="my-32">
+            <div className=" md:my-32">
                 <Landing />
             </div>
             <div className="my-24">

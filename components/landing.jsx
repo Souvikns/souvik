@@ -2,7 +2,7 @@ import React from 'react';
 export default () => {
 
     return <div className="">
-        <div className="flex">
+        <div className="flex flex-col-reverse md:flex-row">
             <div className="self-center">
                 <div className="">
                     <h1 className="text-6xl font-black text-gray-800">I'm Souvik</h1>
