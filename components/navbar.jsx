@@ -17,7 +17,7 @@ export default () => {
           </a>
         </div>
         <div className="self-center">
-          <a href="text-xl lg:https://github.com/Souvikns">
+          <a href="text-xl lg:text-2xl lg:https://github.com/Souvikns">
             <h1 className="text-2xl font-black text-gray-600">GitHub</h1>
           </a>
         </div>
