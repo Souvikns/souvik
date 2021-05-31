@@ -14,6 +14,11 @@ export default () => {
                 </a>
             </div>
             <div>
+                <a href="https://twitter.com/souvik_ns" target="_blank" rel="noopener noreferrer">
+                    <img src="twitter.svg" alt="twitter" width="40" />
+                </a>
+            </div>
+            <div>
                 <a href="mailto:souvikde.ns@gmail.com" target="_blank" rel="noopener noreferrer">
                     <img src="email.svg" alt="email" width="50" />
                 </a>
