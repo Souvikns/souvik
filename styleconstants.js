@@ -1,0 +1,1 @@
+export const SCREEN_PADDING = "py-8 px-28 md:px-48 lg:px-64"
