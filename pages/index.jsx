@@ -1,9 +1,10 @@
 import React from "react";
+import Navbar from "../components/navbar";
 
 export default () => {
   return (
     <div>
-      <h1>new design</h1>
+      <Navbar />
     </div>
   );
 };

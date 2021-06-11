@@ -1,11 +1,7 @@
 import '../style.scss';
-import Navbar from '../components/navbar';
 
 function MyApp({ Component, pageProps }) {
-    return <div>
-        <Navbar />
-        <Component {...pageProps} />
-    </div> 
+    return <Component {...pageProps} /> 
 }
 
 export default MyApp;
