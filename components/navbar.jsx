@@ -1,10 +1,9 @@
-import Link from 'next/link';
 import { SCREEN_PADDING } from '../styleconstants';
-import { change } from '../redux/reducers/route';
-import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export default () => {
-	let dispatch = useDispatch();
+	let router = useRouter();
 
 	return <div className={`shadow ${SCREEN_PADDING}`}>
 		<div className="flex">
@@ -15,14 +14,18 @@ export default () => {
 			<div className="flex-1" />
 
 			<div>
-				<div className="flex">
-					{
-						["Home", "About", "Projects"].map(route => <div key={route}>
-							<p className="md:text-xl cursor-pointer ml-4 font-bold text-gray-700" onClick={() => {
-								dispatch(change(route));
-							}}>{route}</p>
-						</div>)
-					}
+				<div className="flex space-x-4">
+					<Link href="/">
+						<a>Home</a>
+					</Link>
+
+					<Link href="/about">
+						<a>About</a>
+					</Link>
+
+					<Link href="/projects">
+						<a>Projects</a>
+					</Link>
 				</div>
 			</div>
 		</div>
