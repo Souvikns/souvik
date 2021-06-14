@@ -7,12 +7,10 @@ const Blog = (props) => {
 			<div>
 				<img src={props.coverImage} className="rounded-l" alt="coverImage" />
 			</div>
-			<div className="px-8 py-4 flex-column" >
+			<div className="px-8 py-4 flex-column divide-y divide-light-blue-400  space-y-6" >
 				<a href={`https://souvikns.hashnode.dev/${props.slug}`}>
 					<span className="text-2xl font-bold text-gray-600 hover:text-red-400">{props.title}</span>
 				</a>
-
-				<div className="my-4"></div>
 
 				<p className="break text-gray-500">{props.brief}</p>
 			</div>
