@@ -4,12 +4,15 @@ import { SCREEN_PADDING } from '../styleconstants';
 import client from '../apollo-client';
 import { gql } from '@apollo/client';
 import Blogs from '../components/blogs';
+import Landing from '../components/landing';
 
 export default (props) => {
   return (
     <div>
       <Navbar />
-
+      <div className={`${SCREEN_PADDING}`}>
+        <Landing />
+      </div>
       <div className={`${SCREEN_PADDING}`}>
         <Blogs blogs={props.posts} />
       </div>
