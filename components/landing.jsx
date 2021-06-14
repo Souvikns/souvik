@@ -1,11 +1,11 @@
 import { GRADIENT_TITLE } from '../styleconstants';
 const Landing = () => {
-	return <div className="w-full flex shadow my-14 px-4 py-2 md:space-x-6 space-x-2 divide-x divide-red-300">
+	return <div className="w-full flex shadow-lg my-14 px-4 py-2 md:space-x-6 space-x-2 divide-x divide-pink-300">
 		<div>
 			<img src="/me.svg" alt="" style={{ width: "600px" }} />
 		</div>
 
-		<div className="pt-12 pl-8 ">
+		<div className="pt-12 pl-12 ">
 			<div className="flex-column">
 
 				<h1 className={`text-3xl font-black font-mono ${GRADIENT_TITLE} `}>Hi, I'm Souvik De!</h1>
