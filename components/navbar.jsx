@@ -1,27 +1,37 @@
-import React from "react";
+import { SCREEN_PADDING } from '../styleconstants';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+
 export default () => {
-  return (
-    <div className="py-6">
-      <div className="flex">
-        <div className="">
-          <a href="/">
-            <img src="/me.svg" alt="avatar" width="50" />
-          </a>
-        </div>
-        <div className="flex-1" />
-        <div className="mr-10 self-center">
-          <a href="https://souvikns.hashnode.dev/">
-            <h1 className="text-xl lg:text-2xl font-black text-gray-600">
-              Blog
-            </h1>
-          </a>
-        </div>
-        <div className="self-center">
-          <a href="https://github.com/Souvikns">
-            <h1 className="text-xl lg:text-2xl font-black text-gray-600">GitHub</h1>
-          </a>
-        </div>
-      </div>
-    </div>
-  );
-};
+	let router = useRouter();
+	let currentRoute = router.route;
+	const linkColor = 'text-transparent bg-clip-text bg-gradient-to-br from-purple-400 via-pink-500 to-red-500';
+
+	return <div className={`shadow ${SCREEN_PADDING}`}>
+		<div className="flex">
+			<div>
+				<h1 className="text-xl md:text-2xl lg:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-br from-purple-400 via-pink-500 to-red-500">Souvik De</h1>
+			</div>
+
+			<div className="flex-1" />
+
+			<div>
+				<div className="flex space-x-4 text-xl text-gray-600 font-bold">
+					<Link href="/">
+						<a className={(currentRoute === '/'? linkColor : "")}>Home</a>
+					</Link>
+
+					<Link href="/about">
+						<a className={(currentRoute === '/about')? linkColor: ""}>About</a>
+					</Link>
+
+					<Link href="/projects">
+						<a className={(currentRoute === '/projects')? linkColor : ""}>Projects</a>
+					</Link>
+
+					<a href="https://souvikns.hashnode.dev/">Blogs</a>
+				</div>
+			</div>
+		</div>
+	</div>
+}

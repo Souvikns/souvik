@@ -1,27 +1,56 @@
 import React from "react";
 import Navbar from "../components/navbar";
-import Landing from "../components/landing";
-import Education from "../components/education";
-import Aboutme from "../components/aboutme";
-import Footer from "../components/footer";
+import { SCREEN_PADDING } from '../styleconstants';
+import client from '../apollo-client';
+import { gql } from '@apollo/client';
+import Blogs from '../components/blogs';
+import Landing from '../components/landing';
 
-export default () => {
+export default (props) => {
   return (
     <div>
-      <div className="px-12 md:px-20 lg:px-56">
-        <div>
-          <Navbar />
-        </div>
-        <div className=" md:my-32">
-          <Landing />
-        </div>
-        <div className="my-24">
-          <Aboutme />
-        </div>
+      <Navbar />
+      <div className={`${SCREEN_PADDING}`}>
+        <Landing />
       </div>
-      <div className="mt-12">
-        <Footer />
+      <div className={`${SCREEN_PADDING}`}>
+        <Blogs blogs={props.posts} />
       </div>
+
     </div>
   );
 };
+
+export async function getStaticProps(context) {
+  const { data } = await client.query({
+    query: gql`
+    query {
+  user(username: "Souvikns"){
+    username
+    name
+    _id
+    tagline
+    numFollowing
+    photo
+    publication {
+      _id
+      author
+      title
+      posts {
+        title
+        slug
+        cuid
+        totalReactions
+        coverImage
+        brief
+      }
+    }
+  }
+}
+    `
+  })
+  let posts = data.user.publication.posts;
+  return {
+    props: { data, posts }
+  }
+}
