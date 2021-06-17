@@ -5,6 +5,7 @@ import client from '../apollo-client';
 import { gql } from '@apollo/client';
 import Blogs from '../components/blogs';
 import Landing from '../components/landing';
+import GithubContibutions from "../components/github-contibutions";
 
 export default (props) => {
   return (
@@ -15,8 +16,9 @@ export default (props) => {
       <div>
         <Landing />
       </div>
-
-
+      <div className="w-full">
+        <GithubContibutions />
+      </div> 
     </div>
   );
 };
