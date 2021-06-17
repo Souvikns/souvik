@@ -5,8 +5,10 @@ import client from '../apollo-client';
 import { gql } from '@apollo/client';
 import Blogs from '../components/blogs';
 import Landing from '../components/landing';
+import useDarkMode from '../lib/hooks/useDarkMode';
 
 export default (props) => {
+  useDarkMode();
   return (
     <div>
       <div>
