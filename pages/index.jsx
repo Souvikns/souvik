@@ -9,11 +9,13 @@ import Landing from '../components/landing';
 export default (props) => {
   return (
     <div>
-      <Navbar />
-      <div className={`${SCREEN_PADDING}`}>
+      <div>
+        <Navbar />
+      </div>
+      <div>
         <Landing />
       </div>
-      <div className={`${SCREEN_PADDING}`}>
+      <div>
         <Blogs blogs={props.posts} />
       </div>
 
