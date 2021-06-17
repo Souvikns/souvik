@@ -7,7 +7,6 @@ import Blogs from '../components/blogs';
 import Landing from '../components/landing';
 
 export default (props) => {
-  useDarkMode();
   return (
     <div>
       <div>
