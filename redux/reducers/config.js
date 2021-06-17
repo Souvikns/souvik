@@ -7,8 +7,16 @@ const ConfigSlice = createSlice({
 	},
 	reducers: {
 		change: (state) => {
-			if (state.theme === 'light') state.theme = 'dark';
-			if (state.theme === 'dark') state.theme = 'light';
+			let root = window.document.documentElement;
+			if (state.theme === "light") {
+				root.classList.remove('light');
+				root.classList.add("dark");
+				state.theme = "dark";
+			} else {
+				root.classList.remove('dark');
+				root.classList.add('light');
+				state.theme = "light";
+			}
 		}
 	}
 });
