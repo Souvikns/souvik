@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
-
+import client from '../apollo-client';
+import { gql } from '@apollo/client';
+import { useEffect, useState } from 'react';
 
 const Blog = (props) => {
-	return <div className="rounded shadow-md my-8" key={props.id}>
+	return <div className="rounded shadow-md" key={props.id}>
 		<div className="flex">
 			<div>
 				<img src={props.coverImage} className="rounded-l" alt="coverImage" />
@@ -27,8 +29,43 @@ Blog.propTypes = {
 }
 
 const Blogs = (props) => {
-	return <div>
-		{props.blogs.map(el => <Blog
+	let [blogs, setBlogs] = useState([]);
+	const fetchBlogs = async () => {
+		const { data, loading } = await client.query({
+			query: gql`
+			    query {
+  user(username: "Souvikns"){
+    username
+    name
+    _id
+    tagline
+    numFollowing
+    photo
+    publication {
+      _id
+      author
+      title
+      posts {
+        title
+        slug
+        cuid
+        totalReactions
+        coverImage
+        brief
+      }
+    }
+  }
+}
+			`
+		});
+		let posts = data.user.publication.posts;
+		setBlogs(posts);
+	}
+	useEffect(() => {
+		fetchBlogs();
+	}, [])
+	return <div className="flex-column space-y-8">
+		{blogs.map(el => <Blog
 			id={el.cuid}
 			title={el.title}
 			coverImage={el.coverImage}

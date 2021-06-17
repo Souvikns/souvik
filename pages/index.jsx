@@ -19,40 +19,43 @@ export default (props) => {
       <div className="w-full">
         <GithubContibutions />
       </div> 
+      <div>
+        <Blogs />
+      </div>
     </div>
   );
 };
 
-// export async function getStaticProps(context) {
-//   const { data } = await client.query({
-//     query: gql`
-//     query {
-//   user(username: "Souvikns"){
-//     username
-//     name
-//     _id
-//     tagline
-//     numFollowing
-//     photo
-//     publication {
-//       _id
-//       author
-//       title
-//       posts {
-//         title
-//         slug
-//         cuid
-//         totalReactions
-//         coverImage
-//         brief
-//       }
-//     }
-//   }
-// }
-//     `
-//   })
-//   let posts = data.user.publication.posts;
-//   return {
-//     props: { data, posts }
-//   }
-// }
+export async function getStaticProps(context) {
+  const { data } = await client.query({
+    query: gql`
+    query {
+  user(username: "Souvikns"){
+    username
+    name
+    _id
+    tagline
+    numFollowing
+    photo
+    publication {
+      _id
+      author
+      title
+      posts {
+        title
+        slug
+        cuid
+        totalReactions
+        coverImage
+        brief
+      }
+    }
+  }
+}
+    `
+  })
+  let posts = data.user.publication.posts;
+  return {
+    props: { data, posts }
+  }
+}
