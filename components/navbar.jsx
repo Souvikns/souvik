@@ -1,36 +1,33 @@
-import { SCREEN_PADDING } from '../styleconstants';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useSelector, useDispatch } from 'react-redux';
+import { change } from '../redux/reducers/config';
+import { motion } from 'framer-motion';
 
 export default () => {
 	let router = useRouter();
 	let currentRoute = router.route;
-	const linkColor = 'text-transparent bg-clip-text bg-gradient-to-br from-purple-400 via-pink-500 to-red-500';
-
-	return <div className={`shadow ${SCREEN_PADDING}`}>
-		<div className="flex">
+	return <div className="py-4">
+		<div className="flex space-x-8 sub-heading font-medium text-sm">
 			<div>
-				<h1 className="text-xl md:text-2xl lg:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-br from-purple-400 via-pink-500 to-red-500">Souvik De</h1>
+				<h1 className={`${(currentRoute === '/') ? "text-secondary" : null}`}>
+					<Link href="/"><a>Home</a></Link>
+				</h1>
 			</div>
-
-			<div className="flex-1" />
-
+			<div className={`${(currentRoute === '/projects') ? "text-secondary" : null}`}>
+				<h1>
+					<Link href="/projects"><a>Projects</a></Link>
+				</h1>
+			</div>
 			<div>
-				<div className="flex space-x-4 text-xl text-gray-600 font-bold">
-					<Link href="/">
-						<a className={(currentRoute === '/'? linkColor : "")}>Home</a>
-					</Link>
-
-					<Link href="/about">
-						<a className={(currentRoute === '/about')? linkColor: ""}>About</a>
-					</Link>
-
-					<Link href="/projects">
-						<a className={(currentRoute === '/projects')? linkColor : ""}>Projects</a>
-					</Link>
-
+				<h1>
 					<a href="https://souvikns.hashnode.dev/">Blogs</a>
-				</div>
+				</h1>
+			</div>
+			<div className={`${(currentRoute === '/resume') ? "text-secondary" : null}`}>
+				<h1>
+					<Link href="resume"><a>Resume</a></Link>
+				</h1>
 			</div>
 		</div>
 	</div>
