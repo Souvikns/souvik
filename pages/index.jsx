@@ -20,6 +20,7 @@ export default (props) => {
         </p>
       </div>
 
+      <GithubContibutions />
 
     </div>
   );
