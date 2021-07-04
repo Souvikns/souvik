@@ -42,6 +42,6 @@
     "postcss-import": "^14.0.2",
     "postcss-preset-env": "^6.7.0",
     "precss": "^4.0.0",
-    "tailwindcss": "^2.1.2"
+    "tailwindcss": "^2.2.4"
   }
 }
