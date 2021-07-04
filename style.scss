@@ -2,7 +2,6 @@
 @import "~tailwindcss/components";
 @import "~tailwindcss/utilities";
 
-@import url('https://fonts.googleapis.com/css2?family=Andika&family=Cabin:ital,wght@0,400;0,600;1,400;1,600&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap');
 
 $primary-bg: #232931;
 $secondary-bg: #393e46;
@@ -13,19 +12,19 @@ $secondary-text: #4ecca3;
 html {
 	background-color: $primary-bg;
 	color: $primary-text;
-	font-family: 'Andrika';
+	font-family: 'Roboto Mono';
 }
 
 .heading {
-	font-family: 'Roboto';
+	font-family: 'Roboto Slab';
 }
 
 .sub-heading {
-	font-family: 'Cabin';
+	font-family: 'Roboto';
 }
 
 .text {
-	font-family: 'Andika';
+	font-family: 'Roboto Mono';
 }
 
 .text-primary {
