@@ -11,14 +11,8 @@ export default (props) => {
   return (
     <div>
       <Navbar />
-
-      <div className="my-52" id="My Pitch">
-        <h1 className="text-6xl heading text-secondary">Hi, I'm Souvik.</h1>
-        <div className="py-2" />
-        <p className="font-light w-7/12 sub-heading text-xl">
-          I am an undergrad software developer, with 3 years of experience. I spent most of my days hacking things and contributing to cool open source projects. 
-        </p>
-      </div>
+      
+      <Landing />
 
       <GithubContibutions />
 

@@ -8,7 +8,7 @@ export default () => {
 	let router = useRouter();
 	let currentRoute = router.route;
 	return <div className="py-4">
-		<div className="flex space-x-8 sub-heading font-medium text-sm">
+		<div className="flex space-x-8 sub-heading font-medium text-sm justify-center">
 			<div>
 				<h1 className={`${(currentRoute === '/') ? "text-secondary" : null}`}>
 					<Link href="/"><a>Home</a></Link>
