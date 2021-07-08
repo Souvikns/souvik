@@ -1,32 +1,15 @@
-import { GRADIENT_TITLE } from '../styleconstants';
-import Link from 'next/link';
-import Typing from 'react-typing-animation';
 
 const Landing = () => {
 	return <div className="">
-		<div className="flex">
-			<div className="w-1/2 lg:p-24 md:p-16 sm:p-4 ">
-				<img src="/me.svg" alt="me" className="w-full" />
-			</div>
-			<div className="w-1/2 self-center dark:text-gray-200">
-				<div className="flex space-x-2 text-3xl font-black font-mono">
-					<div>I am a </div>
-					<Typing loop={true} className={`${GRADIENT_TITLE}`}>
-						Student.
-						<Typing.Delay ms={3000} />
-						<Typing.Backspace count={8} />
-						Web developer.
-						<Typing.Delay ms={3000} />
-						<Typing.Backspace count={14} />
-						<Typing.Reset delay={500} />
-					</Typing>
-				</div>
-				<p className="pt-4">
-					I am an undergrad software developer and a part time open sourcerer. I blog tech in my free time and work on my side projects.
-				</p>
-			</div>
+		<div className="my-52" id="My Pitch">
+			<h1 className="text-2xl md:text-6xl heading text-secondary text-center font-black ">Hi, I'm Souvik.</h1>
+			<div className="py-2" />
+			<h1 className="font-light sub-heading md:text-xl text-center md:px-24 xl:px-56">
+				I am an undergrad software developer, with 3 years of experience. I spent most of my days hacking things and contributing to cool open source projects.
+			</h1>
 		</div>
 	</div>
+
 }
 
 export default Landing;

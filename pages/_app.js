@@ -5,7 +5,7 @@ import Head from 'next/head';
 
 function MyApp({ Component, pageProps }) {
 
-    return <div className="container md:px-24 lg:px-32 mx-auto h-full">
+    return <div className="container px-6 md:px-24 lg:px-32 mx-auto h-full">
         <Provider store={store}>
             <Head>
                 <title>Souvik</title>
