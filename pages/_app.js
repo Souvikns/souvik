@@ -1,12 +1,11 @@
 import { Provider } from 'react-redux';
 import { store } from '../redux';
 import Head from 'next/head';
-import { ThemeProvider } from 'theme-ui';
+import 'tailwindcss/tailwind.css';
 
 function MyApp({ Component, pageProps }) {
 
-    return <ThemeProvider>
-        <div className="container px-6 md:px-24 lg:px-32 mx-auto h-full">
+    return <div className="container px-6 md:px-24 lg:px-60 mx-auto h-full">
             <Provider store={store}>
                 <Head>
                     <title>Souvik</title>
@@ -20,7 +19,6 @@ function MyApp({ Component, pageProps }) {
                 <Component {...pageProps} />
             </Provider>
         </div>
-    </ThemeProvider>
 }
 
 export default MyApp;
