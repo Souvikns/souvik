@@ -1,22 +1,18 @@
 import Link from "next/link";
+
+const pages = [
+  {name: '/', label: 'Home'},
+  {name: '/blog', label: 'Blog'},
+  {name: '/about', label: 'About'},
+  {name: '/resume', label: 'Resume'}
+]
+
 export default () => {
   return (
-    <div className="flex flex-row-reverse text-gray-500">
-      <div className="px-4">
-        <Link href="/">Home</Link>
-      </div>
-
-      <div className="px-4">
-        <Link href="/blog">Blog</Link>
-      </div>
-
-      <div className="px-4">
-        <Link href="/about">About</Link>
-      </div>
-
-      <div className="px-4">
-        <Link href="/resume">Resume</Link>
-      </div>
+    <div className="flex flex-row-reverse text-gray-500 gap-4 py-4 xl:text-lg">
+      {pages.map(page => <div className="hover:text-red-400 font-medium">
+        <Link href={page.name}>{page.label}</Link>
+      </div>)}
     </div>
   );
 };
