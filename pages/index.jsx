@@ -1,55 +1,33 @@
-import React from "react";
+import Intro from '../components/home/intro';
 import Navbar from "../components/navbar";
-import { SCREEN_PADDING } from '../styleconstants';
-import client from '../apollo-client';
-import { gql } from '@apollo/client';
-import Blogs from '../components/blogs';
-import Landing from '../components/landing';
-import GithubContibutions from "../components/github-contibutions";
+import LanguagesTools from '../components/home/language-tools';
+import Blogs from '../components/home/blogs';
+import Stats from '../components/home/stats';
 
-export default (props) => {
+export default () => {
   return (
     <div>
       <Navbar />
-      
-      <Landing />
 
-      <GithubContibutions />
+      <div className="pt-10">
+        <Intro />
+      </div>
 
+      <div className="pt-5">
+        <LanguagesTools />
+      </div>
+
+      <div className="pt-10">
+        <Blogs />
+      </div>
+
+      <div className="pt-5">
+        <Stats />
+      </div>
+
+      <section id="footer" className="py-20">
+
+      </section>
     </div>
   );
 };
-
-export async function getStaticProps(context) {
-  const { data } = await client.query({
-    query: gql`
-    query {
-  user(username: "Souvikns"){
-    username
-    name
-    _id
-    tagline
-    numFollowing
-    photo
-    publication {
-      _id
-      author
-      title
-      posts {
-        title
-        slug
-        cuid
-        totalReactions
-        coverImage
-        brief
-      }
-    }
-  }
-}
-    `
-  })
-  let posts = data.user.publication.posts;
-  return {
-    props: { data, posts }
-  }
-}
