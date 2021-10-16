@@ -1,5 +1,5 @@
 import Intro from '../components/home/intro';
-import Navbar from "../components/home/navbar";
+import Navbar from "../components/navbar";
 import LanguagesTools from '../components/home/language-tools';
 import Blogs from '../components/home/blogs';
 import Stats from '../components/home/stats';
