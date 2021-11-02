@@ -16,7 +16,7 @@ function Navbar() {
         <Box py={4}>
             <Center py={4} >
 
-                <Text fontSize="sm" fontWeight="bold">Souvik</Text>
+                <Text fontSize="lg" fontWeight="bold">Souvik</Text>
             </Center>
         </Box>
         <Spacer />

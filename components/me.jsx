@@ -6,6 +6,7 @@ import {
     Spacer,
     Link
 } from '@chakra-ui/react';
+import Socials from './socials';
 
 const avatarUrl = 'https://avatars.githubusercontent.com/u/41781438?v=4';
 
@@ -17,6 +18,7 @@ function Me() {
                 <Text>
                     This is Souvik, CS UG Senior Student and a self-taught software developer from India. I am also a maitainer at <Link color="blue.400" href="https://github.com/asyncapi" isExternal >AsyncAPI</Link>.
                 </Text>
+                <Socials />
             </Box>
             <Spacer />
             <Box w="100px" />
