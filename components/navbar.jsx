@@ -22,7 +22,7 @@ function Navbar() {
         <Spacer />
         <Box py={4}>
             <IconButton
-                icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+                icon={colorMode === "light" ? <SunIcon /> : <MoonIcon />}
                 onClick={toggleColorMode}
             />
         </Box>
