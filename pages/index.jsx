@@ -1,6 +1,9 @@
+import {Box} from '@chakra-ui/react'
 
 export default () => {
     return <div>
-        <h1>Hello World</h1>
+    <Box p={4}>
+        <h1>Hello</h1>
+    </Box>
     </div>
 }
