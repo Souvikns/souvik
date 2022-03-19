@@ -1,9 +1,12 @@
-import {Box} from '@chakra-ui/react'
+import { Box, Alert, AlertIcon } from '@chakra-ui/react'
 
 export default () => {
     return <div>
-    <Box p={4}>
-        <h1>Hello</h1>
-    </Box>
+        <Box p={4}>
+            <Alert status='warning'>
+                <AlertIcon />
+                Under Construction
+            </Alert>
+        </Box>
     </div>
 }
