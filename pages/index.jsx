@@ -1,33 +1,18 @@
-import Intro from '../components/home/intro';
-import Navbar from "../components/navbar";
-import LanguagesTools from '../components/home/language-tools';
-import Blogs from '../components/home/blogs';
-import Stats from '../components/home/stats';
+import { Box, Alert, AlertIcon, Image, Center } from '@chakra-ui/react';
 
 export default () => {
-  return (
-    <div>
-      <Navbar />
+    return <div>
+        <Box p={4}>
+            <Alert status='warning'>
+                <AlertIcon />
+                Under Construction
+            </Alert>
+        </Box>
 
-      <div className="pt-10">
-        <Intro />
-      </div>
-
-      <div className="pt-5">
-        <LanguagesTools />
-      </div>
-
-      <div className="pt-10">
-        <Blogs />
-      </div>
-
-      <div className="pt-5">
-        <Stats />
-      </div>
-
-      <section id="footer" className="py-20">
-
-      </section>
+        <Box p={4}>
+            <Center>
+                <Image src='./wip.png' />
+            </Center>
+        </Box>
     </div>
-  );
-};
+}
