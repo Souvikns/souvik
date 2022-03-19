@@ -1,4 +1,4 @@
-import { Box, Alert, AlertIcon } from '@chakra-ui/react'
+import { Box, Alert, AlertIcon, Image, Center } from '@chakra-ui/react';
 
 export default () => {
     return <div>
@@ -7,6 +7,12 @@ export default () => {
                 <AlertIcon />
                 Under Construction
             </Alert>
+        </Box>
+
+        <Box p={4}>
+            <Center>
+                <Image src='./wip.png' />
+            </Center>
         </Box>
     </div>
 }
