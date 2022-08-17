@@ -1,11 +1,17 @@
-import {ChakraProvider} from '@chakra-ui/react'
+import {MDXProvider} from '@mdx-js/react';
+import '../global.css'
 
-function MyApp({Component, pageProps}) {
+export default function MyApp({Component, pageProps}) {
     return (
-        <ChakraProvider>
+        <MDXProvider>
             <Component {...pageProps} />
-        </ChakraProvider>
+        </MDXProvider>
     )
 }
 
-export default MyApp
+function getMDXComponent() {
+    // customize any component
+    return {
+
+    }
+}
