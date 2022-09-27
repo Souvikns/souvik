@@ -10,6 +10,8 @@ export default () => {
             <center>
                 <img src='./wip.png' />
             </center>
+
+            <h1 className="text-gray-600">Hello</h1>
         </div>
     )
 }
