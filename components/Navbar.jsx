@@ -1,3 +1,4 @@
+import ThemeSwitch from './ThemeSwitch'
 
 const Navbar = () => {
   return (
@@ -10,6 +11,7 @@ const Navbar = () => {
           {["blogs", "projects", "about"].map((el) => (
             <h1 className="p-1 font-semibold block">{el}</h1>
           ))}
+          <ThemeSwitch />
         </div>
       </header>
     </div>
