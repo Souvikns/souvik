@@ -1,5 +1,9 @@
-import UnderConstruction from "../components/under-construction"
+import Navbar from "../components/Navbar";
 
 export default () => {
-    return <UnderConstruction />
-}
+  return (
+    <>
+      <h1>Hello</h1>
+    </>
+  );
+};

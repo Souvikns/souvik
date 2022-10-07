@@ -1,17 +1,12 @@
-import { MDXProvider } from "@mdx-js/react";
+import LayoutWrapper from "../components/LayoutWrapper";
 import "../global.css";
 
 export default function MyApp({ Component, pageProps }) {
   return (
-    <div className="prose prose-stone">
-      <MDXProvider components={getMDXComponent()}>
+    <div className="">
+      <LayoutWrapper>
         <Component {...pageProps} />
-      </MDXProvider>
+      </LayoutWrapper>
     </div>
   );
-}
-
-function getMDXComponent() {
-  // customize any component
-  return {};
 }
