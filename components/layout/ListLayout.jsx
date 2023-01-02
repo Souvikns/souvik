@@ -24,7 +24,7 @@ export default function Listlayout({
   return (
     <>
       <div className="divide-y divide-slate-500 dark:divide-gray-700">
-        <div className="space-y-2 pt-6 pb-8 md:space-y-5">
+        {/* <div className="space-y-2 pt-6 pb-8 md:space-y-5">
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight ">
             {title}
           </h1>
@@ -51,7 +51,7 @@ export default function Listlayout({
               />
             </svg>
           </div>
-        </div>
+        </div> */}
 
         <ul>
           {!filterBlogPosts.length && "No Posts Found"}
@@ -71,8 +71,8 @@ export default function Listlayout({
                       <div>
                         <h3 className="text-2xl font-bold leading-8 tracking-tight">
                           <Link
-                            href={`/blog/${slug}`}
-                            className="text-gray-900 dark:text-gray-100"
+                            href={`/posts/${slug}`}
+                            className="text-gray-900"
                           >
                             {title}
                           </Link>

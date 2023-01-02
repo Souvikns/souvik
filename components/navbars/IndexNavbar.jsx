@@ -1,17 +1,16 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 const NavLinks = [
-  {title: 'Posts', href: '/posts'},
-  {title: 'Projects', href: '/project'},
+  { title: 'Posts', href: '/posts' },
+  { title: 'Projects', href: '/project' },
 ]
-
-const Navbar = () => {
+export default () => {
   return (
     <div className="flex flex-col justify-between py-4 mb-12">
       <header className="flex items-center justify-between">
         <div>
           <h1 className="font-extrabold text-base font-mono">
-            <Link href={"/"}>Souvik</Link>
+            <Link href={'/'}>Souvik</Link>
           </h1>
         </div>
         <div className="flex items-center text-base leading-5">
@@ -23,7 +22,5 @@ const Navbar = () => {
         </div>
       </header>
     </div>
-  );
-};
-
-export default Navbar;
+  )
+}

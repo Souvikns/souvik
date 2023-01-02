@@ -1,7 +1,10 @@
+import Navbar from '../components/navbars/IndexNavbar'
+import FaceBubble from '../components/FaceBubble'
 export default () => {
   return (
     <>
-      <h1 className="">Hello</h1>
+      <Navbar />
+      <FaceBubble />
     </>
-  );
-};
+  )
+}
