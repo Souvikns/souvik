@@ -2,6 +2,7 @@ import { useState } from "react";
 import formatDate from "../../lib/utils/formatDate";
 import Tag from '../Tag'
 import Link from '../Link'
+import BlogNavbar from "../navbars/BlogNavbar";
 
 export default function Listlayout({
   posts,
@@ -23,6 +24,7 @@ export default function Listlayout({
 
   return (
     <>
+    <BlogNavbar />
       <div className="divide-y divide-slate-500 dark:divide-gray-700">
         {/* <div className="space-y-2 pt-6 pb-8 md:space-y-5">
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight ">
@@ -62,17 +64,17 @@ export default function Listlayout({
                 <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
                   <dl>
                     <dt className="sr-only">Published On</dt>
-                    <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                    <dd className="text-base font-medium leading-6 text-pink-500 dark:text-cyan-500">
                       <time dateTime={date}>{formatDate(date)}</time>
                     </dd>
                   </dl>
                   <div className="space-y-3 xl:col-span-3">
                     <div>
                       <div>
-                        <h3 className="text-2xl font-bold leading-8 tracking-tight">
+                        <h3 className="text-3xl font-bold leading-8 tracking-tight">
                           <Link
                             href={`/posts/${slug}`}
-                            className="text-gray-900"
+                            className="text-dark-900 dark:text-cullen-100"
                           >
                             {title}
                           </Link>
@@ -83,7 +85,7 @@ export default function Listlayout({
                           ))}
                         </div>
                       </div>
-                      <div className="prose max-w-none text-gray-500 dark:text-gray-400">
+                      <div className="prose max-w-none text-dark-900 dark:text-cullen-50">
                         {summary}
                       </div>
                     </div>

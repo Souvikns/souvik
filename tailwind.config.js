@@ -27,75 +27,133 @@ module.exports = {
         sans: ["InterVariable", ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        primary: dracula.cyan,
-        gray: dracula.blue,
+        primary: dracula.blue,
+        gray: dracula.dark,
       },
       typography: (theme) => ({
         DEFAULT: {
           css: {
-            color: theme("colors.darker.700"),
+            color: theme('colors.dark.900'),
             a: {
-              color: theme("colors.primary.500"),
-              "&:hover": {
-                color: `${theme("colors.primary.600")} !important`,
+              color: theme('colors.pink.500'),
+              '&:hover': {
+                color: `${theme('colors.cyan.600')} !important`,
               },
-              code: { color: theme("colors.primary.400") },
+              code: { color: theme('colors.primary.400') },
             },
             h1: {
-              fontWeight: "700",
-              letterSpacing: theme("letterSpacing.tight"),
-              color: theme("colors.darker.900"),
+              fontWeight: '700',
+              letterSpacing: theme('letterSpacing.tight'),
+              color: theme('colors.dark.900'),
             },
             h2: {
-              fontWeight: "700",
-              letterSpacing: theme("letterSpacing.tight"),
-              color: theme("colors.darker.900"),
+              fontWeight: '700',
+              letterSpacing: theme('letterSpacing.tight'),
+              color: theme('colors.dark.900'),
             },
             h3: {
-              fontWeight: "600",
-              color: theme("colors.darker.900"),
+              fontWeight: '600',
+              color: theme('colors.dark.900'),
             },
-            "h4,h5,h6": {
-              color: theme("colors.darker.900"),
+            'h4,h5,h6': {
+              color: theme('colors.dark.900'),
             },
             pre: {
-              backgroundColor: theme("colors.darker.800"),
+              backgroundColor: theme('colors.dark.800'),
             },
             code: {
-              color: theme("colors.cyan.500"),
-              backgroundColor: theme("colors.dark.100"),
-              paddingLeft: "4px",
-              paddingRight: "4px",
-              paddingTop: "2px",
-              paddingBottom: "2px",
-              borderRadius: "0.25rem",
+              color: theme('colors.pink.500'),
+              backgroundColor: theme('colors.dark.800'),
+              paddingLeft: '4px',
+              paddingRight: '4px',
+              paddingTop: '2px',
+              paddingBottom: '2px',
+              borderRadius: '0.25rem',
             },
-            "code::before": {
-              content: "none",
+            'code::before': {
+              content: 'none',
             },
-            "code::after": {
-              content: "none",
+            'code::after': {
+              content: 'none',
             },
             details: {
-              backgroundColor: theme("colors.gray.100"),
-              paddingLeft: "4px",
-              paddingRight: "4px",
-              paddingTop: "2px",
-              paddingBottom: "2px",
-              borderRadius: "0.25rem",
+              backgroundColor: theme('colors.gray.100'),
+              paddingLeft: '4px',
+              paddingRight: '4px',
+              paddingTop: '2px',
+              paddingBottom: '2px',
+              borderRadius: '0.25rem',
             },
-            hr: { borderColor: theme("colors.gray.200") },
-            "ol li::marker": {
-              fontWeight: "600",
-              color: theme("colors.gray.500"),
+            hr: { borderColor: theme('colors.gray.200') },
+            'ol li::marker': {
+              fontWeight: '600',
+              color: theme('colors.gray.500'),
             },
-            "ul li::marker": {
-              backgroundColor: theme("colors.gray.500"),
+            'ul li::marker': {
+              backgroundColor: theme('colors.gray.500'),
             },
-            strong: { color: theme("colors.gray.600") },
+            strong: { color: theme('colors.gray.600') },
             blockquote: {
-              color: theme("colors.gray.900"),
-              borderLeftColor: theme("colors.gray.200"),
+              color: theme('colors.dark.900'),
+              borderLeftColor: theme('colors.dark.200'),
+            },
+          },
+        },
+        dark: {
+          css: {
+            color: theme('colors.cullen.50'),
+            a: {
+              color: theme('colors.cyan.500'),
+              '&:hover': {
+                color: `${theme('colors.purple.300')} !important`,
+              },
+              code: { color: theme('colors.primary.400') },
+            },
+            h1: {
+              fontWeight: '700',
+              letterSpacing: theme('letterSpacing.tight'),
+              color: theme('colors.cullen.100'),
+            },
+            h2: {
+              fontWeight: '700',
+              letterSpacing: theme('letterSpacing.tight'),
+              color: theme('colors.cullen.100'),
+            },
+            h3: {
+              fontWeight: '600',
+              color: theme('colors.cullen.100'),
+            },
+            'h4,h5,h6': {
+              color: theme('colors.cullen.100'),
+            },
+            pre: {
+              backgroundColor: theme('colors.dark.800'),
+            },
+            details: {
+              backgroundColor: theme('colors.gray.800'),
+            },
+            hr: { borderColor: theme('colors.gray.700') },
+            'ol li::marker': {
+              fontWeight: '600',
+              color: theme('colors.gray.400'),
+            },
+            'ul li::marker': {
+              backgroundColor: theme('colors.gray.400'),
+            },
+            strong: { color: theme('colors.gray.100') },
+            thead: {
+              th: {
+                color: theme('colors.gray.100'),
+              },
+            },
+            tbody: {
+              tr: {
+                borderBottomColor: theme('colors.gray.700'),
+              },
+            },
+            blockquote: {
+              color: theme('colors.cullen.100'),
+              borderLeftColor: theme('colors.dark.700'),
             },
           },
         },

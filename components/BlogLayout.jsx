@@ -1,12 +1,14 @@
 import formatDate from "../lib/utils/formatDate";
 import PageTitle from "./PageTitle";
 import SectionContainer from "./SectionContainer";
+import BlogNavbar from "./navbars/BlogNavbar";
 
 export default function BlogLayout({ frontmatter, next, prev, children }) {
   const { date, title } = frontmatter;
 
   return (
     <SectionContainer>
+      <BlogNavbar />
       <article>
         <div>
           <header>
@@ -25,7 +27,7 @@ export default function BlogLayout({ frontmatter, next, prev, children }) {
         </div>
       </article>
 
-      <div className="prose">{children}</div>
+      <div className="prose dark:prose-dark max-w-none">{children}</div>
     </SectionContainer>
   );
 }
