@@ -1,3 +1,7 @@
+import Facebubble from "../components/Facebubble"
+
 export default () => { 
-    return <h1>Hello World</h1>
+    return <>
+    <Facebubble />
+    </>
 }
