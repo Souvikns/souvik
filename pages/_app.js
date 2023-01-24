@@ -1,30 +1,15 @@
-import LayoutWrapper from '../components/LayoutWrapper'
-import '../css/tailwind.css'
-import '../css/prism.css'
-import 'katex/dist/katex.css'
+import '../global.css'
+import MDXProvider from '../components/MDX'
+import Navbar from '../components/Navbar'
+import SectionContainer from '../components/SectionContainer'
 
-import { ThemeProvider } from 'next-themes'
-import Head from 'next/head'
-
-export default function MyApp({ Component, pageProps }) {
+export default function App({ Component, pageProps, rounter }) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="light">
-      <Head>
-        <meta
-          name="theme-color"
-          media="(prefers-color-scheme: light)"
-          content="#fff"
-        />
-        <meta
-          name="theme-color"
-          media="(prefers-color-scheme: dark)"
-          content="#000"
-        />
-        <meta content="width=device-width, initial-scale=1" name="viewport" />
-      </Head>
-      <LayoutWrapper>
+    <SectionContainer>
+      <Navbar />
+      <MDXProvider>
         <Component {...pageProps} />
-      </LayoutWrapper>
-    </ThemeProvider>
+      </MDXProvider>
+    </SectionContainer>
   )
 }

@@ -1,7 +1,7 @@
 import Socials from './socials'
 export default () => {
   return (
-    <div className="rounded-md shadow-sm my-4 bg-darker-800 text-cullen-100 dark:bg-darker-800">
+    <div className="rounded-md shadow-sm my-4  ">
       <div className="flex flex-row h-full">
         <div>
           <div className="p-6">
@@ -9,7 +9,7 @@ export default () => {
               width="200px"
               src="./souvik.png"
               alt="souvik"
-              className="rounded-full border border-dark-100 shadow-md bg-white dark:bg-cullen-50"
+              className="rounded-full border  shadow-md "
             />
           </div>
         </div>
