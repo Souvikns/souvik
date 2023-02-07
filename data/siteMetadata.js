@@ -9,7 +9,7 @@ const siteMetadata = {
   siteRepo: 'https://github.com/Souvikns/souvik',
   siteLogo: '',
   image: '',
-  socialBanner: 'https://avatars.githubusercontent.com/u/41781438?v=4',
+  socialBanner: '/static/images/Souvik.png',
   email: 'Souvikde.ns@gmail.com',
   github: 'https://github.com/Souvikns',
   twitter: 'https://twitter.com/souvik_ns',
