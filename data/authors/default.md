@@ -1,6 +1,6 @@
 ---
 name: Souvik De
-avatar: /static/images/souvik.png
+avatar: /static/images/Souvik.png
 occupation: Software developer at Postman
 company: Postman
 email: souvikde.ns@gmail.com
