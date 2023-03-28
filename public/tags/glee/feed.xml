@@ -8,26 +8,16 @@
       <managingEditor>Souvikde.ns@gmail.com (Souvik De )</managingEditor>
       <webMaster>Souvikde.ns@gmail.com (Souvik De )</webMaster>
       <lastBuildDate>Wed, 22 Mar 2023 00:00:00 GMT</lastBuildDate>
-      <atom:link href="https://souvikns.com/feed.xml" rel="self" type="application/rss+xml"/>
+      <atom:link href="https://souvikns.com/tags/glee/feed.xml" rel="self" type="application/rss+xml"/>
       
   <item>
     <guid>https://souvikns.com/blog/AsyncAPI/Introduction-to-glee</guid>
-    <title>Building a REST API with Glee: A Guide to Fast and Scalable Web Development</title>
+    <title>Introduction to Glee</title>
     <link>https://souvikns.com/blog/AsyncAPI/Introduction-to-glee</link>
-    <description>How to build a Rest API using Glee.</description>
+    <description>Starting my blogging journey, what you should expect from this blog.</description>
     <pubDate>Wed, 22 Mar 2023 00:00:00 GMT</pubDate>
     <author>Souvikde.ns@gmail.com (Souvik De )</author>
     <category>AsyncAPI</category><category>Glee</category>
-  </item>
-
-  <item>
-    <guid>https://souvikns.com/blog/Introduction-to-blogging</guid>
-    <title>Starting a Blog to Express My Ideas and Share My Work with the World</title>
-    <link>https://souvikns.com/blog/Introduction-to-blogging</link>
-    <description>Starting my blogging journey, what you should expect from this blog.</description>
-    <pubDate>Sun, 05 Feb 2023 18:30:00 GMT</pubDate>
-    <author>Souvikde.ns@gmail.com (Souvik De )</author>
-    <category>personal</category>
   </item>
 
     </channel>
