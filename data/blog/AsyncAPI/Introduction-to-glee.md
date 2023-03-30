@@ -1,7 +1,7 @@
 ---
 title: Why Glee could be the future of API development
 date: '2023-03-22'
-draft: true
+draft: false
 tags: ['AsyncAPI', 'Glee']
 summary:  Exploring Glee Framework. 
 images: ['static/images/ameen-fahmy-_gEKtyIbRSM-unsplash.jpg']
@@ -34,4 +34,17 @@ When creating an API, it's important to document it so that others can understan
 
 Glee simplifies the process of creating and maintaining connections, allowing you to concentrate solely on developing code that meets your business needs. By handling performance, scalability, resilience, and all other aspects necessary for production-readiness, Glee frees you from the burden of managing these technicalities, enabling you to focus on delivering a high-quality application that meets the demands of your users
 
+
+## We could use your help
+
+To improve Glee, we value user feedback and input. At present, Glee is stable for both websocket and MQTT, but we believe that user testing and feedback can help us make Glee even better. We invite individuals to try out Glee and share their thoughts on its functionality and usability. You can open an issue on our GitHub page at https://github.com/asyncapi/glee.
+
+We are particularly interested in hearing whether users would be comfortable using Glee in production environments. If not, we would like to know what specific features they would require to make Glee a viable production tool. Our goal is to incorporate user feedback to enhance the user experience and ensure that Glee meets the needs of its users.
+
+Therefore, we encourage users to test out Glee and provide feedback that can help us shape its development roadmap. Together, we can build a tool that truly meets the needs of the community.
+
+
+## Future Plans for Glee.
+
+Our current priority is to ensure the stability of Glee, therefore we have decided to suspend the development of support for new protocols. You can follow the development of glee [here](https://github.com/asyncapi/glee).
 
