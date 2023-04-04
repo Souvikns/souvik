@@ -1,14 +1,14 @@
 ---
 title: Why Glee could be the future of API development
 date: '2023-03-22'
-draft: true
+draft: flase
 tags: ['AsyncAPI', 'Glee']
 summary:  Exploring Glee Framework. 
 images: ['static/images/ameen-fahmy-_gEKtyIbRSM-unsplash.jpg']
 ---
 
 
-For the last year, I have been working full-time on AsyncAPI, where I have actively taken part in building a new framework called [glee](https://github.com/asyncapi/glee). In this blog, I will share my thoughts and opinion on glee and provide insights into the exciting future that I see for this innovative API framework. 
+For the last year, I have been working full-time on AsyncAPI, where I have actively taken part in building a new framework called [glee](https://github.com/asyncapi/glee). In this blog, I will share my thoughts and opinion on glee and provide insights into the exciting future that I see for this innovative API framework.
 
 
 ## What is Glee?
