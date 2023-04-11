@@ -4,7 +4,7 @@ date: '2023-03-22'
 draft: false
 tags: ['AsyncAPI', 'Glee']
 summary:  Exploring Glee Framework. 
-images: ['static/images/glee-file-structure.png']
+images: ['static/images/glee-file-structure.png', 'static/images/postman-glee-greet.png']
 ---
 
 
@@ -64,7 +64,7 @@ Once the process is complete you should have a new Glee app ready for developmen
 </center>
 
 
-#### Define our Spec for our API
+#### Define our Spec for our API.
 
 Glee being a spec-first framework, development starts with defining your API spec. For our case we will define our API:
 
@@ -102,5 +102,48 @@ components:
         type: string
 ```
 
-This will be the Specification that defines our API, in our case, it is very simple, as we will be sending a name and the time of the day, and our API will be greet us accordingly. 
+This will be the Specification that defines our API, in our case, it is very simple, as we will be sending a name and the time of the day, and our API will greet us accordingly. 
 
+One thing to note here is the `operationId`, this is needed and is a crucial part of glee, as this is how we will be connecting our business logic with our spec, `operationId` is the name of the function that will be called every time a certain operation occurs. In our case whenever `/greet` channel received a message. 
+
+#### Define our operation function.
+
+Now for our case, we will be adding a file `functions/onGreet.js` and writing up the logic for parsing our time and sending a response.
+
+```js:functions/onGreet.js
+export default async function (event) {
+  const { name, time } = event.payload
+  const t = new Date(time)
+  const curHr = t.getHours()
+  let response = ''
+  if (curHr < 12) {
+    response = `Good Morning ${name}`
+  } else if (curHr < 18) {
+    response = `Good Afternoon ${name}`
+  } else {
+    response = `Good Evening ${name}`
+  }
+  return {
+    reply: [
+      {
+        payload: response,
+      },
+    ],
+  }
+}
+```
+
+Every file in the functions folder acts as a handler to develop business logic for glee, every file should export an async function that receives an event parameter, where you have access to payload and server details. 
+
+
+#### Running your application 
+
+Now to run your glee application, just run:
+
+```bash
+npm run dev
+```
+
+#### Testing with Postman 
+
+![postman](/static/images/postman-glee-greet.png)
