@@ -1,5 +1,5 @@
 ---
-title: Why Glee could be the future of API development
+title: Introduction to Glee, A spec-first framework developed by AsyncAPI. 
 date: '2023-03-22'
 draft: false
 tags: ['AsyncAPI', 'Glee']
@@ -66,7 +66,7 @@ Once the process is complete you should have a new Glee app ready for developmen
 
 #### Define our Spec for our API
 
-Glee being a spec-first framework, development starts with defining your API spec. For our case we will define our API 
+Glee being a spec-first framework, development starts with defining your API spec. For our case we will define our API:
 
 
 ```yaml:asyncapi.yaml
@@ -74,12 +74,10 @@ asyncapi: 2.1.0
 info:
   title: Greet Bot
   version: 0.1.0
-
 servers:
   websockets:
     url: ws://0.0.0.0:3000
     protocol: ws
-
 channels:
   greet:
     publish:
@@ -89,7 +87,6 @@ channels:
     subscribe:
       messages:
         $ref: '#/components/messages/greet'
-
 components:
   messages:
     time:
@@ -104,3 +101,6 @@ components:
       payload:
         type: string
 ```
+
+This will be the Specification that defines our API, in our case, it is very simple, as we will be sending a name and the time of the day, and our API will be greet us accordingly. 
+
