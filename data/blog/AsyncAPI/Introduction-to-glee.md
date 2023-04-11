@@ -147,3 +147,6 @@ npm run dev
 #### Testing with Postman 
 
 ![postman](/static/images/postman-glee-greet.png)
+
+
+So this is how easy it is to build a WebSocket API using Glee. You can checkout the example code [here](https://github.com/Souvikns/greet-bot).
