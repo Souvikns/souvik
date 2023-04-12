@@ -136,17 +136,25 @@ export default async function (event) {
 Every file in the functions folder acts as a handler to develop business logic for glee, every file should export an async function that receives an event parameter, where you have access to payload and server details. 
 
 
-#### Running your application 
+#### Running and testing your application 
+
+We will not execute the application and carry out testing with Postman to ensure that it is functioning as intended. 
 
 Now to run your glee application, just run:
 
 ```bash
 npm run dev
+# or 
+npm run start
 ```
 
-#### Testing with Postman 
+Then open Postman and checkout the endpoint: 
 
 ![postman](/static/images/postman-glee-greet.png)
 
 
-So this is how easy it is to build a WebSocket API using Glee. You can checkout the example code [here](https://github.com/Souvikns/greet-bot).
+# Conclusion
+
+So this is how easy it is to build a WebSocket API using Glee. You can check out the example code [here](https://github.com/Souvikns/greet-bot).
+
+Glee is rapidly evolving and aims to support a variety of protocols, and while it is still in development, it currently has stable support for MQTT and WebSocket. As a team, we are eager to gather feedback from users like you to help us improve glee and make it even better. If you are interested in trying out glee, we would greatly appreciate it if you could take the time to test it out and share your thoughts about your experience with us. Your feedback will be invaluable in helping us identify areas for improvement and making glee more user-friendly and effective. The best way to communicate with us is through [GitHub Issues](https://github.com/asyncapi/glee/issues).
