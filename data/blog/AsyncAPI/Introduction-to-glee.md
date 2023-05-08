@@ -46,15 +46,15 @@ If you don't have any of the above tools missing go ahead and install them.
 
 #### Create glee project 
 
-We recommend creating a new Glee app using `create-glee-app` which sets up everything automatically. (You don't need to create an empty directory. create-glee-app will make one for you.) To create a project, run:
+We recommend creating a new Glee app using our official [CLI](https://github.com/asyncapi/cli) which sets up everything automatically. (You don't need to create an empty directory. create-glee-app will make one for you.) To create a project, run:
 
 ```bash
 
-npx create-glee-app
+asyncapi new glee 
 
 ```
 
-> `create-glee-app` can get decricated in the future as we are trying to bring this functionality to our CLI application. Check [here](https://github.com/asyncapi/cli/pull/418) for update. 
+> To install AsyncAPI CLI either use [npm](https://www.npmjs.com/package/@asyncapi/cli) or install binaries for your operating system from https://github.com/asyncapi/cli/releases 
 
 
 Once the process is complete you should have a new Glee app ready for development and see these files that were made.
