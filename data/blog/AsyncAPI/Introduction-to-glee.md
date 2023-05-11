@@ -7,7 +7,6 @@ summary:  Exploring Glee Framework.
 images: ['static/images/glee-file-structure.png', 'static/images/postman-glee-greet.png']
 ---
 
-
 For the last year, I have been working full-time on AsyncAPI, where I have actively taken part in building a new framework called [glee](https://github.com/asyncapi/glee). This is the first of many to come blogs where I will be talking about glee, and all the cool stuff we can build with it. In this blog, I will just introduce glee and give a broad overview of how to get started and keep up with glee's development.
 
 # Introduction
