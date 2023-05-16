@@ -6,6 +6,7 @@ tags: ['personal']
 summary: Starting my blogging journey, what you should expect from this blog. 
 images: ['static/images/ameen-fahmy-_gEKtyIbRSM-unsplash.jpg']
 ---
+
 <center>
 <img src="/static/images/ameen-fahmy-_gEKtyIbRSM-unsplash.jpg" width="60%"  />
 </center>
