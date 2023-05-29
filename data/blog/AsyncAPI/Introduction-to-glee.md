@@ -84,7 +84,7 @@ channels:
       message:
         $ref: '#/components/messages/time'
     subscribe:
-      messages:
+      message:
         $ref: '#/components/messages/greet'
 components:
   messages:
