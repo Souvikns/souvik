@@ -2,7 +2,7 @@ const siteMetadata = {
   title: 'Souvik De',
   author: 'Souvik De ',
   headerTitle: 'Souvik',
-  description: 'opensource-developer',
+  description: 'Software Engineer | Backend Developer | Open Source Contributor',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://souvikns.com',

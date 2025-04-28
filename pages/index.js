@@ -27,9 +27,17 @@ export default function Home({ posts }) {
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
             {siteMetadata.description}
           </p>
-          <div>
+          {/* <div>
             Hello, I am an opensource-developer, currently working full-time on the <a href="https://www.asyncapi.com/" className='font-bold underline'>AsyncAPI</a> project. 
             I am passionate about creating and improving tools that make it easier for developers to design, build, and deploy effective asynchronous APIs.
+          </div> */}
+          <div>
+            I am a software developer with 3+ years of professional experience specializing in API development. Previously worked
+at Postman as a Software Developer, where I maintained AsyncAPI and integrated AsyncAPI specifications into
+Postman’s pipelines. Currently working at Codemate.AI, where I’ve built and shipped a RAG-based AI agent for
+code generation. Active open-source contributor serving as Core Maintainer and Technical Steering Committee
+member at AsyncAPI, where I manage two projects with approximately 16,000 monthly NPM downloads.
+Contributed to developer community growth by mentoring in Google Summer of Code 2023 under Postman
           </div>
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
