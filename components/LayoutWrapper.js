@@ -6,7 +6,6 @@ import SectionContainer from './SectionContainer'
 import Footer from './Footer'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
-import {Analytics} from '@vercel/analytics/next'
 
 const LayoutWrapper = ({ children }) => {
   return (
@@ -47,7 +46,6 @@ const LayoutWrapper = ({ children }) => {
         </header>
         <main className="mb-auto">{children}</main>
         <Footer />
-        <Analytics />
       </div>
     </SectionContainer>
   )
