@@ -3,6 +3,7 @@ import siteMetadata from '@/data/siteMetadata'
 import { getAllFilesFrontMatter } from '@/lib/mdx'
 import ListLayout from '@/layouts/ListLayout'
 import { POSTS_PER_PAGE } from '../../blog'
+import Adbanner from '@/components/adbanner'
 
 export async function getStaticPaths() {
   const totalPosts = await getAllFilesFrontMatter('blog')
@@ -51,6 +52,7 @@ export default function PostPage({ posts, initialDisplayPosts, pagination }) {
         pagination={pagination}
         title="All Posts"
       />
+      <Adbanner />
     </>
   )
 }
