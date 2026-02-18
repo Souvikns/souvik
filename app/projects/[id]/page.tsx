@@ -5,7 +5,79 @@ import { ArrowLeft, ExternalLink, Github } from 'lucide-react'
 import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
 import { Badge } from '@/components/ui/badge'
-import { projects } from '@/lib/projects'
+import { getCaseStudyMarkdown, projects } from '@/lib/projects'
+
+
+
+type CaseStudyBlock =
+  | { type: 'heading'; content: string }
+  | { type: 'paragraph'; content: string }
+  | { type: 'list'; content: string[] }
+
+function parseMarkdownBlocks(markdown: string): CaseStudyBlock[] {
+  const lines = markdown.split('\n')
+  const blocks: CaseStudyBlock[] = []
+  let paragraphBuffer: string[] = []
+  let listBuffer: string[] = []
+
+  const flushParagraph = () => {
+    if (paragraphBuffer.length === 0) {
+      return
+    }
+
+    blocks.push({
+      type: 'paragraph',
+      content: paragraphBuffer.join(' ').trim(),
+    })
+    paragraphBuffer = []
+  }
+
+  const flushList = () => {
+    if (listBuffer.length === 0) {
+      return
+    }
+
+    blocks.push({
+      type: 'list',
+      content: [...listBuffer],
+    })
+    listBuffer = []
+  }
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim()
+
+    if (!line) {
+      flushParagraph()
+      flushList()
+      continue
+    }
+
+    if (line.startsWith('## ')) {
+      flushParagraph()
+      flushList()
+      blocks.push({
+        type: 'heading',
+        content: line.slice(3).trim(),
+      })
+      continue
+    }
+
+    if (line.startsWith('- ')) {
+      flushParagraph()
+      listBuffer.push(line.slice(2).trim())
+      continue
+    }
+
+    flushList()
+    paragraphBuffer.push(line)
+  }
+
+  flushParagraph()
+  flushList()
+
+  return blocks
+}
 
 interface ProjectPageProps {
   params: Promise<{
@@ -37,6 +109,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   if (!project) {
     notFound()
   }
+
+  const caseStudyMarkdown = await getCaseStudyMarkdown(project.caseStudyFile)
+  const caseStudyBlocks = caseStudyMarkdown ? parseMarkdownBlocks(caseStudyMarkdown) : []
 
   return (
     <>
@@ -106,56 +181,40 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </section>
 
         {/* Case Study Content */}
-        {project.caseStudy && (
+        {caseStudyBlocks.length > 0 && (
           <section>
             <div className="container mx-auto max-w-4xl px-4 py-12">
-              <div className="space-y-12">
-                {/* Challenge */}
-                <div className="space-y-4">
-                  <h2 className="text-3xl font-bold">The Challenge</h2>
-                  <p className="text-base text-muted-foreground leading-relaxed">
-                    {project.caseStudy.challenge}
-                  </p>
-                </div>
+              <div className="space-y-6">
+                {caseStudyBlocks.map((block, index) => {
+                  if (block.type === 'heading') {
+                    return (
+                      <h2 key={index} className="pt-6 text-3xl font-bold first:pt-0">
+                        {block.content}
+                      </h2>
+                    )
+                  }
 
-                {/* Solution */}
-                <div className="space-y-4">
-                  <h2 className="text-3xl font-bold">The Solution</h2>
-                  <p className="text-base text-muted-foreground leading-relaxed">
-                    {project.caseStudy.solution}
-                  </p>
-                </div>
+                  if (block.type === 'list') {
+                    return (
+                      <ul key={index} className="space-y-3">
+                        {block.content.map((item, itemIndex) => (
+                          <li key={itemIndex} className="flex items-center gap-3 p-4">
+                            <span className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary font-semibold text-sm">
+                              ✓
+                            </span>
+                            <p className="text-sm font-medium">{item}</p>
+                          </li>
+                        ))}
+                      </ul>
+                    )
+                  }
 
-                {/* Key Features */}
-                <div className="space-y-4">
-                  <h2 className="text-3xl font-bold">Key Features</h2>
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {project.caseStudy.keyFeatures.map((feature, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-start gap-3 rounded-lg border border-border bg-card p-4"
-                      >
-                        <div className="flex-shrink-0 h-5 w-5 rounded-full bg-primary mt-1" />
-                        <p className="text-sm font-medium">{feature}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Results */}
-                <div className="space-y-4">
-                  <h2 className="text-3xl font-bold">Results & Impact</h2>
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {project.caseStudy.results.map((result, idx) => (
-                      <div key={idx} className="flex items-center gap-3 p-4">
-                        <span className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary font-semibold text-sm">
-                          ✓
-                        </span>
-                        <p className="text-sm font-medium">{result}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                  return (
+                    <p key={index} className="text-base leading-relaxed text-muted-foreground">
+                      {block.content}
+                    </p>
+                  )
+                })}
               </div>
             </div>
           </section>

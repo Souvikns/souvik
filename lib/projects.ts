@@ -1,9 +1,5 @@
-export interface CaseStudy {
-  challenge: string
-  solution: string
-  results: string[]
-  keyFeatures: string[]
-}
+import { readFile } from 'node:fs/promises'
+import path from 'node:path'
 
 export interface Project {
   id: string
@@ -17,7 +13,7 @@ export interface Project {
   featured: boolean
   duration?: string
   role?: string
-  caseStudy?: CaseStudy
+  caseStudyFile?: string
 }
 
 export const projects: Project[] = [
@@ -32,12 +28,7 @@ export const projects: Project[] = [
     featured: true,
     duration: '3 months',
     role: 'Full Stack Developer',
-    caseStudy: {
-      challenge: 'Teams were struggling to keep their GitHub project management in sync with their Notion databases. Manual updates were tedious and error-prone, leading to inconsistent data across platforms.',
-      solution: 'Built a GitHub Action that automatically syncs issues and pull requests to Notion in real-time. The solution uses the GitHub API to detect changes and Notion API to update databases, with customizable field mapping.',
-      results: ['50k+ downloads per week', 'Integrated into 1000+ repositories', 'Reduced manual data entry by 95%', 'Used by Fortune 500 companies'],
-      keyFeatures: ['Real-time sync', 'Customizable field mapping', 'Automated workflow', 'GitHub Marketplace integration']
-    }
+    caseStudyFile: 'notion-board.md'
   },
   {
     id: '2',
@@ -50,12 +41,7 @@ export const projects: Project[] = [
     featured: true,
     duration: '6 months',
     role: 'Core Contributor',
-    caseStudy: {
-      challenge: 'The AsyncAPI specification lacked a command-line interface for developers to work with AsyncAPI documents. Developers had to manually parse and validate AsyncAPI files, making it difficult to integrate into CI/CD pipelines.',
-      solution: 'Developed a comprehensive CLI tool that provides commands for validating, generating, and templating AsyncAPI documents. The tool integrates with popular development workflows and supports plugins for extensibility.',
-      results: ['Used by thousands of developers', 'Part of AsyncAPI official tooling', 'Open source community of 100+ contributors', 'Adopted by major tech companies'],
-      keyFeatures: ['Document validation', 'Code generation', 'Template support', 'Plugin system', 'CI/CD integration']
-    }
+    caseStudyFile: 'asyncapi-cli.md'
   },
   {
     id: '3',
@@ -68,13 +54,22 @@ export const projects: Project[] = [
     featured: true,
     duration: '4 months',
     role: 'Lead Developer',
-    caseStudy: {
-      challenge: 'Existing analytics dashboards were slow and difficult to customize. Users needed real-time data insights with the ability to create custom reports tailored to their specific needs.',
-      solution: 'Built a high-performance analytics dashboard using Bun runtime for superior speed. Implemented real-time data visualization with customizable widgets and automated reporting capabilities.',
-      results: ['50% faster load times', 'Support for 100+ data sources', 'Custom reports for 500+ users', 'Real-time data processing'],
-      keyFeatures: ['Real-time visualization', 'Custom dashboards', 'Automated reporting', 'Data source integration', 'Performance optimized']
-    }
+    caseStudyFile: 'kitsu.md'
   }
 ]
 
 export const featuredProjects = projects.filter((p) => p.featured)
+
+export async function getCaseStudyMarkdown(caseStudyFile?: string) {
+  if (!caseStudyFile) {
+    return null
+  }
+
+  const caseStudyPath = path.join(process.cwd(), 'content', 'case-studies', caseStudyFile)
+
+  try {
+    return await readFile(caseStudyPath, 'utf-8')
+  } catch {
+    return null
+  }
+}
