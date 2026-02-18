@@ -6,78 +6,9 @@ import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
 import { Badge } from '@/components/ui/badge'
 import { getCaseStudyMarkdown, projects } from '@/lib/projects'
+import { renderMarkdownToHtml } from '@/lib/markdown'
 
 
-
-type CaseStudyBlock =
-  | { type: 'heading'; content: string }
-  | { type: 'paragraph'; content: string }
-  | { type: 'list'; content: string[] }
-
-function parseMarkdownBlocks(markdown: string): CaseStudyBlock[] {
-  const lines = markdown.split('\n')
-  const blocks: CaseStudyBlock[] = []
-  let paragraphBuffer: string[] = []
-  let listBuffer: string[] = []
-
-  const flushParagraph = () => {
-    if (paragraphBuffer.length === 0) {
-      return
-    }
-
-    blocks.push({
-      type: 'paragraph',
-      content: paragraphBuffer.join(' ').trim(),
-    })
-    paragraphBuffer = []
-  }
-
-  const flushList = () => {
-    if (listBuffer.length === 0) {
-      return
-    }
-
-    blocks.push({
-      type: 'list',
-      content: [...listBuffer],
-    })
-    listBuffer = []
-  }
-
-  for (const rawLine of lines) {
-    const line = rawLine.trim()
-
-    if (!line) {
-      flushParagraph()
-      flushList()
-      continue
-    }
-
-    if (line.startsWith('## ')) {
-      flushParagraph()
-      flushList()
-      blocks.push({
-        type: 'heading',
-        content: line.slice(3).trim(),
-      })
-      continue
-    }
-
-    if (line.startsWith('- ')) {
-      flushParagraph()
-      listBuffer.push(line.slice(2).trim())
-      continue
-    }
-
-    flushList()
-    paragraphBuffer.push(line)
-  }
-
-  flushParagraph()
-  flushList()
-
-  return blocks
-}
 
 interface ProjectPageProps {
   params: Promise<{
@@ -111,7 +42,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   const caseStudyMarkdown = await getCaseStudyMarkdown(project.caseStudyFile)
-  const caseStudyBlocks = caseStudyMarkdown ? parseMarkdownBlocks(caseStudyMarkdown) : []
+  const caseStudyHtml = caseStudyMarkdown ? renderMarkdownToHtml(caseStudyMarkdown) : null
 
   return (
     <>
@@ -181,41 +112,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </section>
 
         {/* Case Study Content */}
-        {caseStudyBlocks.length > 0 && (
+        {caseStudyHtml && (
           <section>
             <div className="container mx-auto max-w-4xl px-4 py-12">
-              <div className="space-y-6">
-                {caseStudyBlocks.map((block, index) => {
-                  if (block.type === 'heading') {
-                    return (
-                      <h2 key={index} className="pt-6 text-3xl font-bold first:pt-0">
-                        {block.content}
-                      </h2>
-                    )
-                  }
-
-                  if (block.type === 'list') {
-                    return (
-                      <ul key={index} className="space-y-3">
-                        {block.content.map((item, itemIndex) => (
-                          <li key={itemIndex} className="flex items-center gap-3 p-4">
-                            <span className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary font-semibold text-sm">
-                              ✓
-                            </span>
-                            <p className="text-sm font-medium">{item}</p>
-                          </li>
-                        ))}
-                      </ul>
-                    )
-                  }
-
-                  return (
-                    <p key={index} className="text-base leading-relaxed text-muted-foreground">
-                      {block.content}
-                    </p>
-                  )
-                })}
-              </div>
+              <article
+                className="space-y-4 text-base leading-relaxed text-muted-foreground [&_h1]:mt-8 [&_h1]:text-4xl [&_h1]:font-bold [&_h1]:text-foreground [&_h2]:mt-8 [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:text-foreground [&_h3]:mt-6 [&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:text-foreground [&_p]:leading-relaxed [&_a]:font-medium [&_a]:text-primary [&_a]:underline-offset-4 [&_a:hover]:underline [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6 [&_blockquote]:border-l-4 [&_blockquote]:border-primary/30 [&_blockquote]:pl-4 [&_blockquote]:italic [&_pre]:overflow-x-auto [&_pre]:rounded-lg [&_pre]:bg-muted [&_pre]:p-4 [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:py-0.5 [&_img]:my-6 [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-lg [&_img]:border [&_img]:border-border [&_hr]:my-8 [&_hr]:border-border"
+                dangerouslySetInnerHTML={{ __html: caseStudyHtml }}
+              />
             </div>
           </section>
         )}

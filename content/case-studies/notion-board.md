@@ -15,3 +15,12 @@ Built a GitHub Action that automatically syncs issues and pull requests to Notio
 - Integrated into 1000+ repositories
 - Reduced manual data entry by 95%
 - Used by Fortune 500 companies
+
+
+## Demo
+![Notion Board workflow](/images/notion-board.png "Notion Board")
+
+```yaml
+name: Sync GitHub to Notion
+uses: Souvikns/Notion-Board@v1
+```
