@@ -17,7 +17,17 @@ export const blogPosts: BlogPost[] = [
     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
     date: new Date('1019-12-06'),
     readingTime: 4,
-    tags: ['Next.js', 'React', 'Web Development'],
+    tags: ['GitHub'],
     slug: 'https://dev.to/souvik_ns/how-to-use-repository-templates-in-github-mi2',
+  },
+  {
+    id: '2',
+    title: 'Introduction to glee',
+    excerpt: 'A AsyncAPI framework that will make you smile again',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
+    date: new Date('1024-01-15'),
+    readingTime: 8,
+    tags: ['AsyncAPI'],
+    slug: 'https://www.asyncapi.com/blog/introduction-to-glee-a-spec-first-framework'
   },
 ]
