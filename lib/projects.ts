@@ -1,12 +1,19 @@
+import { readFile } from 'node:fs/promises'
+import path from 'node:path'
+
 export interface Project {
   id: string
   title: string
   description: string
   image: string
+  heroImage?: string
   technologies: string[]
   liveUrl?: string
   githubUrl?: string
   featured: boolean
+  duration?: string
+  role?: string
+  caseStudyFile?: string
 }
 
 export const projects: Project[] = [
@@ -19,6 +26,9 @@ export const projects: Project[] = [
     liveUrl: 'https://github.com/marketplace/actions/notion-board',
     githubUrl: 'https://github.com/Souvikns/Notion-Board',
     featured: true,
+    duration: '3 months',
+    role: 'Full Stack Developer',
+    caseStudyFile: 'notion-board.md'
   },
   {
     id: '2',
@@ -29,6 +39,9 @@ export const projects: Project[] = [
     liveUrl: 'https://example.com',
     githubUrl: 'https://github.com/asyncapi/cli',
     featured: true,
+    duration: '6 months',
+    role: 'Core Contributor',
+    caseStudyFile: 'asyncapi-cli.md'
   },
   {
     id: '3',
@@ -39,7 +52,24 @@ export const projects: Project[] = [
     liveUrl: 'https://example.com',
     githubUrl: 'https://github.com/Souvikns/kitsu',
     featured: true,
+    duration: '4 months',
+    role: 'Lead Developer',
+    caseStudyFile: 'kitsu.md'
   }
 ]
 
 export const featuredProjects = projects.filter((p) => p.featured)
+
+export async function getCaseStudyMarkdown(caseStudyFile?: string) {
+  if (!caseStudyFile) {
+    return null
+  }
+
+  const caseStudyPath = path.join(process.cwd(), 'content', 'case-studies', caseStudyFile)
+
+  try {
+    return await readFile(caseStudyPath, 'utf-8')
+  } catch {
+    return null
+  }
+}
