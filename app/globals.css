@@ -4,7 +4,16 @@
 
 @layer base {
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background font-sans text-base leading-7 text-foreground;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading tracking-tight text-foreground;
   }
 
   /* Smooth transitions for theme switching */
@@ -117,8 +126,5 @@
 @layer base {
   * {
     @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
   }
 }

@@ -12,6 +12,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ['var(--font-sans)'],
+        heading: ['var(--font-heading)', 'var(--font-sans)'],
         mono: ['var(--font-mono)'],
       },
       colors: {
