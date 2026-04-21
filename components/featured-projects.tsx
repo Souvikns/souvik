@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { ProjectCard } from '@/components/project-card'
+import { ProjectsBentoGrid } from '@/components/projects-bento-grid'
 import { featuredProjects } from '@/lib/projects'
 
 export function FeaturedProjects() {
@@ -13,11 +13,7 @@ export function FeaturedProjects() {
         </p>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {featuredProjects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        ))}
-      </div>
+      <ProjectsBentoGrid projects={featuredProjects} variant="featured" />
 
       <div className="flex justify-center">
         <Button asChild size="lg" variant="outline">

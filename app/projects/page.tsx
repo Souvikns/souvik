@@ -1,6 +1,6 @@
 import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
-import { ProjectCard } from '@/components/project-card'
+import { ProjectsBentoGrid } from '@/components/projects-bento-grid'
 import { projects } from '@/lib/projects'
 
 export const metadata = {
@@ -29,11 +29,7 @@ export default function ProjectsPage() {
         {/* Projects Grid Section */}
         <section className="bg-gradient-to-b from-purple-50/30 to-transparent dark:from-purple-950/10 dark:to-transparent">
           <div className="container mx-auto max-w-4xl px-4 py-12">
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {projects.map((project) => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
-            </div>
+            <ProjectsBentoGrid projects={projects} variant="all" />
           </div>
         </section>
       </main>
