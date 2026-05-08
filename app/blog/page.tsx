@@ -1,11 +1,12 @@
-import { Navigation } from '@/components/navigation'
-import { Footer } from '@/components/footer'
 import { BlogCard } from '@/components/blog-card'
+import { Footer } from '@/components/footer'
+import { Navigation } from '@/components/navigation'
 import { blogPosts } from '@/lib/blog'
 
 export const metadata = {
   title: 'Blog',
-  description: 'Articles and thoughts about web development and software engineering.',
+  description:
+    'Articles by Souvik De about GitHub, AsyncAPI, developer tooling, and software engineering.',
 }
 
 export default function BlogPage() {

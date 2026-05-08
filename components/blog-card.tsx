@@ -13,9 +13,7 @@ export function BlogCard({ post }: BlogCardProps) {
       <div className="space-y-3">
         {/* Date and Reading Time */}
         <div className="flex items-center justify-between text-xs text-muted-foreground">
-          <time dateTime={post.date.toISOString()}>
-            {formatDate(post.date)}
-          </time>
+          <time dateTime={post.date.toISOString()}>{formatDate(post.date)}</time>
           <span>{post.readingTime} min read</span>
         </div>
 
@@ -38,8 +36,9 @@ export function BlogCard({ post }: BlogCardProps) {
 
         {/* Read More Link */}
         <Link
-          href={`${post.slug}`}
-          target='_blank'
+          href={post.slug}
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-block text-sm font-medium text-primary hover:underline"
         >
           Read more →

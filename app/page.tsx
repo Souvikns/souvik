@@ -1,9 +1,15 @@
-import { Navigation } from '@/components/navigation'
+import { AboutSection } from '@/components/about-section'
+import { ContactSection } from '@/components/contact-section'
+import { FeaturedProjects } from '@/components/featured-projects'
 import { Footer } from '@/components/footer'
 import { HeroSection } from '@/components/hero-section'
-import { AboutSection } from '@/components/about-section'
-import { FeaturedProjects } from '@/components/featured-projects'
-import { ContactSection } from '@/components/contact-section'
+import { Navigation } from '@/components/navigation'
+
+export const metadata = {
+  title: 'Backend Developer',
+  description:
+    'Souvik De builds APIs, developer tools, GitHub automation, and AsyncAPI ecosystem tooling.',
+}
 
 export default function Page() {
   return (

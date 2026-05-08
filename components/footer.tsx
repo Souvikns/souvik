@@ -7,9 +7,9 @@ export function Footer() {
         <div className="grid gap-8 sm:grid-cols-3">
           {/* About */}
           <div className="space-y-2">
-            <h3 className="font-semibold">Portfolio</h3>
+            <h3 className="font-semibold">Souvik De</h3>
             <p className="text-xs text-muted-foreground">
-              My Personal portfolio website showcasing my work.
+              Backend developer building APIs, developer tools, and GitHub automation.
             </p>
           </div>
 
@@ -20,7 +20,10 @@ export function Footer() {
               <Link href="/" className="text-xs text-muted-foreground hover:text-foreground">
                 Home
               </Link>
-              <Link href="/projects" className="text-xs text-muted-foreground hover:text-foreground">
+              <Link
+                href="/projects"
+                className="text-xs text-muted-foreground hover:text-foreground"
+              >
                 Projects
               </Link>
               <Link href="/blog" className="text-xs text-muted-foreground hover:text-foreground">

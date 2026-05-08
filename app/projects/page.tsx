@@ -1,11 +1,12 @@
-import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
+import { Navigation } from '@/components/navigation'
 import { ProjectCard } from '@/components/project-card'
 import { projects } from '@/lib/projects'
 
 export const metadata = {
   title: 'Projects',
-  description: 'A showcase of my projects and work samples.',
+  description:
+    'Selected backend, developer tooling, GitHub automation, and open-source projects by Souvik De.',
 }
 
 export default function ProjectsPage() {

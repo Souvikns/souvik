@@ -18,7 +18,7 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: '1',
+    id: 'notion-board',
     title: 'Notion Board',
     description: 'Sync Github Issues and Pull Requests with Notion database.',
     image: '/images/notion-board.png',
@@ -28,34 +28,36 @@ export const projects: Project[] = [
     featured: true,
     duration: '3 months',
     role: 'Full Stack Developer',
-    caseStudyFile: 'notion-board.md'
+    caseStudyFile: 'notion-board.md',
   },
   {
-    id: '2',
+    id: 'asyncapi-cli',
     title: 'AsyncAPI CLI',
-    description: 'Official CLI tool by asyncapi cli gets over 50k downloads over a week.',
+    description:
+      'Official AsyncAPI CLI used by developers to validate, generate, and automate AsyncAPI workflows.',
     image: '/images/asyncapi-cli.png',
-    technologies: ['Node.js', 'TypeScript',],
-    liveUrl: 'https://example.com',
+    technologies: ['Node.js', 'TypeScript'],
+    liveUrl: 'https://www.npmjs.com/package/@asyncapi/cli',
     githubUrl: 'https://github.com/asyncapi/cli',
     featured: true,
     duration: '6 months',
     role: 'Core Contributor',
-    caseStudyFile: 'asyncapi-cli.md'
+    caseStudyFile: 'asyncapi-cli.md',
   },
   {
-    id: '3',
+    id: 'kitsu',
     title: 'Kitsu',
-    description: 'Interactive analytics dashboard with real-time data visualization and custom reporting tools.',
+    description:
+      'GitHub Action that generates AI-powered pull request summaries for faster code review.',
     image: '/images/kitsu.png',
     technologies: ['Bun', 'TypeScript'],
-    liveUrl: 'https://example.com',
+    liveUrl: 'https://github.com/marketplace/actions/kitsu',
     githubUrl: 'https://github.com/Souvikns/kitsu',
     featured: true,
     duration: '4 months',
     role: 'Lead Developer',
-    caseStudyFile: 'kitsu.md'
-  }
+    caseStudyFile: 'kitsu.md',
+  },
 ]
 
 export const featuredProjects = projects.filter((p) => p.featured)

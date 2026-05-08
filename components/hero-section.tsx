@@ -1,12 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Github, Linkedin, Mail, Twitter } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Github, Linkedin, Mail, Twitter } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 
-const roles = ['Backend Developer', 'Software Engineer', 'Tech Enthusiast']
+const roles = ['Backend Developer', 'Developer Tooling Engineer', 'Open Source Contributor']
 
 export function HeroSection() {
   const [currentRole, setCurrentRole] = useState(0)
@@ -33,14 +33,15 @@ export function HeroSection() {
           {/* Greeting */}
           <div className="space-y-4">
             <p className="text-2xl font-medium text-muted-foreground">Hi, I'm Souvik</p>
-            
+
             {/* Animated Role */}
             <div className="h-24 space-y-2">
               <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
                 {roles[currentRole]}
               </h1>
               <p className="h-6 min-w-0 text-sm text-muted-foreground">
-                Building beautiful and functional digital experiences
+                Building APIs, GitHub automation, and developer tools for practical engineering
+                workflows.
               </p>
             </div>
           </div>
@@ -94,6 +95,7 @@ export function HeroSection() {
       {/* Diagonal Line */}
       <div className="absolute inset-0 -z-10">
         <svg
+          aria-hidden="true"
           className="absolute inset-0 h-full w-full"
           preserveAspectRatio="none"
           viewBox="0 0 1000 1000"

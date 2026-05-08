@@ -1,19 +1,19 @@
 'use client'
 
-import * as React from 'react'
+import { Menu } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X } from 'lucide-react'
+import * as React from 'react'
+import { ThemeToggle } from '@/components/theme-toggle'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { ThemeToggle } from '@/components/theme-toggle'
 import { cn } from '@/lib/utils'
 
 const navItems = [
   { href: '/', label: 'Home' },
   { href: '/projects', label: 'Projects' },
   { href: '/blog', label: 'Blog' },
-  { href: 'https://souvikns.github.io/resume', label: 'Resume'},
+  { href: 'https://souvikns.github.io/resume', label: 'Resume' },
 ]
 
 export function Navigation() {
@@ -29,7 +29,10 @@ export function Navigation() {
     return (
       <header className="sticky top-0 z-50 border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <nav className="container mx-auto flex h-14 max-w-4xl items-center justify-between px-4">
-          <Link href="/" className="text-lg font-semibold transition-colors hover:text-foreground/80">
+          <Link
+            href="/"
+            className="text-lg font-semibold transition-colors hover:text-foreground/80"
+          >
             Souvik
           </Link>
           <div className="flex items-center gap-2">

@@ -1,20 +1,43 @@
 import type { Metadata } from 'next'
-import { Inter, JetBrains_Mono, Manrope } from 'next/font/google'
 
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
-const manrope = Manrope({ subsets: ['latin'], variable: '--font-heading' })
-const jetBrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-mono',
-})
-
 export const metadata: Metadata = {
-  title: 'Portfolio',
-  description: 'Minimal portfolio website',
-  generator: 'v0.app',
+  metadataBase: new URL('https://souvikns.github.io'),
+  title: {
+    default: 'Souvik De | Backend Developer',
+    template: '%s | Souvik De',
+  },
+  description:
+    'Portfolio of Souvik De, a backend developer building APIs, developer tools, GitHub automation, and AsyncAPI ecosystem tooling.',
+  authors: [{ name: 'Souvik De' }],
+  creator: 'Souvik De',
+  openGraph: {
+    title: 'Souvik De | Backend Developer',
+    description:
+      'Backend developer focused on APIs, developer tools, GitHub automation, and AsyncAPI ecosystem tooling.',
+    url: 'https://souvikns.github.io',
+    siteName: 'Souvik De',
+    images: [
+      {
+        url: '/images/profile.jpg',
+        width: 640,
+        height: 640,
+        alt: 'Souvik De',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Souvik De | Backend Developer',
+    description:
+      'Backend developer focused on APIs, developer tools, GitHub automation, and AsyncAPI ecosystem tooling.',
+    images: ['/images/profile.jpg'],
+    creator: '@buggs_lightyear',
+  },
 }
 
 export default function RootLayout({
@@ -24,9 +47,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${inter.variable} ${manrope.variable} ${jetBrainsMono.variable} font-sans antialiased`}
-      >
+      <body className="font-sans antialiased">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           {children}
         </ThemeProvider>

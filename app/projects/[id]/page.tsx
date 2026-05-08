@@ -1,14 +1,12 @@
-import { notFound } from 'next/navigation'
+import { ArrowLeft, ExternalLink, Github } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeft, ExternalLink, Github } from 'lucide-react'
-import { Navigation } from '@/components/navigation'
+import { notFound } from 'next/navigation'
 import { Footer } from '@/components/footer'
+import { Navigation } from '@/components/navigation'
 import { Badge } from '@/components/ui/badge'
-import { getCaseStudyMarkdown, projects } from '@/lib/projects'
 import { renderMarkdownToHtml } from '@/lib/markdown'
-
-
+import { getCaseStudyMarkdown, projects } from '@/lib/projects'
 
 interface ProjectPageProps {
   params: Promise<{
@@ -16,9 +14,15 @@ interface ProjectPageProps {
   }>
 }
 
+export function generateStaticParams() {
+  return projects.map((project) => ({
+    id: project.id,
+  }))
+}
+
 export async function generateMetadata({ params }: ProjectPageProps) {
   const { id } = await params
-  const project = projects.find(p => p.id === id)
+  const project = projects.find((p) => p.id === id)
 
   if (!project) {
     return {
@@ -30,12 +34,22 @@ export async function generateMetadata({ params }: ProjectPageProps) {
   return {
     title: project.title,
     description: project.description,
+    openGraph: {
+      title: project.title,
+      description: project.description,
+      images: [
+        {
+          url: project.image,
+          alt: project.title,
+        },
+      ],
+    },
   }
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { id } = await params
-  const project = projects.find(p => p.id === id)
+  const project = projects.find((p) => p.id === id)
 
   if (!project) {
     notFound()
@@ -117,6 +131,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <div className="container mx-auto max-w-4xl px-4 py-12">
               <article
                 className="space-y-4 text-base leading-relaxed text-muted-foreground [&_h1]:mt-8 [&_h1]:text-4xl [&_h1]:font-bold [&_h1]:text-foreground [&_h2]:mt-8 [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:text-foreground [&_h3]:mt-6 [&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:text-foreground [&_p]:leading-relaxed [&_a]:font-medium [&_a]:text-primary [&_a]:underline-offset-4 [&_a:hover]:underline [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6 [&_blockquote]:border-l-4 [&_blockquote]:border-primary/30 [&_blockquote]:pl-4 [&_blockquote]:italic [&_pre]:overflow-x-auto [&_pre]:rounded-lg [&_pre]:bg-muted [&_pre]:p-4 [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:py-0.5 [&_img]:my-6 [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-lg [&_img]:border [&_img]:border-border [&_hr]:my-8 [&_hr]:border-border"
+                // biome-ignore lint/security/noDangerouslySetInnerHtml: case study markdown is sanitized through rehype-sanitize before rendering.
                 dangerouslySetInnerHTML={{ __html: caseStudyHtml }}
               />
             </div>

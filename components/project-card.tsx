@@ -1,6 +1,6 @@
+import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ExternalLink, Github, ArrowRight } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import type { Project } from '@/lib/projects'
 

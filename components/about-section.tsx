@@ -1,7 +1,7 @@
 'use client'
 
-import Link from 'next/link'
 import { CheckCircle2, Code, Database, Zap } from 'lucide-react'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
 export function AboutSection() {
@@ -44,7 +44,8 @@ export function AboutSection() {
             Backend Engineer · AI Integrations · Open Source Contributor
           </h2>
           <p className="text-base text-foreground leading-relaxed max-w-3xl">
-              Backend Engineer II with over 4 years of experience at XaneAI, contributing to scalable backend systems and serving as an open-source maintainer for AsyncAPI.
+            Backend Engineer II with over 4 years of experience at XaneAI, contributing to scalable
+            backend systems and serving as an open-source maintainer for AsyncAPI.
           </p>
         </div>
 
@@ -64,8 +65,8 @@ export function AboutSection() {
       <div className="space-y-4">
         <h3 className="text-xl font-semibold">Profile Highlights</h3>
         <div className="space-y-3 rounded-lg border border-border/40 bg-slate-50/30 dark:bg-slate-950/20 p-6">
-          {highlights.map((item, idx) => (
-            <div key={idx} className="flex items-center gap-4">
+          {highlights.map((item) => (
+            <div key={item.label} className="flex items-center gap-4">
               <div className="text-3xl font-bold text-foreground">{item.stat}</div>
               <div className="text-sm text-foreground/80">{item.label}</div>
             </div>
@@ -88,9 +89,7 @@ export function AboutSection() {
                   <Icon className={`h-5 w-5 ${tech.iconColor}`} />
                   <h4 className="font-semibold text-foreground">{tech.title}</h4>
                 </div>
-                <p className="text-xs text-foreground/80 leading-relaxed">
-                  {tech.technologies}
-                </p>
+                <p className="text-xs text-foreground/80 leading-relaxed">{tech.technologies}</p>
               </div>
             )
           })}
