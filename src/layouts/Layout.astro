@@ -141,7 +141,7 @@ const { baseFontSize } = CONFIG.typography;
     <!-- FlickeringGrid header background - matches template exactly -->
     <div class="absolute inset-0 top-0 left-0 right-0 h-25 overflow-hidden z-0">
       <FlickeringGrid
-        client:load
+        client:only="react"
         className="h-full w-full"
         squareSize={2}
         gridGap={2}
