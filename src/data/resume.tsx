@@ -16,11 +16,9 @@ export const DATA = {
   initials: "SD",
   url: "https://souvik.de",
   location: "Delhi, IN",
-  locationLink: "https://www.google.com/maps/place/austin+tx",
-  description:
-    "Building developer tools, maintaining opensource projects, and shipping fast, thoughtful software with a focus on usability and performance.",
-  summary:
-    "In early 2023, I left a senior engineering role to go all-in on building my own SaaS products. Before that, [I completed a double degree in computer science and business](/#education), and [interned at companies like Stripe and Cloudflare](/#work). I also spent a summer in San Francisco as part of a founder residency focused on shipping fast and finding early customers.",
+  locationLink: "https://www.google.com/maps/search/delhi%2C+Delhi%2C+India/?hl=en",
+  description: "Building developer tools, maintaining opensource projects, and shipping fast, thoughtful software with a focus on usability and performance.",
+  summary: "I started my opensource journey as an AsyncAPI maintainer in late 2021, and later joined the core developer team at Postman to work on AsyncAPI fulltime, where I also mentored students through Google Summer of Code. Since then, I've moved deeper into AI engineering and now work at XaneAI building AI powered applications for major automotive companies. Outside work, I spend my time building weird ideas, maintaining opensource projects, and shipping developer tools.",
   avatarUrl: "/assets/images/profile.jpg",
   ogImage: "/og_image.png",
   sections: {
