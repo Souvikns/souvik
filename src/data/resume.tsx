@@ -89,8 +89,11 @@ export const DATA = {
       logoUrl: "https://avatar.vercel.sh/xaneai?size=40",
       start: "July 2025",
       end: undefined,
-      description:
-        "Worked on the XaneAI project, a platform for building and deploying machine learning models. Contributed to the core library and documentation.",
+      description: [
+        "Building AI-powered applications for major automotive companies.",
+        "Working with large language models and generative AI systems.",
+        "Developing backend services and APIs to power AI-driven features.",
+      ]
     },
     {
       company: "Postman",
@@ -98,11 +101,14 @@ export const DATA = {
       badges: ["Full-time"],
       location: "Remote",
       title: "Software Engineer",
-      logoUrl: "https://avatar.vercel.sh/postman?size=40",
+      logoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREsH1utqLc28avGhOavyrVY5GXgA0dRFOtiG4w1gmvE0W9P1ziOCUT3TA&s=10?size=40",
       start: "February 2022",
       end: "August 2024",
-      description:
-        "Worked on the AsyncAPI project, a specification for defining asynchronous APIs. Contributed to the core library, documentation, and developer tools. Mentored students through Google Summer of Code.",
+      description: [
+        "Worked on the AsyncAPI project, a specification for defining asynchronous APIs.",
+        "Contributed to the core library, documentation, and developer tools.",
+        "Mentored students through Google Summer of Code.",
+      ],
     },
     {
       company: "Mage",
@@ -113,8 +119,10 @@ export const DATA = {
       logoUrl: "https://avatar.vercel.sh/mage?size=40",
       start: "December 2021",
       end: "January 2022",
-      description:
-        "Worked on the Mage project, a platform for building and deploying machine learning pipelines. Contributed to the core library and documentation.",
+      description: [
+        "Worked on the Mage project, a platform for building and deploying machine learning pipelines.",
+        "Contributed to the core library and documentation.",
+      ],
     }
   ],
   projects: [
