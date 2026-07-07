@@ -1,15 +1,10 @@
 import { Icons } from "@/components/icons";
-import { House, Library } from "lucide-react";
-import { ReactLight } from "@/components/ui/svgs/reactLight";
-import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
+import { Brain, Database, Globe, House, Library, Workflow } from "lucide-react";
 import { Typescript } from "@/components/ui/svgs/typescript";
 import { Nodejs } from "@/components/ui/svgs/nodejs";
 import { Python } from "@/components/ui/svgs/python";
 import { Golang } from "@/components/ui/svgs/golang";
-import { Postgresql } from "@/components/ui/svgs/postgresql";
 import { Docker } from "@/components/ui/svgs/docker";
-import { Kubernetes } from "@/components/ui/svgs/kubernetes";
-import { Astro } from "@/components/ui/svgs/astro";
 
 export const DATA = {
   name: "Souvik De - Software Engineer",
@@ -39,16 +34,15 @@ export const DATA = {
     },
   },
   skills: [
-    { name: "Astro", icon: Astro },
-    { name: "React", icon: ReactLight },
-    { name: "Next.js", icon: NextjsIconDark },
-    { name: "Typescript", icon: Typescript },
     { name: "Node.js", icon: Nodejs },
+    { name: "Langchain", icon: Brain },
     { name: "Python", icon: Python },
     { name: "Go", icon: Golang },
-    { name: "Postgres", icon: Postgresql },
+    { name: "MySQL", icon: Database },
     { name: "Docker", icon: Docker },
-    { name: "Kubernetes", icon: Kubernetes },
+    { name: "Gh Actions", icon: Workflow },
+    { name: "REST API", icon: Globe },
+    { name: "Typescript", icon: Typescript },
   ],
   navbar: [
     { href: "/", icon: House, label: "Home" },
