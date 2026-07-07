@@ -66,7 +66,7 @@ export const DATA = {
       },
       email: {
         name: "Send Email",
-        url: "mailto:alex@alexmercer.dev",
+        url: "mailto:souvikde.tech@gmail.com",
         icon: Icons.email,
         navbar: false,
       },
@@ -79,14 +79,17 @@ export const DATA = {
       href: "https://xane.ai",
       badges: ["Full-time"],
       location: "Gurgaon, India",
-      title: "Software Engineer",
+      title: "Software Engineer II",
       logoUrl: "https://avatar.vercel.sh/xaneai?size=40",
       start: "July 2025",
       end: undefined,
       description: [
-        "Building AI-powered applications for major automotive companies.",
-        "Working with large language models and generative AI systems.",
-        "Developing backend services and APIs to power AI-driven features.",
+        `Architected and deployed scalable GenAI pipelines powering Maruti Suzuki’s Customer Assistant System,
+enabling context-aware responses over enterprise-scale knowledge bases.`,
+        `Designed and implemented an OCR-to-RAG ingestion pipeline converting unstructured PDFs into structured
+embeddings indexed in a vector database, enabling persistent knowledge memory for AI agents.`,
+        `Designed and implemented a scalable RAG evaluation pipeline using Ragas, enabling systematic measurement
+of retrieval accuracy, answer relevance, and overall system performance.`
       ]
     },
     {
@@ -99,9 +102,15 @@ export const DATA = {
       start: "February 2022",
       end: "August 2024",
       description: [
-        "Worked on the AsyncAPI project, a specification for defining asynchronous APIs.",
-        "Contributed to the core library, documentation, and developer tools.",
-        "Mentored students through Google Summer of Code.",
+        `Developed and maintained a cross-platform CLI integrating official AsyncAPI tooling, providing a unified
+workflow for developers`,
+        `Created and maintained AsyncAPI Bundler (16,000+ downloads), enabling reliable resolution of complex json
+ref dependency graphs across specification files.`,
+        `Served as maintainer across 3+ open-source projects, reviewing contributions, guiding architectural decisions,
+and driving roadmap initiatives.`,
+        `Mentored contributors under Google Summer of Code (GSoC), guiding projects to production-ready completion`,
+        `Co-led governance initiative to standardize parser tooling architecture across multiple languages, improving
+maintainability and reducing duplication.`
       ],
     },
     {
@@ -114,8 +123,9 @@ export const DATA = {
       start: "December 2021",
       end: "January 2022",
       description: [
-        "Worked on the Mage project, a platform for building and deploying machine learning pipelines.",
-        "Contributed to the core library and documentation.",
+        `Built microservices in Go to automate cloud infrastructure provisioning using templated configuration systems`,
+        `Developed a React-based low-code interface for generating and provisioning infrastructure on demand.`,
+        `Deployed containerized services using Docker and Kubernetes in cloud-native environments`
       ],
     }
   ],
