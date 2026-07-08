@@ -130,6 +130,33 @@ maintainability and reducing duplication.`
     }
   ],
   projects: [
+    {
+      "title": "Notion Board",
+      "href": "https://souvikns.github.io/Notion-Board/index.html",
+      "dates": "March 2022 - April 2022",
+      "active": false,
+      "description": "A GH action that syncs Github Issues and PR into your notion database.",
+      "technologies": [
+        "Next.js",
+        "TypeScript",
+        "Notion API",
+        "GitHub API",
+        "GitHub Actions"
+      ],
+      "links": [
+        {
+          "type": "Website",
+          "href": "https://souvikns.github.io/Notion-Board/index.html",
+          "icon": <Icons.globe className="size-3" />,
+        },
+        {
+          "type": "Source",
+          "href": "https://github.com/Souvikns/Notion-Board",
+          "icon": <Icons.github className="size-3" />,
+        }
+      ],
+      "image": "/notion-board.png",
+    }
     // {
     //   title: "Stackwise",
     //   href: "https://stackwise.dev",
