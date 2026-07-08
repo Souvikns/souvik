@@ -14,7 +14,7 @@ export const DATA = {
   locationLink: "https://www.google.com/maps/search/delhi%2C+Delhi%2C+India/?hl=en",
   description: "Building developer tools, maintaining opensource projects, and shipping fast, thoughtful software with a focus on usability and performance.",
   summary: "I started my opensource journey as an AsyncAPI maintainer in late 2021, and later joined the core developer team at Postman to work on AsyncAPI fulltime, where I also mentored students through Google Summer of Code. Since then, I've moved deeper into AI engineering and now work at XaneAI building AI powered applications for major automotive companies. Outside work, I spend my time building weird ideas, maintaining opensource projects, and shipping developer tools.",
-  avatarUrl: "/profile.jpg",
+  avatarUrl: "/profile.png",
   ogImage: "/og_image.png",
   sections: {
     about: { order: 1, enabled: true, heading: "About" },
