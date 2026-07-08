@@ -13,8 +13,8 @@ This document provides operational rules for AI coding agents working on the Sta
 | **UI Library** | React 19 (islands) |
 | **Styling** | Tailwind CSS v4 |
 | **Component System** | shadcn/ui (radix-luma style) |
-| **Deployment** | Cloudflare (SSR via `@astrojs/cloudflare`) |
-| **Package Manager** | `pnpm` |
+| **Deployment** | Vercel (SSR via `@astrojs/vercel`) |
+| **Package Manager** | `npm` |
 | **Node Version** | >= 22.12.0 |
 
 **Core Principle**: Starfolio is a **config-driven portfolio template**. All content (name, bio, work history, projects, skills) lives in `src/data/resume.tsx`. All site settings, SEO, and theme tokens live in `src/data/config.ts`. Components are generic shells that render data. **Never hardcode portfolio content into components.**
@@ -63,7 +63,7 @@ This document provides operational rules for AI coding agents working on the Sta
 │   └── mdx-components.tsx     # MDX component map
 ├── astro.config.mjs           # Astro config (integrations, adapter, markdown plugins)
 ├── components.json            # shadcn/ui configuration
-├── wrangler.jsonc             # Cloudflare deployment config
+├── vercel.json               # (Optional) Vercel deployment overrides
 ├── design.md                  # Visual design system reference (this project)
 └── agents.md                  # This file
 ```
@@ -217,8 +217,8 @@ Blog posts use Astro Content Collections v3 with the `glob` loader.
 
 ## 8. Performance & Edge Constraints
 
-- **Output mode**: `output: 'server'` in `astro.config.mjs`. All pages are server-rendered on Cloudflare.
-- **Adapter**: `@astrojs/cloudflare`. Do not use Node.js built-in modules (`fs`, `path`, etc.) in client-side or island code.
+- **Output mode**: `output: 'server'` in `astro.config.mjs`. All pages are server-rendered on Vercel serverless functions.
+- **Adapter**: `@astrojs/vercel`. Node.js built-in modules (`fs`, `path`, etc.) are available on the server side, but avoid them in client/island code.
 - **Prerendering**: Only `src/pages/index.astro` is prerendered (`export const prerender = true`). Blog pages are dynamic (SSR).
 - **Bundle size**: Keep React islands lean. Use Astro components for static markup. Avoid heavy third-party JS in islands.
 - **Images**: Store static assets in `/public/`. Astro does not optimize these automatically; consider using `astro:assets` if image optimization is needed in the future.
@@ -245,15 +245,14 @@ response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocatio
 ### Commands
 | Command | Purpose |
 |---|---|
-| `pnpm dev` | Start dev server |
-| `pnpm build` | Production build |
-| `pnpm preview` | Preview production build locally |
-| `pnpm generate-types` | Generate Wrangler types from `wrangler.jsonc` |
+| `npm run dev` | Start dev server |
+| `npm run build` | Production build |
+| `npm run preview` | Preview production build locally |
 
 ### Deployment
-- Target: Cloudflare Pages / Workers (via Wrangler).
-- Config: `wrangler.jsonc`.
-- Astro adapter: `@astrojs/cloudflare` in `astro.config.mjs`.
+- Target: Vercel (via Git integration or Vercel CLI).
+- Config: Astro adapter `@astrojs/vercel` in `astro.config.mjs`.
+- Optional overrides: `vercel.json` for custom headers, redirects, or rewrites.
 
 ---
 
@@ -287,10 +286,10 @@ Use the shadcn CLI (if available in environment) or manually add components foll
 3. **Set `enableSystem: true`** in `ThemeProvider`. System theme detection is intentionally disabled.
 4. **Use raw color values** (hex, rgb, OKLCH) in component `className`s. Always use the theme CSS variable utilities.
 5. **Forget hydration directives** on new interactive React components inside `.astro` files. Without `client:load` or `client:only`, React islands won't hydrate.
-6. **Use Node.js built-ins** in client/island code. This will break Cloudflare builds.
+6. **Use Node.js built-ins** in client/island code. This will break client-side bundles.
 7. **Use `px` for font sizes**. Scale is controlled globally via `baseFontSize` config.
 8. **Add arbitrary Tailwind values** (e.g., `w-[123px]`) for theme-adjacent properties. Extend the theme via `global.css` `@theme inline` if needed.
-9. **Change `output: 'server'`** without understanding the Cloudflare adapter implications.
+9. **Change `output: 'server'`** without understanding the adapter implications.
 10. **Forget to add new sections** to both `DATA.sections` (with `order` and `enabled`) and `sectionComponents` in `HomePage.tsx`.
 
 ### Do:
