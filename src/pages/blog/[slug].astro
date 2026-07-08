@@ -13,14 +13,19 @@ export async function getStaticPaths() {
     if (new Date(a.data.publishedAt) > new Date(b.data.publishedAt)) return -1;
     return 1;
   });
-  return sortedPosts.map((post, index) => ({
-    params: { slug: post.id },
-    props: {
-      post,
-      previousPost: index > 0 ? sortedPosts[index - 1] : null,
-      nextPost: index < sortedPosts.length - 1 ? sortedPosts[index + 1] : null,
-    },
-  }));
+  const publishedPosts = sortedPosts.filter((post) => post.data.published);
+
+  return sortedPosts.map((post) => {
+    const index = publishedPosts.findIndex((p) => p.id === post.id);
+    return {
+      params: { slug: post.id },
+      props: {
+        post,
+        previousPost: index > 0 ? publishedPosts[index - 1] : null,
+        nextPost: index >= 0 && index < publishedPosts.length - 1 ? publishedPosts[index + 1] : null,
+      },
+    };
+  });
 }
 
 const { post, previousPost, nextPost } = Astro.props;

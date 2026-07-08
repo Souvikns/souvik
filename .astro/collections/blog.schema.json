@@ -20,6 +20,10 @@
     "image": {
       "type": "string"
     },
+    "published": {
+      "default": true,
+      "type": "boolean"
+    },
     "$schema": {
       "type": "string"
     }
