@@ -157,6 +157,34 @@ maintainability and reducing duplication.`
         }
       ],
       "image": "/notion-board.png",
+    },
+    {
+      "title": "Kitsu",
+      "href": "https://souvikns.github.io/kitsu/",
+      "dates": "March 2026 - April 2026",
+      "active": true,
+      "description": "AI Powered code review for every pull request. Kitsu is a GitHub app that uses AI to review your code and provide feedback on your pull requests.",
+      "technologies": [
+        "TypeScript",
+        "OpenAI API",
+        "GitHub API",
+        "GitHub Actions",
+        "langchain",
+        "deepagents"
+      ],
+      links: [
+        {
+          "type": "Website",
+          "href": "https://souvikns.github.io/kitsu/",
+          "icon": <Icons.globe className="size-3" />,
+        },
+        {
+          "type": "Source",
+          "href": "https://github.com/Souvikns/kitsu",
+          "icon": <Icons.github className="size-3" />,
+        }
+      ],
+      image: "/kitsu.png",
     }
     // {
     //   title: "Stackwise",
