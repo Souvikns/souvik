@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons";
-import { Brain, Database, Globe, House, Library, Workflow } from "lucide-react";
+import { Brain, Database, FileText, Globe, House, Library, Workflow } from "lucide-react";
 import { Typescript } from "@/components/ui/svgs/typescript";
 import { Nodejs } from "@/components/ui/svgs/nodejs";
 import { Python } from "@/components/ui/svgs/python";
@@ -47,6 +47,7 @@ export const DATA = {
   navbar: [
     { href: "/", icon: House, label: "Home" },
     { href: "/blog", icon: Library, label: "Blog" },
+    { href: "https://souvikns.github.io/resume/resume.pdf", icon: FileText, label: "Resume" },
   ],
   contact: {
     email: "souvikde.tech@gmail.com",
