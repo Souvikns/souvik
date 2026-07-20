@@ -1,5 +1,7 @@
 import { FlickeringGrid } from "@/components/magicui/flickering-grid";
+import { Button } from "@/components/ui/button";
 import { DATA } from "@/data/resume";
+import { Mail } from "lucide-react";
 
 export default function ContactSection() {
   return (
@@ -25,6 +27,12 @@ export default function ContactSection() {
         <p className="mx-auto max-w-lg text-muted-foreground text-balance">
           {DATA.sections.contact.text}
         </p>
+        <Button asChild>
+          <a href={`mailto:${DATA.contact.email}`}>
+            <Mail className="mr-2 size-4" />
+            Send Email
+          </a>
+        </Button>
       </div>
     </div>
   );

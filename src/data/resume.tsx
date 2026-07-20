@@ -30,7 +30,7 @@ export const DATA = {
       order: 8, enabled: true,
       label: "Contact",
       heading: "Get in Touch",
-      text: "Want to chat? Just shoot me a dm with a direct question on twitter and I'll respond whenever I can. I will ignore all soliciting.",
+      text: "Want to get in touch? Drop me an email and I'll get back to you."
     },
   },
   skills: [
