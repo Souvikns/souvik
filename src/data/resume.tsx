@@ -13,7 +13,10 @@ export const DATA = {
   location: "Delhi, IN",
   locationLink: "https://www.google.com/maps/search/delhi%2C+Delhi%2C+India/?hl=en",
   description: "Building developer tools, maintaining opensource projects, and shipping fast, thoughtful software with a focus on usability and performance.",
-  summary: "I started my opensource journey as an AsyncAPI maintainer in late 2021, and later joined the core developer team at Postman to work on AsyncAPI fulltime, where I also mentored students through Google Summer of Code. Since then, I've moved deeper into AI engineering and now work at XaneAI building AI powered applications for major automotive companies. Outside work, I spend my time building weird ideas, maintaining opensource projects, and shipping developer tools.",
+  summary: `Backend Software Engineer with 4+ years of experience building production AI infrastructure, distributed backend systems, and developer tooling. Experienced in designing RAG platforms, document ingestion pipelines,
+vector search systems, and LLM orchestration using Go, TypeScript, and Python. Former Postman engineer,
+AsyncAPI maintainer, and Google Summer of Code mentor with experience building open-source tools used by
+thousands of developers.`,
   avatarUrl: "/profile.png",
   ogImage: "/og_image.png",
   sections: {
@@ -85,8 +88,7 @@ export const DATA = {
       start: "July 2025",
       end: undefined,
       description: [
-        `Architected and deployed scalable GenAI pipelines powering Maruti Suzuki’s Customer Assistant System,
-enabling context-aware responses over enterprise-scale knowledge bases.`,
+        `Built a multi stage OCR --> chunking --> embedding --> retieval pipeline powering Maruti Suzuki's AI assistant enabling semantic search across thousands of vehicle manuals`,
         `Designed and implemented an OCR-to-RAG ingestion pipeline converting unstructured PDFs into structured
 embeddings indexed in a vector database, enabling persistent knowledge memory for AI agents.`,
         `Designed and implemented a scalable RAG evaluation pipeline using Ragas, enabling systematic measurement
