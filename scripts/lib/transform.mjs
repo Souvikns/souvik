@@ -22,22 +22,25 @@ function remarkMdxToMarkdown({ baseUrl, slug }) {
         node.type === "mdxJsxFlowElement" ||
         node.type === "mdxJsxTextElement"
       ) {
+        const isFlow = node.type === "mdxJsxFlowElement";
         const name = node.name;
         if (name === "MediaContainer") {
           const src = getAttribute(node, "src") ?? "";
           const alt = getAttribute(node, "alt") ?? "";
-          return {
+          const image = {
             type: "image",
             url: toAbsoluteUrl(src, baseUrl, slug),
             alt,
             title: null,
           };
+          return isFlow ? { type: "paragraph", children: [image] } : image;
         }
+        const children = node.children ?? [];
         if (name === "mark") {
-          return node.children ?? [];
+          return isFlow ? { type: "paragraph", children } : children;
         }
         console.warn(`sync-devto: dropping unknown MDX component <${name}>`);
-        return node.children ?? [];
+        return isFlow ? { type: "paragraph", children } : children;
       }
 
       if (node.type === "html") {
