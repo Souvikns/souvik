@@ -15,7 +15,7 @@ export async function getStaticPaths() {
   });
   const publishedPosts = sortedPosts.filter((post) => post.data.published);
 
-  return sortedPosts.map((post) => {
+  return publishedPosts.map((post) => {
     const index = publishedPosts.findIndex((p) => p.id === post.id);
     return {
       params: { slug: post.id },
