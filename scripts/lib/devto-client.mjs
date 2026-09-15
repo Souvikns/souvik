@@ -10,15 +10,26 @@ async function request(apiKey, path, options = {}) {
     },
   });
   const text = await res.text();
-  const json = text ? JSON.parse(text) : null;
+  const label = `dev.to ${options.method ?? "GET"} ${path}`;
   if (!res.ok) {
-    const err = new Error(
-      `dev.to ${options.method ?? "GET"} ${path} failed: ${res.status} ${text}`,
-    );
+    const err = new Error(`${label} failed: ${res.status} ${text}`);
     err.status = res.status;
     throw err;
   }
-  return json;
+  if (!text) return null;
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new Error(`${label} returned non-JSON body: ${text.slice(0, 200)}`);
+  }
+}
+
+// dev.to only accepts lowercase alphanumeric tags, at most 4 per article.
+export function toDevtoTags(tags = []) {
+  const cleaned = tags
+    .map((tag) => String(tag).toLowerCase().replace(/[^a-z0-9]/g, ""))
+    .filter(Boolean);
+  return [...new Set(cleaned)].slice(0, 4);
 }
 
 export async function listMyArticles(apiKey) {

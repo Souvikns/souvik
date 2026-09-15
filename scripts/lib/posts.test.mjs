@@ -47,3 +47,19 @@ test("writeDevtoId replaces an existing devtoId", async () => {
   assert.doesNotMatch(raw, /"99"/);
   await rm(dir, { recursive: true, force: true });
 });
+
+test("writeDevtoId ignores devtoId lines in the body", async () => {
+  const dir = await makeTempDir();
+  const file = path.join(dir, "my-post.mdx");
+  await writeFile(
+    file,
+    '---\ntitle: "Hello"\n---\n```yaml\ndevtoId: example\n```\n',
+  );
+  await writeDevtoId(file, 789);
+  const raw = await readFile(file, "utf8");
+  assert.equal(
+    raw,
+    '---\ntitle: "Hello"\ndevtoId: "789"\n---\n```yaml\ndevtoId: example\n```\n',
+  );
+  await rm(dir, { recursive: true, force: true });
+});

@@ -4,6 +4,7 @@ import {
   listMyArticles,
   createArticle,
   updateArticle,
+  toDevtoTags,
 } from "./devto-client.mjs";
 
 const originalFetch = globalThis.fetch;
@@ -62,4 +63,22 @@ test("createArticle throws on non-2xx", async () => {
     () => createArticle("bad", { title: "x" }),
     /failed: 401/,
   );
+});
+
+test("request reports status for non-JSON error bodies", async () => {
+  globalThis.fetch = async () =>
+    new Response("<html>Bad Gateway</html>", { status: 502 });
+  await assert.rejects(() => listMyArticles("secret"), (err) => {
+    assert.equal(err.status, 502);
+    assert.match(err.message, /failed: 502 <html>Bad Gateway/);
+    return true;
+  });
+});
+
+test("toDevtoTags strips non-alphanumerics, dedupes and caps at 4", () => {
+  assert.deepEqual(
+    toDevtoTags(["Web-Dev", "node.js", "webdev", "--", "a", "b", "c"]),
+    ["webdev", "nodejs", "a", "b"],
+  );
+  assert.deepEqual(toDevtoTags(undefined), []);
 });

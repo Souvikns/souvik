@@ -21,12 +21,16 @@ export async function loadPosts(dir) {
 export async function writeDevtoId(filePath, id) {
   const raw = await readFile(filePath, "utf8");
   const idStr = String(id);
-  let updated;
-  if (raw.includes("\ndevtoId:")) {
-    updated = raw.replace(/(\ndevtoId:\s*)[^\n]*/, `$1"${idStr}"`);
-  } else {
-    const closing = raw.indexOf("\n---", 4);
-    updated = raw.slice(0, closing) + `\ndevtoId: "${idStr}"` + raw.slice(closing);
+  const closing = raw.startsWith("---") ? raw.indexOf("\n---", 3) : -1;
+  if (closing === -1) {
+    throw new Error(`${filePath}: no frontmatter block to write devtoId into`);
   }
-  await writeFile(filePath, updated, "utf8");
+  // Only touch the frontmatter so a `devtoId:` line in the body is left alone.
+  let frontmatter = raw.slice(0, closing);
+  if (/\ndevtoId:/.test(frontmatter)) {
+    frontmatter = frontmatter.replace(/(\ndevtoId:\s*)[^\n]*/, `$1"${idStr}"`);
+  } else {
+    frontmatter += `\ndevtoId: "${idStr}"`;
+  }
+  await writeFile(filePath, frontmatter + raw.slice(closing), "utf8");
 }

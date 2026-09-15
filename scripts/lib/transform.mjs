@@ -13,54 +13,72 @@ function getAttribute(node, name) {
   return typeof attr.value === "string" ? attr.value : undefined;
 }
 
+const isComment = (value) => /^\s*\/\*[\s\S]*\*\/\s*$/.test(value);
+
 function remarkMdxToMarkdown({ baseUrl, slug }) {
-  return (tree) => {
-    const walk = (node) => {
-      if (!node || typeof node !== "object") return node;
+  // Returns the replacement for `node`: a single node, or an array of nodes
+  // to splice into the parent (empty to remove it).
+  const walk = (node) => {
+    if (!node || typeof node !== "object") return node;
 
-      if (
-        node.type === "mdxJsxFlowElement" ||
-        node.type === "mdxJsxTextElement"
-      ) {
-        const isFlow = node.type === "mdxJsxFlowElement";
-        const name = node.name;
-        if (name === "MediaContainer") {
-          const src = getAttribute(node, "src") ?? "";
-          const alt = getAttribute(node, "alt") ?? "";
-          const image = {
-            type: "image",
-            url: toAbsoluteUrl(src, baseUrl, slug),
-            alt,
-            title: null,
-          };
-          return isFlow ? { type: "paragraph", children: [image] } : image;
-        }
-        const children = node.children ?? [];
-        if (name === "mark") {
-          return isFlow ? { type: "paragraph", children } : children;
-        }
+    if (node.type === "mdxjsEsm") return [];
+
+    if (
+      node.type === "mdxFlowExpression" ||
+      node.type === "mdxTextExpression"
+    ) {
+      if (!isComment(node.value)) {
+        console.warn(`sync-devto: dropping MDX expression {${node.value}}`);
+      }
+      return [];
+    }
+
+    // Transform children first so components nested inside dropped or
+    // unwrapped components are still converted.
+    if (Array.isArray(node.children)) {
+      node.children = node.children.flatMap((child) => {
+        const result = walk(child);
+        return Array.isArray(result) ? result : [result];
+      });
+    }
+
+    if (
+      node.type === "mdxJsxFlowElement" ||
+      node.type === "mdxJsxTextElement"
+    ) {
+      const isFlow = node.type === "mdxJsxFlowElement";
+      const name = node.name;
+      if (name === "MediaContainer") {
+        const src = getAttribute(node, "src") ?? "";
+        const alt = getAttribute(node, "alt") ?? "";
+        const image = {
+          type: "image",
+          url: toAbsoluteUrl(src, baseUrl, slug),
+          alt,
+          title: null,
+        };
+        return isFlow ? { type: "paragraph", children: [image] } : image;
+      }
+      if (name !== "mark") {
         console.warn(`sync-devto: dropping unknown MDX component <${name}>`);
-        return isFlow ? { type: "paragraph", children } : children;
       }
+      // Flow elements hold block content and text elements hold phrasing
+      // content, so the children can take the element's place as-is.
+      return node.children ?? [];
+    }
 
-      if (node.type === "html") {
-        node.value = node.value.replace(/<\/?mark\s*>/g, "");
-        return node;
-      }
-
-      if (Array.isArray(node.children)) {
-        node.children = node.children.flatMap((child) => {
-          const result = walk(child);
-          return Array.isArray(result) ? result : [result];
-        });
-      }
+    if (node.type === "html") {
+      node.value = node.value.replace(/<\/?mark\s*>/g, "");
       return node;
-    };
+    }
 
-    tree.children = tree.children.flatMap((child) => {
-      const result = walk(child);
-      return Array.isArray(result) ? result : [result];
-    });
+    if (node.type === "paragraph" && node.children.length === 0) return [];
+
+    return node;
+  };
+
+  return (tree) => {
+    walk(tree);
   };
 }
 

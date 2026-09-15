@@ -7,6 +7,7 @@ import {
   listMyArticles,
   createArticle,
   updateArticle,
+  toDevtoTags,
 } from "./lib/devto-client.mjs";
 import { SITE_URL, toAbsoluteUrl, canonicalUrl } from "./lib/urls.mjs";
 
@@ -27,11 +28,13 @@ const apiKey = process.env.DEVTO_API_KEY;
 
 async function main() {
   const posts = (await loadPosts(values.dir)).filter(
-    (p) => p.data.devto === true && p.data.published === true,
+    // `published` defaults to true in the content schema, so only an explicit
+    // `published: false` keeps a post off dev.to.
+    (p) => p.data.devto === true && p.data.published !== false,
   );
 
   if (posts.length === 0) {
-    console.log("No posts opted in to dev.to (devto: true + published: true).");
+    console.log("No published posts opted in to dev.to (devto: true).");
     return;
   }
 
@@ -66,7 +69,7 @@ async function main() {
       title: post.data.title,
       published: true,
       body_markdown: bodyMarkdown,
-      tags: (post.data.tags ?? []).slice(0, 4),
+      tags: toDevtoTags(post.data.tags),
       canonical_url: url,
       description: post.data.summary,
     };
@@ -78,29 +81,42 @@ async function main() {
       );
     }
 
-    const existing = post.data.devtoId
-      ? { id: Number(post.data.devtoId) }
-      : index.get(url);
+    // The canonical_url lookup is authoritative; devtoId is only a cache.
+    const indexedId = index.get(url)?.id;
+    const cachedId = Number(post.data.devtoId);
+    const targetId =
+      indexedId ?? (Number.isInteger(cachedId) && cachedId > 0 ? cachedId : undefined);
 
     if (values["dry-run"]) {
       console.log(
-        `[dry-run] ${existing ? "UPDATE" : "CREATE"} ${post.slug} -> ${url}`,
+        `[dry-run] ${targetId ? "UPDATE" : "CREATE"} ${post.slug} -> ${url}`,
       );
       console.log(JSON.stringify(article, null, 2));
       continue;
     }
 
     try {
-      const result = existing
-        ? await updateArticle(apiKey, existing.id, article)
-        : await createArticle(apiKey, article);
-      console.log(
-        `${existing ? "updated" : "created"} ${post.slug} (id ${result.id})`,
-      );
-      if (existing) updated += 1;
-      else {
+      let result;
+      if (targetId) {
+        try {
+          result = await updateArticle(apiKey, targetId, article);
+          updated += 1;
+          console.log(`updated ${post.slug} (id ${result.id})`);
+        } catch (err) {
+          // A stale cached id (deleted article) falls through to create.
+          if (err.status !== 404 || indexedId) throw err;
+          console.warn(
+            `devtoId ${targetId} for ${post.slug} not found on dev.to; creating a new article.`,
+          );
+        }
+      }
+      if (!result) {
+        result = await createArticle(apiKey, article);
         created += 1;
-        if (values.write) await writeDevtoId(post.filePath, result.id);
+        console.log(`created ${post.slug} (id ${result.id})`);
+      }
+      if (values.write && String(result.id) !== String(post.data.devtoId)) {
+        await writeDevtoId(post.filePath, result.id);
       }
     } catch (err) {
       failed += 1;
