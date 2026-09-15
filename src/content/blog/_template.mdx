@@ -1,0 +1,64 @@
+---
+# ─── Required ────────────────────────────────────────────────
+title: "My Post Title"
+publishedAt: "2026-09-15"          # ISO date, sorts newest-first
+summary: "One-line description shown on the card and used for SEO."
+
+# ─── Optional ────────────────────────────────────────────────
+updatedAt: "2026-09-15"            # last content update
+author: "Souvik"                    # defaults to nothing
+image: "/og.png"                    # absolute URL or /public path
+published: false                    # true = live on site; false = draft
+tags: ["astro", "typescript"]       # used for dev.to tags
+devto: false                        # true = syndicate to dev.to on merge
+devtoId: ""                         # auto-filled by the sync script; leave empty
+---
+
+Intro paragraph. A short, plain-text hook that sells the post.
+
+## A section heading
+
+Body copy with **bold**, _italic_, ~~strikethrough~~, and ==highlighted== text,
+plus an [inline link](https://example.com) and `inline code`.
+
+- bullet one
+- bullet two
+
+1. ordered one
+2. ordered two
+
+- [ ] a task list item
+- [x] a completed task list item
+
+> A blockquote for pulling out a key idea.
+
+## Code blocks
+
+Fenced code with `title="..."` metadata renders a titled header with a copy
+button. The title is stripped by the `remark-code-meta` plugin.
+
+```ts title="src/example.ts"
+export function hello(name: string): string {
+  return `Hello, ${name}!`;
+}
+```
+
+## Tables
+
+| Column A | Column B | Column C |
+|----------|----------|----------|
+| one      | two      | three    |
+| four     | five     | six      |
+
+## Media
+
+<MediaContainer
+  src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&fit=crop"
+  alt="Descriptive alt text"
+/>
+
+Use `type="video"` for video, `type="image"` (default) for images.
+
+## Wrap-up
+
+Closing paragraph that ties the post together.

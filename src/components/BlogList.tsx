@@ -7,6 +7,7 @@ interface Post {
   id: string;
   title: string;
   publishedAt: string;
+  published: boolean;
 }
 
 interface Pagination {
@@ -57,6 +58,11 @@ export default function BlogList({ posts, allPostsCount, pagination, pageSize }:
                         <p className="tracking-tight text-lg font-medium">
                           <span className="group-hover:text-foreground transition-colors">
                             {post.title}
+                            {!post.published && (
+                              <span className="ml-2 text-xs font-normal align-middle border border-border rounded-md px-1.5 py-0.5 bg-muted/50 text-muted-foreground">
+                                Draft
+                              </span>
+                            )}
                             <ChevronRight
                               className="ml-1 inline-block size-4 stroke-3 text-muted-foreground opacity-0 -translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0"
                               aria-hidden
