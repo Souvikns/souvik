@@ -1,0 +1,142 @@
+---
+title: "An Introduction to Glee: A Spec-First Framework for Event-Driven APIs"
+publishedAt: "2026-09-15"
+author: "Souvik De"
+summary: "How Glee turned an AsyncAPI specification into a running WebSocket server, and why a spec-first approach keeps your code, docs, and API in sync."
+tags: ["asyncapi", "glee", "websocket", "event-driven"]
+published: true
+devto: false
+---
+
+> **Note:** Glee was archived on August 4, 2025 and is no longer maintained. I'm keeping this walkthrough around as a reference — it's a useful example of building with a spec-first mindset. This post originally appeared on the [AsyncAPI blog](https://www.asyncapi.com/blog/introduction-to-glee-a-spec-first-framework).
+
+During my time working full-time on AsyncAPI, I helped build a framework called [Glee](https://github.com/asyncapi/glee). This post is a broad introduction to what Glee does, why a spec-first approach is worth your attention, and how to spin up a working WebSocket API in a few minutes.
+
+## What is Glee?
+
+Glee is a spec-first framework for building server-side, event-driven applications. The core idea is that your [AsyncAPI specification](https://www.asyncapi.com/docs/concepts) is the single source of truth, and Glee does the plumbing around it — creating connections, managing message flow, and keeping everything wired to the spec — so you can focus on business logic instead of connection management.
+
+Two things stand out:
+
+- **Your code, spec, and docs stay in sync.** Because the spec drives everything, you can't quietly drift away from it. When the API evolves, the specification and documentation move with it.
+- **Connection management is handled for you.** Performance, scalability, and resilience concerns are off your plate, so you spend your time on the logic that actually matters to your users.
+
+## Getting started
+
+Let's build something concrete: a WebSocket server that receives the current time and the client's name, then replies with a greeting based on the hour.
+
+You'll need Node.js and npm. Check they're installed:
+
+```bash title="terminal"
+node -v
+npm -v
+```
+
+### Create a Glee project
+
+The quickest way to scaffold a project is the official AsyncAPI CLI. It creates the directory for you, so run it from wherever you want the app to live:
+
+```bash title="terminal"
+asyncapi new glee
+```
+
+You can install the CLI via [npm](https://www.npmjs.com/package/@asyncapi/cli) or grab binaries from the [releases page](https://github.com/asyncapi/cli/releases).
+
+### Define the spec
+
+Because Glee is spec-first, you start with the spec — not the code. Here's a minimal AsyncAPI 3.0.0 document that describes our greet API:
+
+```yaml title="asyncapi.yaml"
+asyncapi: 3.0.0
+info:
+  title: Greet Bot
+  version: 0.1.0
+servers:
+  websockets:
+    host: '0.0.0.0:3000'
+    protocol: ws
+channels:
+  greet:
+    address: greet
+    messages:
+      onGreet.message:
+        $ref: '#/components/messages/time'
+      subscribe.message:
+        $ref: '#/components/messages/greet'
+operations:
+  onGreet: # operationId
+    action: receive
+    channel:
+      $ref: '#/channels/greet'
+    messages:
+      - $ref: '#/components/messages/time'
+  greet.subscribe:
+    action: send
+    channel:
+      $ref: '#/channels/greet'
+    messages:
+      - $ref: '#/components/messages/greet'
+components:
+  messages:
+    time:
+      payload:
+        type: object
+        properties:
+          currentTime:
+            type: number
+          name:
+            type: string
+    greet:
+      payload:
+        type: string
+```
+
+The important bit is the `operationId`. Glee uses it to connect the spec to your business logic: whenever the `/greet` channel receives a message, Glee calls the function with that `operationId`. In other words, the spec doesn't just describe the API — it names the entry points your code plugs into.
+
+### Write the operation function
+
+Create `functions/onGreet.js` with the greeting logic. Every file in `functions/` is a handler that exports an async function taking an `event` parameter, which gives you access to the payload and server details:
+
+```js title="functions/onGreet.js"
+export default async function (event) {
+  const { name, currentTime } = event.payload;
+  const hour = new Date(currentTime).getHours();
+
+  let response = "";
+  if (hour < 12) {
+    response = `Good Morning ${name}`;
+  } else if (hour < 18) {
+    response = `Good Afternoon ${name}`;
+  } else {
+    response = `Good Evening ${name}`;
+  }
+
+  return {
+    reply: [
+      {
+        payload: response,
+      },
+    ],
+  };
+}
+```
+
+### Run and test
+
+Start the app:
+
+```bash title="terminal"
+npm run dev
+# or
+npm run start
+```
+
+Then point a WebSocket client at the server (I used Postman) and send a message with a `currentTime` and `name`. You should get a greeting back based on the time of day.
+
+## Wrapping up
+
+That's the whole loop: define the spec, map operations to functions, and run. There's a full working example in the [Greet Bot repo](https://github.com/Souvikns/greet-bot) if you want to poke around.
+
+Glee was evolving quickly and supported MQTT and WebSocket while I worked on it, but the project has since been archived. The ideas behind it — spec-first development, code and docs that can't drift apart — are still worth carrying into whatever you build next.
+
+You can read the original version of this post on the [AsyncAPI blog](https://www.asyncapi.com/blog/introduction-to-glee-a-spec-first-framework), and find the archived source in [asyncapi-archived-repos/glee](https://github.com/asyncapi-archived-repos/glee).

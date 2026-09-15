@@ -6,7 +6,11 @@ import { paginate, normalizePage } from "@/lib/pagination";
 
 const PAGE_SIZE = 5;
 
-const allPosts = await getCollection("blog", ({ data }) => data.published);
+const isDev = import.meta.env.DEV;
+const allPosts = await getCollection(
+  "blog",
+  ({ data }) => isDev || data.published,
+);
 const sortedPosts = [...allPosts].sort((a, b) => {
   if (new Date(a.data.publishedAt) > new Date(b.data.publishedAt)) return -1;
   return 1;
@@ -24,6 +28,7 @@ const posts = paginatedPosts.map((post) => ({
   id: post.id,
   title: post.data.title,
   publishedAt: post.data.publishedAt,
+  published: post.data.published,
 }));
 ---
 

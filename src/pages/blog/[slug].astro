@@ -13,9 +13,12 @@ export async function getStaticPaths() {
     if (new Date(a.data.publishedAt) > new Date(b.data.publishedAt)) return -1;
     return 1;
   });
-  const publishedPosts = sortedPosts.filter((post) => post.data.published);
+  const isDev = import.meta.env.DEV;
+  const publishedPosts = sortedPosts.filter(
+    (post) => isDev || post.data.published,
+  );
 
-  return sortedPosts.map((post) => {
+  return publishedPosts.map((post) => {
     const index = publishedPosts.findIndex((p) => p.id === post.id);
     return {
       params: { slug: post.id },
@@ -29,7 +32,7 @@ export async function getStaticPaths() {
 }
 
 const { post, previousPost, nextPost } = Astro.props;
-const { title, publishedAt, summary, image } = post.data;
+const { title, publishedAt, summary, image, published } = post.data;
 const slug = post.id;
 
 const { Content } = await render(post);
@@ -82,6 +85,13 @@ const jsonLd = JSON.stringify({
       </h1>
       <p class="text-sm text-muted-foreground">
         {formatDate(publishedAt)}
+        {
+          !published && (
+            <span class="ml-2 text-xs align-middle border border-border rounded-md px-1.5 py-0.5 bg-muted/50">
+              Draft
+            </span>
+          )
+        }
       </p>
     </div>
     <div class="my-6 flex w-full items-center">
