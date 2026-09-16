@@ -235,3 +235,13 @@
     @apply border-b-0;
   }
 }
+/* The motion primitives render their `hidden` variant during SSR, so the page
+   ships readable HTML that is painted at opacity 0 until hydration animates it
+   in. If scripting never runs, un-hide it rather than showing a blank page. */
+@media (scripting: none) {
+  [data-blur-fade] {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}

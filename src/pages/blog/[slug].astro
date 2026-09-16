@@ -32,8 +32,15 @@ export async function getStaticPaths() {
 }
 
 const { post, previousPost, nextPost } = Astro.props;
-const { title, publishedAt, summary, image, published } = post.data;
+const { title, publishedAt, updatedAt, summary, image, published, tags } =
+  post.data;
 const slug = post.id;
+const postUrl = `${DATA.url}/blog/${slug}`;
+const postImage = image
+  ? image.startsWith("http")
+    ? image
+    : `${DATA.url}${image}`
+  : `${DATA.url}${DATA.ogImage}`;
 
 const { Content } = await render(post);
 
@@ -42,18 +49,19 @@ const jsonLd = JSON.stringify({
   "@type": "BlogPosting",
   headline: title,
   datePublished: publishedAt,
-  dateModified: publishedAt,
+  dateModified: updatedAt ?? publishedAt,
   description: summary,
-  image: image
-    ? image.startsWith("http")
-      ? image
-      : `${DATA.url}${image}`
-    : `${DATA.url}/og_image.png`,
-  url: `${DATA.url}/blog/${slug}`,
+  image: postImage,
+  url: postUrl,
+  mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
+  keywords: tags,
   author: {
     "@type": "Person",
+    "@id": `${DATA.url}/#person`,
     name: DATA.name,
+    url: DATA.url,
   },
+  publisher: { "@id": `${DATA.url}/#person` },
 }).replace(/</g, "\\u003c");
 ---
 
@@ -61,7 +69,13 @@ const jsonLd = JSON.stringify({
   title={title}
   description={summary}
   image={image}
-  canonicalURL={`${DATA.url}/blog/${slug}`}
+  imageAlt={title}
+  canonicalURL={postUrl}
+  type="article"
+  publishedTime={new Date(publishedAt).toISOString()}
+  modifiedTime={new Date(updatedAt ?? publishedAt).toISOString()}
+  tags={tags}
+  noindex={!published}
 >
   <section id="blog">
     <script is:inline type="application/ld+json" set:html={jsonLd} />

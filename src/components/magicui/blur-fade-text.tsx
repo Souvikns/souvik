@@ -5,6 +5,8 @@ import { useMemo } from "react";
 interface BlurFadeTextProps {
   text: string;
   className?: string;
+  /** Wrapper element. Use a heading tag so crawlers see real document structure. */
+  as?: "div" | "h1" | "h2" | "h3" | "p";
   variant?: {
     hidden: { y: number };
     visible: { y: number };
@@ -18,6 +20,7 @@ interface BlurFadeTextProps {
 const BlurFadeText = ({
   text,
   className,
+  as: Wrapper = "div",
   variant,
   duration = 0.4,
   characterDelay = 0.03,
@@ -34,7 +37,7 @@ const BlurFadeText = ({
 
   if (animateByCharacter) {
     return (
-      <div className="flex">
+      <Wrapper className="flex">
         {characters.map((char, i) => {
           const charVariants: Variants = {
             hidden: { y: -yOffset, opacity: 0, filter: "blur(8px)" },
@@ -43,6 +46,7 @@ const BlurFadeText = ({
           return (
             <motion.span
               key={i}
+              data-blur-fade
               initial="hidden"
               animate="visible"
               variants={charVariants}
@@ -58,13 +62,14 @@ const BlurFadeText = ({
             </motion.span>
           );
         })}
-      </div>
+      </Wrapper>
     );
   }
 
   return (
-    <div className="flex">
+    <Wrapper className="flex">
       <motion.span
+        data-blur-fade
         initial="hidden"
         animate="visible"
         variants={combinedVariants}
@@ -77,7 +82,7 @@ const BlurFadeText = ({
       >
         {text}
       </motion.span>
-    </div>
+    </Wrapper>
   );
 };
 

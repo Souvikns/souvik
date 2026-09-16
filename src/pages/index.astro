@@ -2,8 +2,48 @@
 export const prerender = true;
 import Layout from "../layouts/Layout.astro";
 import HomePage from "@/components/HomePage";
+import { DATA } from "@/data/resume";
+
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${DATA.url}/#person`,
+      name: DATA.name,
+      jobTitle: DATA.jobTitle,
+      description: DATA.summary.replace(/\s+/g, " ").trim(),
+      url: DATA.url,
+      image: `${DATA.url}${DATA.avatarUrl}`,
+      email: `mailto:${DATA.contact.email}`,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: DATA.location,
+      },
+      knowsAbout: DATA.skills.map((skill) => skill.name),
+      sameAs: Object.values(DATA.contact.social)
+        .map((social) => social.url)
+        .filter((url) => !url.startsWith("mailto:")),
+      worksFor: {
+        "@type": "Organization",
+        name: DATA.work[0].company,
+        url: DATA.work[0].href,
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${DATA.url}/#website`,
+      url: DATA.url,
+      name: `${DATA.name} - ${DATA.jobTitle}`,
+      description: DATA.description,
+      inLanguage: "en",
+      publisher: { "@id": `${DATA.url}/#person` },
+    },
+  ],
+}).replace(/</g, "\\u003c");
 ---
 
 <Layout>
-  <HomePage client:only="react" />
+  <script is:inline type="application/ld+json" set:html={jsonLd} />
+  <HomePage client:load />
 </Layout>

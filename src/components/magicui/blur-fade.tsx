@@ -41,6 +41,7 @@ const BlurFade = ({
     <AnimatePresence>
       <motion.div
         ref={ref}
+        data-blur-fade
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
         exit="hidden"

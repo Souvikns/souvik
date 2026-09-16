@@ -9,24 +9,39 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
   canonicalURL?: string;
+  type?: "website" | "article";
+  publishedTime?: string;
+  modifiedTime?: string;
+  tags?: string[];
+  noindex?: boolean;
 }
 
 const {
   title,
   description = DATA.description,
   image,
-  canonicalURL = Astro.url.href,
+  imageAlt,
+  canonicalURL = new URL(Astro.url.pathname, CONFIG.site.url).href,
+  type = "website",
+  publishedTime,
+  modifiedTime,
+  tags = [],
+  noindex = false,
 } = Astro.props;
 
 const pageTitle = title
   ? CONFIG.seo.titleTemplate.replace("%s", title).replace("%n", DATA.name)
-  : DATA.name;
+  : `${DATA.name} - ${DATA.jobTitle}`;
 const ogImage = image
   ? image.startsWith("http")
     ? image
     : `${CONFIG.site.url}${image}`
   : `${CONFIG.site.url}${DATA.ogImage}`;
+const ogImageAlt = imageAlt ?? pageTitle;
+const robots = noindex ? "noindex, nofollow" : CONFIG.seo.robots;
+const twitterHandle = CONFIG.site.twitterHandle;
 
 const { light, dark, radius } = CONFIG.theme;
 const { baseFontSize } = CONFIG.typography;
@@ -108,34 +123,76 @@ const { baseFontSize } = CONFIG.typography;
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta
+      name="theme-color"
+      content={light.background}
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content={dark.background}
+      media="(prefers-color-scheme: dark)"
+    />
 
     <!-- Primary meta -->
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    <meta name="author" content={DATA.name} />
     <link rel="canonical" href={canonicalURL} />
-
-    <!-- Robots -->
-    <meta name="robots" content={CONFIG.seo.robots} />
-    <meta
-      name="googlebot"
-      content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${DATA.name} - Blog`}
+      href={`${CONFIG.site.url}/rss.xml`}
     />
 
+    <!-- Robots -->
+    <meta name="robots" content={robots} />
+    {
+      !noindex && (
+        <meta
+          name="googlebot"
+          content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+        />
+      )
+    }
+
     <!-- OpenGraph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:site_name" content={DATA.name} />
     <meta property="og:locale" content={CONFIG.site.locale} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    {
+      type === "article" && (
+        <>
+          <meta property="article:author" content={DATA.name} />
+          {publishedTime && (
+            <meta property="article:published_time" content={publishedTime} />
+          )}
+          {modifiedTime && (
+            <meta property="article:modified_time" content={modifiedTime} />
+          )}
+          {tags.map((tag) => (
+            <meta property="article:tag" content={tag} />
+          ))}
+        </>
+      )
+    }
 
     <!-- Twitter -->
     <meta name="twitter:card" content={CONFIG.seo.twitterCard} />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
+    {twitterHandle && <meta name="twitter:site" content={twitterHandle} />}
+    {twitterHandle && <meta name="twitter:creator" content={twitterHandle} />}
   </head>
   <body class="min-h-screen bg-background font-sans antialiased relative">
     <!-- FlickeringGrid header background - matches template exactly -->

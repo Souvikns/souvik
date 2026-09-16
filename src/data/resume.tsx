@@ -7,7 +7,8 @@ import { Golang } from "@/components/ui/svgs/golang";
 import { Docker } from "@/components/ui/svgs/docker";
 
 export const DATA = {
-  name: "Souvik De - Software Engineer",
+  name: "Souvik De",
+  jobTitle: "Software Engineer",
   initials: "SD",
   url: "https://souvik.de",
   location: "Delhi, IN",
