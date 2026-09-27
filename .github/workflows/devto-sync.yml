@@ -12,6 +12,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   sync:
@@ -34,14 +35,28 @@ jobs:
           DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
         run: node scripts/sync-devto.mjs --write --require-key
 
-      - name: Commit devtoId write-back
+      # main is protected, so the bot cannot push to it directly. The devtoId
+      # is only a cache (the sync matches articles by canonical URL), so the
+      # write-back goes through a pull request and never fails the run.
+      - name: Open PR with devtoId write-back
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add src/content/blog
           if git diff --cached --quiet; then
             echo "No changes to commit"
+            exit 0
+          fi
+          branch="chore/devto-ids-${{ github.run_id }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git commit -m "chore: persist dev.to article ids [skip ci]"
+          if git push origin "$branch" && gh pr create \
+              --base main --head "$branch" \
+              --title "chore: persist dev.to article ids" \
+              --body "Stores the dev.to article ids created by sync run ${{ github.run_id }}. Safe to merge; the sync also matches articles by canonical URL, so nothing breaks if this waits."; then
+            echo "Opened pull request from $branch"
           else
-            git commit -m "chore: persist dev.to article ids [skip ci]"
-            git push
+            echo "::warning::Could not open a devtoId write-back PR. The dev.to sync itself succeeded."
           fi
