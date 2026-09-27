@@ -5,7 +5,7 @@ export const CONFIG = {
   site: {
     url: "https://souvik.de",
     locale: "en_US",
-    twitterHandle: "@alexmercer_dev",
+    twitterHandle: "@buggs_lightyear",
   },
 
   // ---------------------------------------------------------------------------

@@ -37,7 +37,6 @@ The site is entirely config-driven: every piece of content (name, bio, work hist
 - Blog uses Astro Content Collections v3 with a fixed frontmatter schema (title, publishedAt, summary, etc.) and a Shiki-based `rehype-pretty-code` pipeline.
 - SEO: title template, robots meta, canonical URLs, OpenGraph, Twitter cards, and sitemap via `@astrojs/sitemap`.
 - Security headers set in `src/middleware.ts` (nosniff, frame options, referrer policy, permissions policy).
-- Known stale template defaults: `CONFIG.site.url` is still `https://alexmercer.dev` and `twitterHandle` is `@alexmercer_dev`, while the real site is `https://souvik.de`. This is an undecided/known-drift fact to reconcile in the data file.
 
 ## Brand Commitments
 
