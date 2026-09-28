@@ -135,6 +135,29 @@ maintainability and reducing duplication.`
   ],
   projects: [
     {
+      "title": "JobScout",
+      "href": "https:findmejob.xyz",
+      "dates": "August 2026",
+      "active": true,
+      "description": "An cross platform desktop application that connects to your local AI agents like claude-code, codex and opencode and helps yor find jobs based on your resume.",
+      "technologies": [
+        "wails",
+        "go",
+        "typescript",
+        "react",
+        "tailwindcss",
+        "docker"
+      ],
+      "links": [
+        {
+          "type": "Website",
+          "href": "https://findmejob.xyz",
+          "icon": <Icons.globe className="size-3" />,
+        }
+      ],
+      "image": "/findmejob.png",
+    },
+    {
       "title": "Notion Board",
       "href": "https://souvikns.github.io/Notion-Board/index.html",
       "dates": "March 2022 - April 2022",
