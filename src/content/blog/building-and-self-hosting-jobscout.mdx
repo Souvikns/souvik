@@ -1,0 +1,47 @@
+---
+title: "How I'm Building and Self-Hosting JobScout"
+publishedAt: "2026-10-03"
+author: "Souvik De"
+summary: "A look at how JobScout is built and how I self-host it."
+tags: ["job-search", "side-project", "build-in-public", "self-hosting", "ai-agents"]
+published: true
+devto: true
+series: "building-jobscout"
+seriesPart: 2
+---
+
+In the [last post](/blog/why-im-building-jobscout) I wrote about why I'm building JobScout. This time I want to go through how it's built and where it's hosted.
+
+As of now I'm self-hosting JobScout on an old ThinkPad T470 that I had lying around. I'm not paying a cloud provider for any of it. The laptop wasn't doing anything else, and the project is early enough that one machine that stays on is all it needs.
+
+The ThinkPad runs Arch Linux (yeah, I use Arch by the way), and I have Tailscale set up on it. Tailscale puts the laptop on a private network with my other devices, so I can get into it from anywhere and nobody else can.
+
+For the public side I'm using a Cloudflare Tunnel. The laptop opens a connection out to Cloudflare, and Cloudflare sends incoming traffic back through it. So I don't have to open ports on my router or pay for a static IP, and those two were the main things putting me off hosting from home.
+
+Two things run on the laptop.
+
+One is a scraper. It's a separate application that pulls jobs from different job boards. Every board lays out its listings differently, so the scraper is where most of the messy code lives.
+
+The scraper builds a single database of jobs. On every run it adds the new jobs it found and marks the old ones inactive. I don't delete old jobs. They stay in the database with an inactive flag.
+
+The other is an API that serves the jobs in that database. Since it only reads from the database, I can change how the scraping works and the API stays the same.
+
+## The desktop app
+
+What people actually download is a desktop app. I built it with [Wails](https://wails.io/), which lets me write the backend in Go and the UI in React. It builds for macOS, Windows and Linux.
+
+You sign in with GitHub or Google and land on Discover, which is the search screen. It searches job titles and descriptions, and you can filter by remote, seniority and employment type.
+
+There's also a profile. You can drop in your résumé as a PDF and the app fills the profile in from it. Each job gets a score for how well it fits your profile, and you can sort results by that score or by newest.
+
+If you like a job you can save it, and it goes to the Saved screen. The app re-checks saved jobs against the API so that you can tell when one has closed.
+
+The agent part is why I started this project in the first place. The app looks for coding agents installed on your machine. Right now it supports Claude Code, Codex and OpenCode. You pick the agent and the model in settings. After that, every job you open has a chat next to it, and you can ask the agent things like whether the Kubernetes requirement is a must-have, or what to put in a cover letter for that role.
+
+The newest feature is called Ask. You describe what you're looking for and the agent builds a table, with jobs as rows and facts about them as columns. You can watch it fill in, and if a cell is wrong you can edit it yourself.
+
+Some smaller things I like: you can use the whole app from the keyboard, there's a command palette with every action in it, and the app checks for updates every time it opens.
+
+## Follow along
+
+If you're interested in following the development of the project, feel free to join the [Discord channel](https://discord.gg/jnCcFRH5F). I'll be posting updates there as I build.
