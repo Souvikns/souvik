@@ -14,6 +14,11 @@ export async function GET() {
       new Date(a.data.publishedAt).getTime(),
   );
 
+  const seriesEntries = await getCollection("series");
+  const seriesTitleBySlug = new Map(
+    seriesEntries.map((s) => [s.id, s.data.title]),
+  );
+
   return rss({
     title: `${DATA.name} - Blog`,
     description: DATA.description,
@@ -27,13 +32,19 @@ export async function GET() {
           siteUrl: CONFIG.site.url,
           slug: post.id,
         });
+        const seriesTitle = post.data.series
+          ? seriesTitleBySlug.get(post.data.series)
+          : undefined;
         return {
           title: post.data.title,
           description: post.data.summary,
           pubDate: new Date(post.data.publishedAt),
           link: `/blog/${post.id}`,
           content: `${html}<p><a href="${url}">Read the full article on ${hostname} →</a></p>`,
-          categories: post.data.tags,
+          categories: [
+            ...post.data.tags,
+            ...(seriesTitle ? [`series: ${seriesTitle}`] : []),
+          ],
           author: DATA.contact.email,
         };
       }),
