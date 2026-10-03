@@ -10,9 +10,11 @@ import {
   toDevtoTags,
 } from "./lib/devto-client.mjs";
 import { SITE_URL, toAbsoluteUrl, canonicalUrl } from "./lib/urls.mjs";
+import { loadSeries, resolveSeriesTitle } from "./lib/series.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const BLOG_DIR = path.resolve(__dirname, "../src/content/blog");
+const SERIES_DIR = path.resolve(__dirname, "../src/content/series");
 
 const { values } = parseArgs({
   options: {
@@ -37,6 +39,8 @@ async function main() {
     console.log("No published posts opted in to dev.to (devto: true).");
     return;
   }
+
+  const seriesList = await loadSeries(SERIES_DIR);
 
   if (!apiKey) {
     if (values["dry-run"]) {
@@ -65,6 +69,14 @@ async function main() {
       baseUrl: values.site,
       slug: post.slug,
     });
+    const seriesTitle = post.data.series
+      ? resolveSeriesTitle(seriesList, post.data.series)
+      : null;
+    if (post.data.series && !seriesTitle) {
+      console.warn(
+        `sync-devto: post ${post.slug} references unknown series "${post.data.series}"`,
+      );
+    }
     const article = {
       title: post.data.title,
       published: true,
@@ -72,6 +84,7 @@ async function main() {
       tags: toDevtoTags(post.data.tags),
       canonical_url: url,
       description: post.data.summary,
+      ...(seriesTitle ? { series: seriesTitle } : {}),
     };
     if (post.data.image) {
       article.cover_image = toAbsoluteUrl(
