@@ -1,14 +1,18 @@
 ---
 export const prerender = true;
 import Layout from "@/layouts/Layout.astro";
-import { getCollection, render } from "astro:content";
+import { getCollection, render, type CollectionEntry } from "astro:content";
 import { DATA } from "@/data/resume";
 import { formatDate } from "@/lib/utils";
 import { mdxComponents } from "@/mdx-components";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { orderPostsByPart, getAdjacentParts } from "@/lib/series";
+import SeriesNav from "@/components/SeriesNav.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
+  const seriesEntries = await getCollection("series");
+  const seriesBySlug = new Map(seriesEntries.map((s) => [s.id, s]));
   const sortedPosts = [...posts].sort((a, b) => {
     if (new Date(a.data.publishedAt) > new Date(b.data.publishedAt)) return -1;
     return 1;
@@ -20,18 +24,59 @@ export async function getStaticPaths() {
 
   return publishedPosts.map((post) => {
     const index = publishedPosts.findIndex((p) => p.id === post.id);
+
+    let postSeries: CollectionEntry<"series"> | null = null;
+    let seriesParts: CollectionEntry<"blog">[] = [];
+    let seriesPrev: CollectionEntry<"blog"> | null = null;
+    let seriesNext: CollectionEntry<"blog"> | null = null;
+    if (post.data.series) {
+      const seriesEntry = seriesBySlug.get(post.data.series);
+      if (seriesEntry) {
+        postSeries = seriesEntry;
+        seriesParts = orderPostsByPart(
+          publishedPosts.filter(
+            (p) =>
+              p.data.series === post.data.series &&
+              p.data.seriesPart !== undefined,
+          ),
+        );
+        const { previous, next } = getAdjacentParts(seriesParts, post.id);
+        seriesPrev = previous;
+        seriesNext = next;
+      } else {
+        console.warn(
+          `[series] blog post "${post.id}" references unknown series "${post.data.series}"`,
+        );
+      }
+    }
+
     return {
       params: { slug: post.id },
       props: {
         post,
         previousPost: index > 0 ? publishedPosts[index - 1] : null,
-        nextPost: index >= 0 && index < publishedPosts.length - 1 ? publishedPosts[index + 1] : null,
+        nextPost:
+          index >= 0 && index < publishedPosts.length - 1
+            ? publishedPosts[index + 1]
+            : null,
+        postSeries,
+        seriesParts,
+        seriesPrev,
+        seriesNext,
       },
     };
   });
 }
 
-const { post, previousPost, nextPost } = Astro.props;
+const {
+  post,
+  previousPost,
+  nextPost,
+  postSeries,
+  seriesParts,
+  seriesPrev,
+  seriesNext,
+} = Astro.props;
 const { title, publishedAt, updatedAt, summary, image, published, tags } =
   post.data;
 const slug = post.id;
@@ -121,46 +166,59 @@ const jsonLd = JSON.stringify({
       <Content components={mdxComponents} />
     </article>
 
-    <nav class="mt-12 pt-8 max-w-2xl">
-      <div class="flex flex-col sm:flex-row justify-between gap-4">
-        {
-          previousPost ? (
-            <a
-              href={`/blog/${previousPost.id}`}
-              class="group flex-1 flex flex-col gap-1 p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors"
-            >
-              <span class="flex items-center gap-1 text-xs text-muted-foreground">
-                <ChevronLeft className="size-3" />
-                Previous
-              </span>
-              <span class="text-sm font-medium group-hover:text-foreground transition-colors whitespace-normal wrap-break-word">
-                {previousPost.data.title}
-              </span>
-            </a>
-          ) : (
-            <div class="hidden sm:block flex-1" />
-          )
-        }
+    {
+      postSeries ? (
+        <SeriesNav
+          seriesTitle={postSeries.data.title}
+          seriesSlug={postSeries.id}
+          parts={seriesParts}
+          currentId={post.id}
+          previous={seriesPrev}
+          next={seriesNext}
+        />
+      ) : (
+        <nav class="mt-12 pt-8 max-w-2xl">
+          <div class="flex flex-col sm:flex-row justify-between gap-4">
+            {
+              previousPost ? (
+                <a
+                  href={`/blog/${previousPost.id}`}
+                  class="group flex-1 flex flex-col gap-1 p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors"
+                >
+                  <span class="flex items-center gap-1 text-xs text-muted-foreground">
+                    <ChevronLeft className="size-3" />
+                    Previous
+                  </span>
+                  <span class="text-sm font-medium group-hover:text-foreground transition-colors whitespace-normal wrap-break-word">
+                    {previousPost.data.title}
+                  </span>
+                </a>
+              ) : (
+                <div class="hidden sm:block flex-1" />
+              )
+            }
 
-        {
-          nextPost ? (
-            <a
-              href={`/blog/${nextPost.id}`}
-              class="group flex-1 flex flex-col gap-1 p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors text-right"
-            >
-              <span class="flex items-center justify-end gap-1 text-xs text-muted-foreground">
-                Next
-                <ChevronRight className="size-3" />
-              </span>
-              <span class="text-sm font-medium group-hover:text-foreground transition-colors whitespace-normal wrap-break-word">
-                {nextPost.data.title}
-              </span>
-            </a>
-          ) : (
-            <div class="hidden sm:block flex-1" />
-          )
-        }
-      </div>
-    </nav>
+            {
+              nextPost ? (
+                <a
+                  href={`/blog/${nextPost.id}`}
+                  class="group flex-1 flex flex-col gap-1 p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors text-right"
+                >
+                  <span class="flex items-center justify-end gap-1 text-xs text-muted-foreground">
+                    Next
+                    <ChevronRight className="size-3" />
+                  </span>
+                  <span class="text-sm font-medium group-hover:text-foreground transition-colors whitespace-normal wrap-break-word">
+                    {nextPost.data.title}
+                  </span>
+                </a>
+              ) : (
+                <div class="hidden sm:block flex-1" />
+              )
+            }
+          </div>
+        </nav>
+      )
+    }
   </section>
 </Layout>

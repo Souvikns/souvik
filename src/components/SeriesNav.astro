@@ -1,0 +1,82 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  seriesTitle: string;
+  seriesSlug: string;
+  parts: CollectionEntry<"blog">[];
+  currentId: string;
+  previous: CollectionEntry<"blog"> | null;
+  next: CollectionEntry<"blog"> | null;
+}
+
+const { seriesTitle, seriesSlug, parts, currentId, previous, next } =
+  Astro.props;
+---
+
+<div class="mt-12 pt-8 border-t border-border max-w-2xl">
+  <div class="flex items-baseline gap-2 mb-4">
+    <span class="text-xs uppercase tracking-wider text-muted-foreground">Series</span>
+    <a
+      href={`/series/${seriesSlug}`}
+      class="text-sm font-medium hover:text-foreground transition-colors"
+    >
+      {seriesTitle}
+    </a>
+  </div>
+  <ol class="flex flex-col gap-1 mb-6">
+    {parts.map((part, i) => (
+      <li>
+        {part.id === currentId ? (
+          <span class="flex items-center gap-2 text-sm text-foreground">
+            <span class="text-xs font-mono tabular-nums text-muted-foreground">
+              {i + 1}.
+            </span>
+            {part.data.title}
+            <span class="text-xs text-muted-foreground">(this post)</span>
+          </span>
+        ) : (
+          <a
+            href={`/blog/${part.id}`}
+            class="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <span class="text-xs font-mono tabular-nums">{i + 1}.</span>
+            {part.data.title}
+          </a>
+        )}
+      </li>
+    ))}
+  </ol>
+  <div class="flex flex-col sm:flex-row justify-between gap-4">
+    {previous ? (
+      <a
+        href={`/blog/${previous.id}`}
+        class="group flex-1 flex flex-col gap-1 p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors"
+      >
+        <span class="flex items-center gap-1 text-xs text-muted-foreground">
+          &larr; Previous
+        </span>
+        <span class="text-sm font-medium group-hover:text-foreground transition-colors whitespace-normal wrap-break-word">
+          {previous.data.title}
+        </span>
+      </a>
+    ) : (
+      <div class="hidden sm:block flex-1" />
+    )}
+    {next ? (
+      <a
+        href={`/blog/${next.id}`}
+        class="group flex-1 flex flex-col gap-1 p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors text-right"
+      >
+        <span class="flex items-center justify-end gap-1 text-xs text-muted-foreground">
+          Next &rarr;
+        </span>
+        <span class="text-sm font-medium group-hover:text-foreground transition-colors whitespace-normal wrap-break-word">
+          {next.data.title}
+        </span>
+      </a>
+    ) : (
+      <div class="hidden sm:block flex-1" />
+    )}
+  </div>
+</div>
