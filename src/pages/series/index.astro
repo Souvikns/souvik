@@ -1,0 +1,81 @@
+---
+export const prerender = true;
+import Layout from "@/layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { orderPostsByPart } from "@/lib/series";
+
+const isDev = import.meta.env.DEV;
+const seriesEntries = await getCollection("series");
+const posts = await getCollection("blog", ({ data }) => isDev || data.published);
+
+const seriesList = seriesEntries
+  .map((series) => {
+    const parts = orderPostsByPart(
+      posts.filter(
+        (p) =>
+          p.data.series === series.id && p.data.seriesPart !== undefined,
+      ),
+    );
+    return {
+      slug: series.id,
+      title: series.data.title,
+      description: series.data.description,
+      partCount: parts.length,
+      latestPublishedAt: parts[0]?.data.publishedAt ?? null,
+    };
+  })
+  .sort((a, b) => {
+    if (a.latestPublishedAt && b.latestPublishedAt) {
+      return (
+        new Date(b.latestPublishedAt).getTime() -
+        new Date(a.latestPublishedAt).getTime()
+      );
+    }
+    if (a.latestPublishedAt) return -1;
+    if (b.latestPublishedAt) return 1;
+    return a.title.localeCompare(b.title);
+  });
+---
+
+<Layout title="Series" description="Series of related blog posts, in order.">
+  <section id="series">
+    <h1 class="text-2xl font-semibold tracking-tight mb-4">
+      Series
+      <span class="ml-1 bg-card border border-border rounded-md px-2 py-1 text-muted-foreground text-sm">
+        {seriesList.length} series
+      </span>
+    </h1>
+    <p class="text-sm text-muted-foreground mb-8">
+      Multi-part posts grouped and ordered.
+    </p>
+
+    {seriesList.length > 0 ? (
+      <div class="flex flex-col gap-4">
+        {seriesList.map((series) => (
+          <a
+            href={`/series/${series.slug}`}
+            class="block p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors"
+          >
+            <div class="flex items-baseline gap-2">
+              <h2 class="text-lg font-medium tracking-tight">{series.title}</h2>
+              <span class="text-xs text-muted-foreground">
+                {series.partCount} part{series.partCount === 1 ? "" : "s"}
+              </span>
+            </div>
+            {series.description && (
+              <p class="text-sm text-muted-foreground mt-1">
+                {series.description}
+              </p>
+            )}
+          </a>
+        ))}
+      </div>
+    ) : (
+      <div class="flex flex-col items-center justify-center py-12 px-4 border border-border rounded-xl">
+        <p class="text-muted-foreground text-center">
+          No series yet. Check back soon!
+        </p>
+      </div>
+    )}
+  </section>
+</Layout>

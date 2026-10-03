@@ -1,0 +1,77 @@
+---
+export const prerender = true;
+import Layout from "@/layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { formatDate } from "@/lib/utils";
+import { orderPostsByPart } from "@/lib/series";
+
+export async function getStaticPaths() {
+  const isDev = import.meta.env.DEV;
+  const seriesEntries = await getCollection("series");
+  const posts = await getCollection("blog", ({ data }) => isDev || data.published);
+  return seriesEntries.map((series) => {
+    const parts = orderPostsByPart(
+      posts.filter(
+        (p) =>
+          p.data.series === series.id && p.data.seriesPart !== undefined,
+      ),
+    );
+    return { params: { slug: series.id }, props: { series, parts } };
+  });
+}
+
+const { series, parts } = Astro.props;
+const { title, description } = series.data;
+---
+
+<Layout title={title} description={description ?? `${title} series`}>
+  <section id="series">
+    <a
+      href="/series"
+      class="text-sm text-muted-foreground hover:text-foreground transition-colors border border-border rounded-lg px-2 py-1 inline-flex items-center gap-1 mb-6"
+    >
+      &larr; All series
+    </a>
+    <div class="flex flex-col gap-4 mb-8">
+      <h1 class="title font-semibold text-3xl md:text-4xl tracking-tighter leading-tight">
+        {title}
+      </h1>
+      {description && (
+        <p class="text-sm text-muted-foreground">{description}</p>
+      )}
+    </div>
+
+    {parts.length > 0 ? (
+      <ol class="flex flex-col gap-3">
+        {parts.map((part, i) => (
+          <li>
+            <a
+              href={`/blog/${part.id}`}
+              class="flex items-start gap-x-2 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              <span class="text-xs font-mono tabular-nums font-medium mt-[5px]">
+                {String(i + 1).padStart(2, "0")}.
+              </span>
+              <div class="flex flex-col gap-y-2 flex-1">
+                <p class="tracking-tight text-lg font-medium">
+                  <span class="group-hover:text-foreground transition-colors">
+                    {part.data.title}
+                  </span>
+                </p>
+                <p class="text-xs text-muted-foreground">
+                  {formatDate(part.data.publishedAt)}
+                </p>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ol>
+    ) : (
+      <div class="flex flex-col items-center justify-center py-12 px-4 border border-border rounded-xl">
+        <p class="text-muted-foreground text-center">
+          No published posts in this series yet.
+        </p>
+      </div>
+    )}
+  </section>
+</Layout>
