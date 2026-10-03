@@ -8,6 +8,7 @@ interface Post {
   title: string;
   publishedAt: string;
   published: boolean;
+  series?: string;
 }
 
 interface Pagination {
@@ -58,6 +59,15 @@ export default function BlogList({ posts, allPostsCount, pagination, pageSize }:
                         <p className="tracking-tight text-lg font-medium">
                           <span className="group-hover:text-foreground transition-colors">
                             {post.title}
+                            {post.series && (
+                              <a
+                                href={`/series/${post.series}`}
+                                onClick={(e) => e.stopPropagation()}
+                                className="ml-2 text-xs font-normal align-middle border border-border rounded-md px-1.5 py-0.5 bg-muted/50 text-muted-foreground hover:text-foreground transition-colors"
+                              >
+                                Series
+                              </a>
+                            )}
                             {!post.published && (
                               <span className="ml-2 text-xs font-normal align-middle border border-border rounded-md px-1.5 py-0.5 bg-muted/50 text-muted-foreground">
                                 Draft
