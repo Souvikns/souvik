@@ -1,0 +1,67 @@
+---
+import { DATA } from "@/data/resume";
+
+const { heading, headingMuted, moreLabel } = DATA.sections.projects;
+const [featured, ...rest] = DATA.projects;
+---
+
+<section id="projects" aria-labelledby="projects-title" class="mt-24 scroll-mt-8">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <h2 id="projects-title" class="text-4xl font-semibold tracking-tighter sm:text-5xl">
+      {heading} <span class="text-faint">{headingMuted}</span>
+    </h2>
+    <a
+      href={DATA.contact.social.GitHub.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="border-b border-foreground pb-0.5 text-base font-medium hover:text-brand-foreground hover:border-brand-foreground transition-colors"
+    >
+      {moreLabel}
+    </a>
+  </div>
+  <div class="mt-7 grid grid-cols-1 gap-4 lg:grid-cols-5">
+    <a
+      href={`/projects/${featured.slug}`}
+      class="group block rounded-3xl border border-border bg-card p-3.5 lg:col-span-3"
+    >
+      <img
+        src={featured.image}
+        alt={`${featured.title} screenshot`}
+        loading="lazy"
+        width="1200"
+        height="675"
+        class="aspect-video w-full rounded-2xl object-cover"
+      />
+      <div class="flex items-start justify-between gap-3 px-2.5 pt-4 pb-2">
+        <div>
+          <p class="text-2xl font-semibold tracking-tight group-hover:text-brand-foreground transition-colors">{featured.title}</p>
+          <p class="mt-1 text-base text-muted-foreground">{featured.description}</p>
+        </div>
+        <span class="font-mono text-sm text-muted-foreground">{featured.year}</span>
+      </div>
+    </a>
+    <div class="flex flex-col gap-4 lg:col-span-2">
+      {
+        rest.map((project) => (
+          <a href={`/projects/${project.slug}`} class="group block rounded-3xl border border-border bg-card p-3.5">
+            <img
+              src={project.image}
+              alt={`${project.title} screenshot`}
+              loading="lazy"
+              width="1200"
+              height="600"
+              class="aspect-[2/1] w-full rounded-2xl object-cover"
+            />
+            <div class="flex items-start justify-between gap-3 px-2 pt-3 pb-1">
+              <div>
+                <p class="text-lg font-semibold group-hover:text-brand-foreground transition-colors">{project.title}</p>
+                <p class="text-sm text-muted-foreground">{project.tagline}</p>
+              </div>
+              <span class="font-mono text-sm text-muted-foreground">{project.year}</span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

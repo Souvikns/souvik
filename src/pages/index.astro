@@ -1,8 +1,29 @@
 ---
 export const prerender = true;
 import Layout from "../layouts/Layout.astro";
-import HomePage from "@/components/HomePage";
+import { getCollection } from "astro:content";
 import { DATA } from "@/data/resume";
+import Hero from "@/components/home/Hero.astro";
+import Highlights from "@/components/home/Highlights.astro";
+import ProjectsSection from "@/components/home/ProjectsSection.astro";
+import ContactSection from "@/components/home/ContactSection.astro";
+import { getContributionCalendar } from "@/lib/github";
+
+const posts = (await getCollection("blog", ({ data }) => data.published))
+  .sort((a, b) => b.data.publishedAt.localeCompare(a.data.publishedAt))
+  .slice(0, 3);
+const contributions = await getContributionCalendar(DATA.github.username);
+
+const sectionComponents = {
+  highlights: () => ({ Component: Highlights, props: { posts, contributions } }),
+  projects: () => ({ Component: ProjectsSection, props: {} }),
+  contact: () => ({ Component: ContactSection, props: {} }),
+} as const;
+
+const orderedSections = Object.entries(DATA.sections)
+  .filter(([, s]) => s.enabled)
+  .sort(([, a], [, b]) => a.order - b.order)
+  .map(([key]) => sectionComponents[key as keyof typeof sectionComponents]());
 
 const jsonLd = JSON.stringify({
   "@context": "https://schema.org",
@@ -45,5 +66,6 @@ const jsonLd = JSON.stringify({
 
 <Layout>
   <script is:inline type="application/ld+json" set:html={jsonLd} />
-  <HomePage client:load />
+  <Hero />
+  {orderedSections.map(({ Component, props }) => <Component {...(props as any)} />)}
 </Layout>

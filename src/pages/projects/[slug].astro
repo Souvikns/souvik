@@ -1,0 +1,187 @@
+---
+export const prerender = true;
+import Layout from "@/layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { DATA } from "@/data/resume";
+import { orderPostsByPart } from "@/lib/series";
+import { shortDate } from "@/lib/dates";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
+
+type Project = (typeof DATA.projects)[number];
+
+export function getStaticPaths() {
+  return DATA.projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props as { project: Project };
+const series = "series" in project ? project.series : undefined;
+const problem = "problem" in project ? project.problem : undefined;
+const features = "features" in project ? project.features : [];
+const buildLog = series
+  ? orderPostsByPart(
+      await getCollection("blog", ({ data }) => data.published && data.series === series),
+    )
+  : [];
+const others = DATA.projects.filter((p) => p.slug !== project.slug);
+const [primaryLink, ...otherLinks] = project.links;
+---
+
+<Layout
+  title={project.title}
+  description={project.description}
+  image={project.image}
+  imageAlt={`${project.title} screenshot`}
+>
+  <section class="pt-14">
+    <a href="/#projects" class="inline-flex items-center gap-1.5 text-base font-medium text-muted-foreground hover:text-foreground transition-colors">
+      <ArrowLeft className="size-4" aria-hidden /> All projects
+    </a>
+    <div class="mt-7 flex flex-wrap items-end justify-between gap-7">
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-sm font-medium">
+          <span class:list={["size-2 rounded-full", project.active ? "bg-brand" : "bg-muted-foreground"]} aria-hidden="true"></span>
+          {project.status} · {project.year}
+        </span>
+        <h1 class="mt-5 text-5xl font-semibold leading-none tracking-tighter sm:text-7xl lg:text-8xl">
+          {project.title}<span class="text-brand">.</span>
+        </h1>
+        <p class="mt-5 text-xl leading-relaxed text-foreground/80 sm:text-2xl">{project.description}</p>
+      </div>
+      <div class="flex flex-wrap gap-2.5">
+        {primaryLink && (
+          <a
+            href={primaryLink.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-4 text-lg font-medium text-primary-foreground transition-opacity hover:opacity-90"
+          >
+            {primaryLink.label}
+            <ArrowUpRight className="size-4" aria-hidden />
+          </a>
+        )}
+        {otherLinks.map((link) => (
+          <a
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-4 text-lg font-medium transition-colors hover:bg-muted"
+          >
+            {link.label}
+          </a>
+        ))}
+        {buildLog.length > 0 && (
+          <a
+            href={`/blog/${buildLog[0].id}`}
+            class="inline-flex items-center rounded-full border border-border bg-card px-6 py-4 text-lg font-medium transition-colors hover:bg-muted"
+          >
+            Read the build series
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <div class="mt-12 rounded-4xl border border-border bg-card p-3 sm:p-4">
+    <img
+      src={project.image}
+      alt={`${project.title} screenshot`}
+      width="1200"
+      height="675"
+      class="aspect-video w-full rounded-3xl object-cover"
+    />
+  </div>
+
+  <section aria-label="Project facts" class="mt-4 grid grid-cols-2 gap-4 lg:grid-cols-5">
+    {
+      project.facts.map((fact) => (
+        <div class="rounded-3xl border border-border bg-card p-5">
+          <p class="text-sm text-muted-foreground">{fact.label}</p>
+          <p class="mt-1 text-xl font-medium">{fact.value}</p>
+        </div>
+      ))
+    }
+    <div class:list={["col-span-2 rounded-3xl bg-primary p-5 text-primary-foreground", project.facts.length < 3 && "lg:col-span-3"]}>
+      <p class="text-sm text-primary-foreground/70">Stack</p>
+      <ul class="mt-2.5 flex flex-wrap gap-2">
+        {project.technologies.map((tech) => (
+          <li class="rounded-full border border-primary-foreground/20 px-3 py-1 text-base">{tech}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {
+    problem && (
+      <section class="mt-20 grid gap-8 lg:grid-cols-5">
+        <div class="lg:col-span-2">
+          <span class="inline-block rounded-full border border-border bg-card px-3.5 py-1.5 text-sm font-medium">The problem</span>
+          <h2 class="mt-5 text-4xl font-semibold leading-tight tracking-tighter sm:text-5xl">
+            {problem.heading} <span class="text-brand">{problem.headingAccent}</span>
+          </h2>
+        </div>
+        <div class="flex flex-col gap-5 text-lg leading-relaxed text-foreground/85 lg:col-span-3 sm:text-xl">
+          {problem.paragraphs.map((p) => <p>{p}</p>)}
+        </div>
+      </section>
+    )
+  }
+
+  {
+    features.length > 0 && (
+      <section class="mt-16">
+        <span class="inline-block rounded-full border border-border bg-card px-3.5 py-1.5 text-sm font-medium">How it works</span>
+        <ol class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {features.map((f, i) => (
+            <li class="rounded-3xl border border-border bg-card p-6">
+              <p class="font-mono text-sm text-brand-foreground">{String(i + 1).padStart(2, "0")}</p>
+              <p class="mt-3 text-xl font-semibold tracking-tight">{f.title}</p>
+              <p class="mt-2 text-base leading-relaxed text-foreground/80">{f.body}</p>
+              {f.planned && (
+                <span class="mt-4 inline-block rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">Planned</span>
+              )}
+            </li>
+          ))}
+        </ol>
+      </section>
+    )
+  }
+
+  {
+    buildLog.length > 0 && (
+      <section class="mt-16 flex flex-wrap items-center gap-7 rounded-4xl bg-primary p-6 text-primary-foreground sm:p-10">
+        <div class="flex-[1_1_18rem]">
+          <span class="inline-flex items-center gap-2 rounded-full bg-primary-foreground/10 px-3.5 py-1.5 text-sm font-medium"><span class="size-2 rounded-full bg-brand" aria-hidden="true"></span>Build log</span>
+          <h2 class="mt-4 text-3xl font-semibold tracking-tight">Building {project.title}, in public</h2>
+        </div>
+        <ol class="flex flex-[1.4_1_26rem] flex-col gap-2.5">
+          {buildLog.map((post) => (
+            <li>
+              <a href={`/blog/${post.id}`} class="flex items-center gap-4 rounded-2xl bg-primary-foreground/8 px-5 py-4 transition-colors hover:bg-primary-foreground/14">
+                <span class="font-mono text-sm text-primary-foreground/65">{shortDate(post.data.publishedAt)}</span>
+                <span class="flex-1 text-lg font-medium">{post.data.title}</span>
+                <span aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )
+  }
+
+  <section class="mt-20">
+    <h2 class="text-3xl font-semibold tracking-tight">More <span class="text-faint">projects</span></h2>
+    <div class="mt-5 grid gap-4 md:grid-cols-2">
+      {
+        others.map((p) => (
+          <a href={`/projects/${p.slug}`} class="group flex items-center gap-4 rounded-3xl border border-border bg-card p-3">
+            <img src={p.image} alt="" loading="lazy" width="560" height="420" class="aspect-[4/3] w-36 shrink-0 rounded-2xl object-cover" />
+            <span>
+              <span class="block text-lg font-semibold group-hover:text-brand-foreground transition-colors">{p.title}</span>
+              <span class="block text-base text-muted-foreground">{p.tagline}</span>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Layout>

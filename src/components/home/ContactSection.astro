@@ -1,0 +1,45 @@
+---
+import { DATA } from "@/data/resume";
+import { Icons } from "@/components/icons";
+
+const { heading, headingAccent, headingMuted, text } = DATA.sections.contact;
+---
+
+<section
+  id="contact"
+  aria-labelledby="contact-title"
+  class="mt-24 flex flex-wrap items-center justify-between gap-7 rounded-4xl border border-border bg-card p-7 sm:p-14"
+>
+  <div class="max-w-2xl">
+    <h2 id="contact-title" class="text-4xl font-semibold leading-[1.05] tracking-tighter sm:text-5xl">
+      {heading} <span class="text-brand">{headingAccent}</span>? <span class="text-faint">{headingMuted}</span>
+    </h2>
+    <p class="mt-4 text-lg leading-relaxed text-foreground/80">{text}</p>
+  </div>
+  <div class="flex flex-wrap gap-2.5">
+    <a
+      href={`mailto:${DATA.contact.email}`}
+      class="inline-flex items-center rounded-full bg-primary px-7 py-4 text-lg font-medium text-primary-foreground transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+    >
+      {DATA.hero.cta}
+    </a>
+    <a
+      href={DATA.contact.social.GitHub.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="GitHub"
+      class="flex size-15 items-center justify-center rounded-full border border-border transition-colors hover:bg-muted"
+    >
+      <Icons.github className="size-5.5" aria-hidden />
+    </a>
+    <a
+      href={DATA.contact.social.LinkedIn.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="LinkedIn"
+      class="flex size-15 items-center justify-center rounded-full border border-border transition-colors hover:bg-muted"
+    >
+      <Icons.linkedin className="size-5.5" aria-hidden />
+    </a>
+  </div>
+</section>

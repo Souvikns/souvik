@@ -1,44 +1,140 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import BlogList from "@/components/BlogList";
 import { getCollection } from "astro:content";
 import { paginate, normalizePage } from "@/lib/pagination";
+import { orderPostsByPart } from "@/lib/series";
+import { CONFIG } from "@/data/config";
+import { Rss } from "lucide-react";
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = CONFIG.blog.postsPerPage;
 
 const isDev = import.meta.env.DEV;
-const allPosts = await getCollection(
-  "blog",
-  ({ data }) => isDev || data.published,
-);
-const sortedPosts = [...allPosts].sort((a, b) => {
-  if (new Date(a.data.publishedAt) > new Date(b.data.publishedAt)) return -1;
-  return 1;
-});
+const allPosts = await getCollection("blog", ({ data }) => isDev || data.published);
+const sortedPosts = [...allPosts].sort((a, b) => b.data.publishedAt.localeCompare(a.data.publishedAt));
 
 const pageParam = Astro.url.searchParams.get("page") ?? undefined;
-const totalPages = Math.ceil(sortedPosts.length / PAGE_SIZE);
+const totalPages = Math.max(1, Math.ceil(sortedPosts.length / PAGE_SIZE));
 const currentPage = normalizePage(pageParam, totalPages);
-const { items: paginatedPosts, pagination } = paginate(sortedPosts, {
-  page: currentPage,
-  pageSize: PAGE_SIZE,
-});
+const { items: posts, pagination } = paginate(sortedPosts, { page: currentPage, pageSize: PAGE_SIZE });
 
-const posts = paginatedPosts.map((post) => ({
-  id: post.id,
-  title: post.data.title,
-  publishedAt: post.data.publishedAt,
-  published: post.data.published,
-  series: post.data.series,
-}));
+const seriesEntries = await getCollection("series");
+const seriesTitles = new Map(seriesEntries.map((s) => [s.id, s.data.title]));
+const featuredSeries = currentPage === 1
+  ? seriesEntries
+      .map((s) => ({
+        ...s,
+        parts: orderPostsByPart(sortedPosts.filter((p) => p.data.series === s.id && p.data.seriesPart !== undefined)),
+      }))
+      .filter((s) => s.parts.length > 0)
+      .sort((a, b) => b.parts.at(-1)!.data.publishedAt.localeCompare(a.parts.at(-1)!.data.publishedAt))[0]
+  : undefined;
 ---
 
-<Layout title="Blog" description="Thoughts on software development, life, and more.">
-  <BlogList
-    client:load
-    posts={posts}
-    allPostsCount={sortedPosts.length}
-    pagination={pagination}
-    pageSize={PAGE_SIZE}
-  />
+<Layout title="Blog" description="Notes on AI infrastructure, developer tools, open source and the things I'm building.">
+  <section class="flex flex-wrap items-end justify-between gap-6 pt-16 pb-10 sm:pt-20">
+    <div>
+      <h1 class="text-5xl font-semibold leading-none tracking-tighter sm:text-7xl">
+        Writing<span class="text-brand">.</span>
+      </h1>
+      <p class="mt-4 max-w-xl text-lg leading-relaxed text-foreground/80 sm:text-xl">
+        Notes on AI infrastructure, developer tools, open source and the things I'm building.
+      </p>
+    </div>
+    <a
+      href="/rss.xml"
+      class="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-card px-4.5 text-base font-medium transition-colors hover:bg-muted"
+    >
+      <Rss className="size-4" aria-hidden /> RSS feed
+    </a>
+  </section>
+
+  {
+    featuredSeries && (
+      <section
+        aria-label="Featured series"
+        class="flex flex-wrap items-center gap-8 rounded-4xl bg-primary p-6 text-primary-foreground sm:p-10"
+      >
+        <div class="min-w-0 flex-[1_1_20rem]">
+          <span class="inline-flex items-center gap-2 rounded-full bg-primary-foreground/10 px-3.5 py-1.5 text-sm font-medium">
+            <span class="size-2 rounded-full bg-brand" aria-hidden="true" />
+            Series · {featuredSeries.parts.length} {featuredSeries.parts.length === 1 ? "part" : "parts"}
+          </span>
+          <h2 class="mt-4 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+            <a href={`/series/${featuredSeries.id}`} class="hover:underline underline-offset-4">{featuredSeries.data.title}</a>
+          </h2>
+          {featuredSeries.data.description && (
+            <p class="mt-3 text-base leading-relaxed text-primary-foreground/75 sm:text-lg">{featuredSeries.data.description}</p>
+          )}
+        </div>
+        <ol class="flex min-w-0 flex-[1_1_26rem] flex-col gap-2.5">
+          {featuredSeries.parts.map((part, i) => (
+            <li>
+              <a
+                href={`/blog/${part.id}`}
+                class="flex items-center gap-4 rounded-2xl bg-primary-foreground/8 px-5 py-4 transition-colors hover:bg-primary-foreground/14"
+              >
+                <span class="font-mono text-sm text-primary-foreground/65">{String(i + 1).padStart(2, "0")}</span>
+                <span class="flex-1 text-lg font-medium">{part.data.title}</span>
+                <span aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )
+  }
+
+  {
+    posts.length > 0 ? (
+      <ul class="mt-10">
+        {posts.map((post) => (
+          <li class="border-b border-border">
+            <a href={`/blog/${post.id}`} class="group flex flex-wrap gap-x-8 gap-y-2 py-7">
+              <span class="basis-28 pt-1.5 font-mono text-sm text-muted-foreground">{post.data.publishedAt}</span>
+              <span class="min-w-0 flex-[1_1_28rem]">
+                <span class="block text-2xl font-semibold leading-snug tracking-tight group-hover:text-brand-foreground transition-colors">
+                  {post.data.title}
+                </span>
+                <span class="mt-2 block text-base leading-relaxed text-foreground/80 sm:text-lg">{post.data.summary}</span>
+                <span class="mt-3 flex flex-wrap gap-2">
+                  {post.data.series && (
+                    <span class="rounded-full bg-brand-soft px-3 py-1 text-sm font-medium text-brand-foreground">
+                      {seriesTitles.get(post.data.series) ?? "Series"} · Part {post.data.seriesPart}
+                    </span>
+                  )}
+                  {!post.data.published && (
+                    <span class="rounded-full bg-muted px-3 py-1 text-sm font-medium text-muted-foreground">Draft</span>
+                  )}
+                </span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="mt-10 rounded-3xl border border-border bg-card p-10 text-center text-muted-foreground">
+        No posts yet. Check back soon.
+      </p>
+    )
+  }
+
+  {
+    pagination.totalPages > 1 && (
+      <nav aria-label="Pagination" class="mt-8 flex items-center justify-between gap-4 text-base text-muted-foreground">
+        <span>Page {pagination.page} of {pagination.totalPages}</span>
+        <span class="flex gap-2">
+          {pagination.hasPreviousPage && (
+            <a href={`/blog?page=${pagination.page - 1}`} class="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-4 text-foreground hover:bg-muted">
+              ← Newer
+            </a>
+          )}
+          {pagination.hasNextPage && (
+            <a href={`/blog?page=${pagination.page + 1}`} class="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-4 text-foreground hover:bg-muted">
+              Older →
+            </a>
+          )}
+        </span>
+      </nav>
+    )
+  }
 </Layout>

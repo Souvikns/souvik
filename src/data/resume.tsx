@@ -20,39 +20,75 @@ AsyncAPI maintainer, and Google Summer of Code mentor with experience building o
 thousands of developers.`,
   avatarUrl: "/profile.png",
   ogImage: "/og_image.png",
+  avatarThumbUrl: "/avatar.jpg",
+  timezone: "IST",
+  hero: {
+    greeting: "Hi, I'm",
+    role: "Backend Engineer",
+    company: "XaneAI",
+    intro: "I build AI infrastructure and developer tools: RAG platforms, ingestion pipelines and open-source tooling. Have a look around, then say hello.",
+    cta: "Email me",
+  },
+  availability: {
+    open: true,
+    label: "Open to contract work",
+  },
+  github: {
+    username: "Souvikns",
+  },
+  openSource: [
+    { name: "AsyncAPI", detail: "Maintainer across 3+ projects", mark: "A" },
+    { name: "AsyncAPI Bundler", detail: "16,000+ downloads", mark: "16k+" },
+    { name: "Google Summer of Code", detail: "Mentor", mark: "GSoC" },
+  ],
   sections: {
-    about: { order: 1, enabled: true, heading: "About" },
-    work: { order: 2, enabled: true, heading: "Work Experience", presentLabel: "Present" },
-    skills: { order: 3, enabled: true, heading: "Skills" },
+    highlights: {
+      order: 1, enabled: true,
+      labels: {
+        experience: "Experience",
+        building: "Currently building",
+        openSource: "Open source",
+        github: "GitHub activity",
+        location: "Location",
+        writing: "Latest writing",
+        stack: "Stack",
+      },
+      experienceMore: "All details",
+    },
     projects: {
-      order: 5, enabled: true,
-      label: "My Projects",
-      heading: "Check out my latest work",
-      text: "I've worked on a variety of projects, from simple websites to complex web applications. Here are a few of my favorites.",
+      order: 2, enabled: true,
+      heading: "Selected",
+      headingMuted: "projects",
+      moreLabel: "Everything on GitHub",
     },
     contact: {
-      order: 8, enabled: true,
-      label: "Contact",
-      heading: "Get in Touch",
-      text: "Want to get in touch? Drop me an email and I'll get back to you."
+      order: 3, enabled: true,
+      heading: "Building something with",
+      headingAccent: "LLMs",
+      headingMuted: "Let's talk.",
+      text: "RAG systems, agent tooling, MCP servers and backend work. I usually reply within a day or two.",
     },
   },
   skills: [
     { name: "Node.js", icon: Nodejs },
-    { name: "Langchain", icon: Brain },
+    { name: "LangChain", icon: Brain },
     { name: "Python", icon: Python },
     { name: "Go", icon: Golang },
+    { name: "RAG", icon: Brain },
+    { name: "Vector search", icon: Database },
     { name: "MySQL", icon: Database },
     { name: "Docker", icon: Docker },
-    { name: "Gh Actions", icon: Workflow },
+    { name: "GitHub Actions", icon: Workflow },
     { name: "REST API", icon: Globe },
-    { name: "Typescript", icon: Typescript },
+    { name: "TypeScript", icon: Typescript },
   ],
   navbar: [
-    { href: "/", icon: House, label: "Home" },
+    { href: "/#work", icon: House, label: "Work" },
+    { href: "/#projects", icon: Globe, label: "Projects" },
     { href: "/blog", icon: Library, label: "Blog" },
     { href: "https://souvikns.github.io/resume/resume.pdf", icon: FileText, label: "Resume" },
   ],
+
   contact: {
     email: "souvikde.tech@gmail.com",
     tel: "+91 9073302976",
@@ -89,7 +125,7 @@ thousands of developers.`,
       start: "July 2025",
       end: undefined,
       description: [
-        `Built a multi stage OCR --> chunking --> embedding --> retieval pipeline powering Maruti Suzuki's AI assistant enabling semantic search across thousands of vehicle manuals`,
+        `Built a multi stage OCR → chunking → embedding → retrieval pipeline powering Maruti Suzuki's AI assistant enabling semantic search across thousands of vehicle manuals`,
         `Designed and implemented an OCR-to-RAG ingestion pipeline converting unstructured PDFs into structured
 embeddings indexed in a vector database, enabling persistent knowledge memory for AI agents.`,
         `Designed and implemented a scalable RAG evaluation pipeline using Ragas, enabling systematic measurement
@@ -133,84 +169,88 @@ maintainability and reducing duplication.`
       ],
     }
   ],
+  // Projects, newest first. Each one gets a page at /projects/<slug>.
   projects: [
     {
-      "title": "JobScout",
-      "href": "https:findmejob.xyz",
-      "dates": "August 2026",
-      "active": true,
-      "description": "An cross platform desktop application that connects to your local AI agents like claude-code, codex and opencode and helps yor find jobs based on your resume.",
-      "technologies": [
-        "wails",
-        "go",
-        "typescript",
-        "react",
-        "tailwindcss",
-        "docker"
-      ],
-      "links": [
-        {
-          "type": "Website",
-          "href": "https://findmejob.xyz",
-          "icon": <Icons.globe className="size-3" />,
-        }
-      ],
-      "image": "/findmejob.png",
-    },
-    {
-      "title": "Notion Board",
-      "href": "https://souvikns.github.io/Notion-Board/index.html",
-      "dates": "March 2022 - April 2022",
-      "active": false,
-      "description": "A GH action that syncs Github Issues and PR into your notion database.",
-      "technologies": [
-        "Next.js",
-        "TypeScript",
-        "Notion API",
-        "GitHub API",
-        "GitHub Actions"
-      ],
-      "links": [
-        {
-          "type": "Website",
-          "href": "https://souvikns.github.io/Notion-Board/index.html",
-          "icon": <Icons.globe className="size-3" />,
-        },
-        {
-          "type": "Source",
-          "href": "https://github.com/Souvikns/Notion-Board",
-          "icon": <Icons.github className="size-3" />,
-        }
-      ],
-      "image": "/notion-board.png",
-    },
-    {
-      "title": "Kitsu",
-      "href": "https://souvikns.github.io/kitsu/",
-      "dates": "March 2026 - April 2026",
-      "active": true,
-      "description": "AI Powered code review for every pull request. Kitsu is a GitHub app that uses AI to review your code and provide feedback on your pull requests.",
-      "technologies": [
-        "TypeScript",
-        "OpenAI API",
-        "GitHub API",
-        "GitHub Actions",
-        "langchain",
-        "deepagents"
-      ],
+      slug: "jobscout",
+      title: "JobScout",
+      href: "https://findmejob.xyz",
+      dates: "August 2026",
+      year: "2026",
+      active: true,
+      featured: true,
+      status: "In development",
+      tagline: "Job research with your local AI agents",
+      description: "A desktop app that hands job research to the AI agents already on your machine: Claude Code, Codex and OpenCode.",
+      technologies: ["Wails", "Go", "TypeScript", "React", "Tailwind CSS", "Docker"],
       links: [
-        {
-          "type": "Website",
-          "href": "https://souvikns.github.io/kitsu/",
-          "icon": <Icons.globe className="size-3" />,
-        },
-        {
-          "type": "Source",
-          "href": "https://github.com/Souvikns/kitsu",
-          "icon": <Icons.github className="size-3" />,
-        }
+        { type: "Website", label: "Visit findmejob.xyz", href: "https://findmejob.xyz", icon: <Icons.globe className="size-3" /> },
+      ],
+      image: "/findmejob.png",
+      facts: [
+        { label: "Role", value: "Solo builder" },
+        { label: "Platform", value: "Desktop · Wails" },
+        { label: "Started", value: "August 2026" },
+      ],
+      series: "building-jobscout",
+      problem: {
+        heading: "Job hunting turned into",
+        headingAccent: "data entry.",
+        paragraphs: [
+          "A dozen tabs open across job boards, careers pages and review sites. Roles saved to bookmarks, then a spreadsheet that stopped getting updated after a week.",
+          "Researching each company (its stack, whether people there seem happy) meant more searches and more tabs. It's exactly the kind of work you'd hand to an agent when coding.",
+        ],
+      },
+      features: [
+        { title: "Bring your own agent", body: "Connects to Claude Code, OpenCode or Codex. No new subscription or account.", planned: false },
+        { title: "Point it at a company", body: "Your agent does the digging on stack and culture; you read what it found.", planned: false },
+        { title: "Save and shortlist", body: "Keep companies you like, shortlist the ones you really want, research attached.", planned: false },
+        { title: "Draft applications", body: "A draft for one specific role that you read and fix before anything is sent.", planned: true },
+      ],
+    },
+    {
+      slug: "kitsu",
+      title: "Kitsu",
+      href: "https://souvikns.github.io/kitsu/",
+      dates: "March 2026 - April 2026",
+      year: "2026",
+      active: true,
+      featured: false,
+      status: "Shipped",
+      tagline: "AI code review for every pull request",
+      description: "AI-powered code review for every pull request. Kitsu is a GitHub app that uses AI to review your code and give feedback on your pull requests.",
+      technologies: ["TypeScript", "OpenAI API", "GitHub API", "GitHub Actions", "LangChain", "Deep Agents"],
+      links: [
+        { type: "Website", label: "Visit website", href: "https://souvikns.github.io/kitsu/", icon: <Icons.globe className="size-3" /> },
+        { type: "Source", label: "Source", href: "https://github.com/Souvikns/kitsu", icon: <Icons.github className="size-3" /> },
       ],
       image: "/kitsu.png",
+      facts: [
+        { label: "Type", value: "GitHub app" },
+        { label: "Built", value: "Mar – Apr 2026" },
+      ],
+    },
+    {
+      slug: "notion-board",
+      title: "Notion Board",
+      href: "https://souvikns.github.io/Notion-Board/index.html",
+      dates: "March 2022 - April 2022",
+      year: "2022",
+      active: false,
+      featured: false,
+      status: "Shipped",
+      tagline: "Sync GitHub issues and PRs into Notion",
+      description: "A GitHub Action that syncs GitHub issues and pull requests into your Notion database.",
+      technologies: ["Next.js", "TypeScript", "Notion API", "GitHub API", "GitHub Actions"],
+      links: [
+        { type: "Website", label: "Visit website", href: "https://souvikns.github.io/Notion-Board/index.html", icon: <Icons.globe className="size-3" /> },
+        { type: "Source", label: "Source", href: "https://github.com/Souvikns/Notion-Board", icon: <Icons.github className="size-3" /> },
+      ],
+      image: "/notion-board.png",
+      facts: [
+        { label: "Type", value: "GitHub Action" },
+        { label: "Built", value: "Mar – Apr 2022" },
+      ],
     },
   ],
 } as const;

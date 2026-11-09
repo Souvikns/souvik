@@ -31,6 +31,11 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-soft: var(--brand-soft);
+  --color-faint: var(--faint);
+  --color-success: var(--success);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -47,25 +52,6 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -82,24 +68,6 @@
 }
 
 .dark {
-  --background: oklch(0.18 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
@@ -155,11 +123,11 @@
   }
 
   .prose h2 {
-    @apply text-xl! font-semibold! tracking-tight! leading-tight!;
+    @apply text-2xl! sm:text-3xl! font-semibold! tracking-tight! leading-tight!;
   }
 
   .prose h3 {
-    @apply text-lg! font-semibold! tracking-tight! leading-tight!;
+    @apply text-xl! font-semibold! tracking-tight! leading-tight!;
   }
 
   .prose h4 {
@@ -175,11 +143,11 @@
   }
 
   .prose a {
-    @apply text-primary underline underline-offset-4;
+    @apply text-brand-foreground underline decoration-brand/40 underline-offset-4 hover:decoration-brand;
   }
 
   .prose blockquote {
-    @apply border-l-4 border-amber-500! pl-4 italic bg-muted/50 p-4 rounded-md rounded-l-none;
+    @apply border-l-4 border-brand! pl-5 py-1 not-italic text-xl font-medium text-foreground! leading-snug;
   }
 
   .prose blockquote p {
@@ -235,13 +203,11 @@
     @apply border-b-0;
   }
 }
-/* The motion primitives render their `hidden` variant during SSR, so the page
-   ships readable HTML that is painted at opacity 0 until hydration animates it
-   in. If scripting never runs, un-hide it rather than showing a blank page. */
-@media (scripting: none) {
-  [data-blur-fade] {
-    opacity: 1 !important;
-    filter: none !important;
-    transform: none !important;
-  }
+
+/* Faint street-map texture for the location card. */
+@utility map-grid {
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 28px 28px;
 }

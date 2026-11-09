@@ -2,8 +2,8 @@
 import "../styles/global.css";
 import { DATA } from "@/data/resume";
 import { CONFIG } from "@/data/config";
-import NavbarIsland from "@/components/NavbarIsland";
-import { FlickeringGrid } from "@/components/magicui/flickering-grid";
+import SiteHeader from "@/components/SiteHeader.astro";
+import SiteFooter from "@/components/SiteFooter.astro";
 
 interface Props {
   title?: string;
@@ -44,6 +44,11 @@ const robots = noindex ? "noindex, nofollow" : CONFIG.seo.robots;
 const twitterHandle = CONFIG.site.twitterHandle;
 
 const { light, dark, radius } = CONFIG.theme;
+const toCssVars = (tokens: Record<string, string>) =>
+  Object.entries(tokens)
+    .map(([key, value]) => `--${key.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)}: ${value};`)
+    .join("\n");
+const themeCss = `:root {\n--radius: ${radius};\n${toCssVars(light)}\n}\n.dark {\n${toCssVars(dark)}\n}`;
 const { baseFontSize } = CONFIG.typography;
 ---
 
@@ -75,51 +80,7 @@ const { baseFontSize } = CONFIG.typography;
     </script>
 
     <!-- Theme variables from config.ts -->
-    <style
-      set:html={`
-      :root {
-        --radius: ${radius};
-        --background: ${light.background};
-        --foreground: ${light.foreground};
-        --card: ${light.card};
-        --card-foreground: ${light.cardForeground};
-        --popover: ${light.popover};
-        --popover-foreground: ${light.popoverForeground};
-        --primary: ${light.primary};
-        --primary-foreground: ${light.primaryForeground};
-        --secondary: ${light.secondary};
-        --secondary-foreground: ${light.secondaryForeground};
-        --muted: ${light.muted};
-        --muted-foreground: ${light.mutedForeground};
-        --accent: ${light.accent};
-        --accent-foreground: ${light.accentForeground};
-        --destructive: ${light.destructive};
-        --border: ${light.border};
-        --input: ${light.input};
-        --ring: ${light.ring};
-      }
-      .dark {
-        --background: ${dark.background};
-        --foreground: ${dark.foreground};
-        --card: ${dark.card};
-        --card-foreground: ${dark.cardForeground};
-        --popover: ${dark.popover};
-        --popover-foreground: ${dark.popoverForeground};
-        --primary: ${dark.primary};
-        --primary-foreground: ${dark.primaryForeground};
-        --secondary: ${dark.secondary};
-        --secondary-foreground: ${dark.secondaryForeground};
-        --muted: ${dark.muted};
-        --muted-foreground: ${dark.mutedForeground};
-        --accent: ${dark.accent};
-        --accent-foreground: ${dark.accentForeground};
-        --destructive: ${dark.destructive};
-        --border: ${dark.border};
-        --input: ${dark.input};
-        --ring: ${dark.ring};
-      }
-    `}
-    ></style>
+    <style set:html={themeCss}></style>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -194,27 +155,19 @@ const { baseFontSize } = CONFIG.typography;
     {twitterHandle && <meta name="twitter:site" content={twitterHandle} />}
     {twitterHandle && <meta name="twitter:creator" content={twitterHandle} />}
   </head>
-  <body class="min-h-screen bg-background font-sans antialiased relative">
-    <!-- FlickeringGrid header background - matches template exactly -->
-    <div class="absolute inset-0 top-0 left-0 right-0 h-25 overflow-hidden z-0">
-      <FlickeringGrid
-        client:only="react"
-        className="h-full w-full"
-        squareSize={2}
-        gridGap={2}
-        style={{
-          maskImage: "linear-gradient(to bottom, black, transparent)",
-          WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
-        }}
-      />
+  <body class="min-h-screen bg-background font-sans text-foreground antialiased">
+    <a
+      href="#content"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+    >
+      Skip to content
+    </a>
+    <div class="mx-auto w-full max-w-6xl px-5 pb-16 sm:px-8">
+      <SiteHeader />
+      <main id="content">
+        <slot />
+      </main>
+      <SiteFooter />
     </div>
-
-    <!-- Main content wrapper - matches template's z-10 container exactly -->
-    <div class="relative z-10 max-w-2xl mx-auto py-12 pb-24 sm:py-24 px-6">
-      <slot />
-    </div>
-
-    <!-- Navbar: ThemeProvider + TooltipProvider + Navbar all in one React island -->
-    <NavbarIsland client:load />
   </body>
 </html>
