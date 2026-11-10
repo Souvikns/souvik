@@ -1,0 +1,47 @@
+---
+import { DATA } from "@/data/resume";
+import { Mail } from "lucide-react";
+
+const { hero, availability } = DATA;
+---
+
+<section aria-labelledby="hero-title" class="pt-16 pb-12 sm:pt-24 sm:pb-14">
+  <div>
+    <h1
+      id="hero-title"
+      class="inline text-4xl font-semibold leading-[1.1] tracking-tighter sm:text-6xl lg:text-7xl"
+    >
+      {hero.greeting}
+      <img
+        src={DATA.avatarThumbUrl}
+        alt={DATA.name}
+        width="320"
+        height="320"
+        class="inline-block size-[1.1em] rounded-[0.28em] border-[3px] border-card object-cover align-[-0.2em] shadow-lg"
+      />
+      {DATA.name}.<br />
+      <span class="text-faint">I'm a</span>
+      {hero.role}
+      <span class="text-faint">at</span><br />
+      <span class="text-brand">{hero.company}.</span>
+    </h1>
+    {
+      availability.open && (
+        <span class="mt-5 flex w-fit items-center sm:mt-0 sm:ml-2 sm:inline-flex sm:translate-y-[-0.6em] gap-2.5 rounded-full border border-border bg-card px-4 py-2 text-base font-medium sm:align-middle sm:text-lg">
+          <span class="size-2.5 rounded-full bg-success ring-4 ring-success/20" aria-hidden="true" />
+          {availability.label}
+        </span>
+      )
+    }
+  </div>
+  <div class="mt-10 flex flex-wrap items-center gap-6">
+    <a
+      href={`mailto:${DATA.contact.email}`}
+      class="inline-flex items-center gap-2.5 rounded-full bg-primary px-8 py-5 text-lg font-medium text-primary-foreground transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+    >
+      <Mail className="size-5" aria-hidden />
+      {hero.cta}
+    </a>
+    <p class="max-w-xl text-lg leading-relaxed text-foreground/80 sm:text-xl">{hero.intro}</p>
+  </div>
+</section>

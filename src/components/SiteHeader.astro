@@ -1,0 +1,52 @@
+---
+import { DATA } from "@/data/resume";
+import ThemeToggle from "@/components/ThemeToggle";
+
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isActive = (href: string) =>
+  !href.startsWith("http") && !href.includes("#") && href !== "/" && path.startsWith(href);
+---
+
+<header class="flex flex-wrap items-center justify-between gap-4 pt-7">
+  <div class="flex items-center gap-4">
+    <a
+      href="/"
+      aria-label={`${DATA.name}, home`}
+      class="text-2xl font-semibold tracking-tighter focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md"
+    >
+      {DATA.initials.toLowerCase()}<span class="text-brand">.</span>
+    </a>
+    <a
+      href={`mailto:${DATA.contact.email}`}
+      class="hidden border-b border-foreground pb-0.5 text-base sm:inline hover:text-brand-foreground hover:border-brand-foreground transition-colors"
+    >
+      {DATA.contact.email}
+    </a>
+  </div>
+  <nav aria-label="Main" class="flex flex-wrap items-center gap-1.5 text-base">
+    {
+      DATA.navbar.map((item) => {
+        const external = item.href.startsWith("http");
+        const active = isActive(item.href);
+        return (
+          <a
+            href={item.href}
+            target={external ? "_blank" : undefined}
+            rel={external ? "noopener noreferrer" : undefined}
+            aria-current={active ? "page" : undefined}
+            class:list={[
+              "inline-flex min-h-11 items-center rounded-full border px-4 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              item.href.includes("#") && "max-sm:hidden",
+              active
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-border bg-card hover:bg-muted",
+            ]}
+          >
+            {item.label}
+          </a>
+        );
+      })
+    }
+    <ThemeToggle client:load />
+  </nav>
+</header>

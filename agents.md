@@ -31,14 +31,12 @@ This document provides operational rules for AI coding agents working on the Sta
 │   ├── components/
 │   │   ├── ui/                # shadcn/ui components (Button, Card, Avatar, Tooltip, etc.)
 │   │   │   └── svgs/          # Custom SVG React components for tech logos
-│   │   ├── magicui/           # Animation primitives (BlurFade, Dock, FlickeringGrid)
-│   │   ├── section/           # Page section components (WorkSection, ProjectsSection, etc.)
+│   │   ├── home/              # Home page sections (Hero, Highlights bento, Projects, Contact) + ExperienceCard island
 │   │   ├── mdx/               # MDX-specific components (CodeBlock, MediaContainer)
 │   │   ├── icons.tsx          # Custom social/brand icon components
-│   │   ├── navbar.tsx         # Floating dock navigation bar
-│   │   ├── NavbarIsland.tsx   # React island wrapping ThemeProvider + TooltipProvider + Navbar
-│   │   ├── HomePage.tsx       # Main landing page component (renders all sections)
-│   │   ├── BlogList.tsx       # Blog listing with pagination
+│   │   ├── SiteHeader.astro   # Top header: logo, email, nav pills, theme toggle
+│   │   ├── SiteFooter.astro   # Footer links
+│   │   ├── ThemeToggle.tsx    # React island: ThemeProvider + light/dark button
 │   │   ├── mode-toggle.tsx    # Light/Dark theme toggle button
 │   │   ├── theme-provider.tsx # next-themes provider wrapper
 │   │   └── ...
@@ -81,7 +79,7 @@ This document provides operational rules for AI coding agents working on the Sta
   - Site URL, locale, SEO templates, blog pagination size, typography scale, theme colors (light/dark), border radius.
 
 ### How Sections Work
-`src/components/HomePage.tsx` defines a `sectionComponents` map. Each key matches a key in `DATA.sections`.
+`src/pages/index.astro` defines a `sectionComponents` map. Each key matches a key in `DATA.sections` (`highlights`, `projects`, `contact`); the Hero always renders first.
 
 ```tsx
 const sectionComponents: Record<string, React.ReactNode> = {
@@ -95,7 +93,7 @@ The component filters `DATA.sections` by `enabled: true`, sorts by `order`, and 
 
 **To add a new section:**
 1. Add entry to `DATA.sections` in `resume.tsx` with `order`, `enabled`, and any labels/headings.
-2. Add the corresponding JSX to `sectionComponents` in `HomePage.tsx`.
+2. Add an Astro component in `src/components/home/` and register it in `sectionComponents` in `src/pages/index.astro`.
 3. Add any new data arrays (e.g., `DATA.talks`) to `resume.tsx`.
 4. Ensure the section's `id` matches for anchor linking.
 
@@ -107,13 +105,13 @@ The component filters `DATA.sections` by `enabled: true`, sorts by `order`, and 
 | Use Case | Format | Hydration |
 |---|---|---|
 | Static shell, meta tags, layout | `.astro` | None |
-| Interactive UI (dock, theme toggle, animations) | `.tsx` island | `client:load` or `client:only="react"` |
+| Interactive UI (theme toggle, experience panel) | `.tsx` island | `client:load` |
 | Blog list with pagination | `.tsx` island | `client:load` |
 | shadcn/ui primitives | `.tsx` | Island-level only |
 
 ### Hydration Directives
-- `client:load` — Hydrate immediately on page load. Use for always-visible interactive elements (Navbar, Dock).
-- `client:only="react"` — Skip server render entirely. Use for heavy client-only React trees (HomePage sections with BlurFade animations).
+- `client:load` — Hydrate immediately on page load. Use for always-visible interactive elements (ThemeToggle, ExperienceCard).
+- `client:only="react"` — Skip server render entirely. Avoid unless a component cannot render on the server.
 - **Do not** use `client:visible` unless the element is below the fold and heavy.
 
 ### shadcn/ui Conventions
@@ -173,7 +171,7 @@ Dark mode is **class-based** (`<html class="dark">`), controlled by `next-themes
 
 **Critical rules:**
 1. **FOUC Prevention**: `Layout.astro` contains an inline `<script is:inline>` that reads `localStorage.theme` and applies `.dark` **before first paint**. This script must never be removed or altered.
-2. **`enableSystem: false`**: The `ThemeProvider` in `NavbarIsland.tsx` explicitly disables system preference detection. The theme is strictly user-controlled.
+2. **`enableSystem: false`**: The `ThemeProvider` in `ThemeToggle.tsx` explicitly disables system preference detection. The theme is strictly user-controlled.
 3. **Storage key**: `localStorage.theme` (values `"light"` or `"dark"`).
 
 ### Adding/Changing Colors
@@ -267,8 +265,7 @@ Use the shadcn CLI (if available in environment) or manually add components foll
 
 ### Custom Components
 1. **Reusable primitives** → `src/components/ui/`
-2. **Page sections** → `src/components/section/`
-3. **Animation effects** → `src/components/magicui/`
+2. **Home page sections** → `src/components/home/`
 4. **MDX-specific** → `src/components/mdx/`
 
 ### SVG Icons
@@ -290,7 +287,7 @@ Use the shadcn CLI (if available in environment) or manually add components foll
 7. **Use `px` for font sizes**. Scale is controlled globally via `baseFontSize` config.
 8. **Add arbitrary Tailwind values** (e.g., `w-[123px]`) for theme-adjacent properties. Extend the theme via `global.css` `@theme inline` if needed.
 9. **Change `output: 'server'`** without understanding the adapter implications.
-10. **Forget to add new sections** to both `DATA.sections` (with `order` and `enabled`) and `sectionComponents` in `HomePage.tsx`.
+10. **Forget to add new sections** to both `DATA.sections` (with `order` and `enabled`) and `sectionComponents` in `src/pages/index.astro`.
 
 ### Do:
 1. Keep components generic and data-driven.
@@ -310,9 +307,10 @@ Use the shadcn CLI (if available in environment) or manually add components foll
 | Change colors | `src/data/config.ts` → `CONFIG.theme` |
 | Change fonts | Install package + edit `src/styles/global.css` |
 | Add blog post | `src/content/blog/*.mdx` |
-| Add new page section | `src/data/resume.tsx` (data) + `src/components/HomePage.tsx` (UI) |
+| Add new page section | `src/data/resume.tsx` (data) + `src/components/home/` + `src/pages/index.astro` |
 | Add shadcn/ui component | `src/components/ui/` |
 | Add custom icon | `src/components/ui/svgs/` or `src/components/icons.tsx` |
 | Change security headers | `src/middleware.ts` |
 | Change prose/blog styling | `src/styles/global.css` |
-| Change animation timing | `src/components/HomePage.tsx` (`BLUR_FADE_DELAY`) |
+| Add/edit a project page | `src/data/resume.tsx` → `DATA.projects` (rendered at `/projects/<slug>`) |
+| Change accent color | `src/data/config.ts` → `CONFIG.theme.*.brand` / `brandForeground` |

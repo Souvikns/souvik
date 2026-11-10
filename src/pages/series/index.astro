@@ -38,14 +38,14 @@ const seriesList = seriesEntries
 ---
 
 <Layout title="Series" description="Series of related blog posts, in order.">
-  <section id="series">
-    <h1 class="text-2xl font-semibold tracking-tight mb-4">
+  <section id="series" class="pt-14">
+    <h1 class="mb-4 text-5xl font-semibold leading-none tracking-tighter sm:text-6xl">
       Series
-      <span class="ml-1 bg-card border border-border rounded-md px-2 py-1 text-muted-foreground text-sm">
+      <span class="ml-2 rounded-full border border-border bg-card px-3 py-1 align-middle text-sm font-medium tracking-normal text-muted-foreground">
         {seriesList.length} series
       </span>
     </h1>
-    <p class="text-sm text-muted-foreground mb-8">
+    <p class="mb-10 text-lg text-foreground/80">
       Multi-part posts grouped and ordered.
     </p>
 
@@ -54,16 +54,16 @@ const seriesList = seriesEntries
         {seriesList.map((series) => (
           <a
             href={`/series/${series.slug}`}
-            class="block p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors"
+            class="block rounded-3xl border border-border bg-card p-6 transition-colors hover:bg-muted"
           >
             <div class="flex items-baseline gap-2">
-              <h2 class="text-lg font-medium tracking-tight">{series.title}</h2>
-              <span class="text-xs text-muted-foreground">
+              <h2 class="text-2xl font-semibold tracking-tight">{series.title}</h2>
+              <span class="rounded-full bg-brand-soft px-2.5 py-0.5 text-sm font-medium text-brand-foreground">
                 {series.partCount} part{series.partCount === 1 ? "" : "s"}
               </span>
             </div>
             {series.description && (
-              <p class="text-sm text-muted-foreground mt-1">
+              <p class="mt-2 text-base text-foreground/80">
                 {series.description}
               </p>
             )}
@@ -71,7 +71,7 @@ const seriesList = seriesEntries
         ))}
       </div>
     ) : (
-      <div class="flex flex-col items-center justify-center py-12 px-4 border border-border rounded-xl">
+      <div class="flex flex-col items-center justify-center rounded-3xl border border-border bg-card px-4 py-12">
         <p class="text-muted-foreground text-center">
           No series yet. Check back soon!
         </p>

@@ -1,0 +1,14 @@
+---
+import { DATA } from "@/data/resume";
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-16 flex flex-wrap justify-between gap-3 text-sm text-muted-foreground">
+  <span>© {year} {DATA.name}</span>
+  <span class="flex gap-5">
+    <a href="/blog" class="hover:text-foreground transition-colors">Blog</a>
+    <a href="/rss.xml" class="hover:text-foreground transition-colors">RSS</a>
+    <a href={DATA.contact.social.GitHub.url} class="hover:text-foreground transition-colors" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href={DATA.contact.social.LinkedIn.url} class="hover:text-foreground transition-colors" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+  </span>
+</footer>
