@@ -1,23 +1,22 @@
 import { Icons } from "@/components/icons";
-import { Brain, Database, FileText, Globe, House, Library, Workflow } from "lucide-react";
+import { Bot, Brain, Cloud, Database, FileText, House, Library, Plug, Workflow } from "lucide-react";
 import { Typescript } from "@/components/ui/svgs/typescript";
 import { Nodejs } from "@/components/ui/svgs/nodejs";
 import { Python } from "@/components/ui/svgs/python";
 import { Golang } from "@/components/ui/svgs/golang";
 import { Docker } from "@/components/ui/svgs/docker";
+import { Kubernetes } from "@/components/ui/svgs/kubernetes";
+import { Postgresql } from "@/components/ui/svgs/postgresql";
 
 export const DATA = {
   name: "Souvik De",
-  jobTitle: "Software Engineer",
+  jobTitle: "Software Engineer, AI Systems",
   initials: "SD",
   url: "https://souvik.de",
-  location: "Delhi, IN",
-  locationLink: "https://www.google.com/maps/search/delhi%2C+Delhi%2C+India/?hl=en",
-  description: "Building developer tools, maintaining opensource projects, and shipping fast, thoughtful software with a focus on usability and performance.",
-  summary: `Backend Software Engineer with 4+ years of experience building production AI infrastructure, distributed backend systems, and developer tooling. Experienced in designing RAG platforms, document ingestion pipelines,
-vector search systems, and LLM orchestration using Go, TypeScript, and Python. Former Postman engineer,
-AsyncAPI maintainer, and Google Summer of Code mentor with experience building open-source tools used by
-thousands of developers.`,
+  location: "Gurugram, India",
+  locationLink: "https://www.google.com/maps/search/gurugram%2C+Haryana%2C+India/?hl=en",
+  description: "Building production LLM systems — RAG, AI agents, and backend tooling in Python, Go, and TypeScript.",
+  summary: `Software engineer with 4+ years in backend and developer tooling, now building production LLM systems in Python, Go and TypeScript. At XANE.AI I work on the agent behind Maruti Suzuki's AI assistant, where adding evals to CI helped take answer relevance from 64% to 89%. I also maintain AsyncAPI tools with 36,000+ downloads, wrote the project's MCP server, and mentor Google Summer of Code contributors.`,
   avatarUrl: "/profile.png",
   ogImage: "/og_image.png",
   sections: {
@@ -38,15 +37,19 @@ thousands of developers.`,
     },
   },
   skills: [
-    { name: "Node.js", icon: Nodejs },
-    { name: "Langchain", icon: Brain },
     { name: "Python", icon: Python },
     { name: "Go", icon: Golang },
-    { name: "MySQL", icon: Database },
+    { name: "TypeScript", icon: Typescript },
+    { name: "Node.js", icon: Nodejs },
+    { name: "RAG", icon: Brain },
+    { name: "AI Agents", icon: Bot },
+    { name: "MCP", icon: Plug },
+    { name: "LangChain", icon: Workflow },
+    { name: "PostgreSQL", icon: Postgresql },
+    { name: "Qdrant", icon: Database },
     { name: "Docker", icon: Docker },
-    { name: "Gh Actions", icon: Workflow },
-    { name: "REST API", icon: Globe },
-    { name: "Typescript", icon: Typescript },
+    { name: "Kubernetes", icon: Kubernetes },
+    { name: "AWS", icon: Cloud },
   ],
   navbar: [
     { href: "/", icon: House, label: "Home" },
@@ -55,7 +58,7 @@ thousands of developers.`,
   ],
   contact: {
     email: "souvikde.tech@gmail.com",
-    tel: "+91 9073302976",
+    tel: "+91 98305 05728",
     social: {
       GitHub: {
         name: "GitHub",
@@ -80,41 +83,67 @@ thousands of developers.`,
 
   work: [
     {
-      company: "XaneAI",
+      company: "XANE.AI",
       href: "https://xane.ai",
       badges: ["Full-time"],
-      location: "Gurgaon, India",
+      location: "Gurugram, India",
       title: "Software Engineer II",
       logoUrl: "https://avatar.vercel.sh/xaneai?size=40",
-      start: "July 2025",
+      start: "Jul 2025",
       end: undefined,
       description: [
-        `Built a multi stage OCR --> chunking --> embedding --> retieval pipeline powering Maruti Suzuki's AI assistant enabling semantic search across thousands of vehicle manuals`,
-        `Designed and implemented an OCR-to-RAG ingestion pipeline converting unstructured PDFs into structured
-embeddings indexed in a vector database, enabling persistent knowledge memory for AI agents.`,
-        `Designed and implemented a scalable RAG evaluation pipeline using Ragas, enabling systematic measurement
-of retrieval accuracy, answer relevance, and overall system performance.`
-      ]
+        `Built the Mastra agent behind Maruti Suzuki's AI assistant, which handles 100,000+ queries a day from 4.37M+ users across 34 vehicle models. It began as a RAG system over vehicle manuals and now also checks insurance policy status, handles renewals and quotes, and finds and books workshops.`,
+        `For retrieval, manuals go through MinerU OCR instead of manual data entry and are then chunked, embedded and searched in Qdrant with hybrid search and reranking.`,
+        `Built a separate deepagents system that sorts raw OCR output into CRM records.`,
+        `Added RAGAS evals on a golden set to CI (GitHub Actions) to flag quality regressions and set up self-hosted Langfuse for tracing. Answer relevance rose from 64% to 89%.`,
+        `Routed customer photos of car parts to a vision model whose output drives retrieval, and attached provenance metadata to every chunk so answers cite their sources.`,
+        `Deployed it on AWS, with Bedrock for the assistant's LLM and the part-identification vision model, EC2 for the backend, and S3 and RDS for vehicle manuals and metadata.`,
+      ],
+    },
+    {
+      company: "CodeMate.AI",
+      href: "https://codemate.ai",
+      badges: ["Full-time"],
+      location: "Noida, India",
+      title: "Lead Software Engineer",
+      logoUrl: "https://avatar.vercel.sh/codemate?size=40",
+      start: "Dec 2024",
+      end: "May 2025",
+      description: [
+        `Wrote a custom search algorithm for retrieval over Swagger/OpenAPI specs that improved precision in the RAG system.`,
+        `Cut startup time of the VS Code extension's local server by over 30% by loading models in the background instead of at boot.`,
+        `Set up GitHub Actions CI/CD for macOS, Linux and Windows releases and automated deploys to an Azure production VM, saving the team 2–5 hours of release work a week.`,
+        `Led a two-engineer team working on the local server and VS Code extension.`,
+      ],
     },
     {
       company: "Postman",
       href: "https://postman.com",
       badges: ["Full-time"],
-      location: "Remote",
+      location: "Bangalore, India",
       title: "Software Engineer",
       logoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREsH1utqLc28avGhOavyrVY5GXgA0dRFOtiG4w1gmvE0W9P1ziOCUT3TA&s=10?size=40",
-      start: "February 2022",
-      end: "August 2024",
+      start: "Feb 2022",
+      end: "Jun 2024",
       description: [
-        `Developed and maintained a cross-platform CLI integrating official AsyncAPI tooling, providing a unified
-workflow for developers`,
-        `Created and maintained AsyncAPI Bundler (16,000+ downloads), enabling reliable resolution of complex json
-ref dependency graphs across specification files.`,
-        `Served as maintainer across 3+ open-source projects, reviewing contributions, guiding architectural decisions,
-and driving roadmap initiatives.`,
-        `Mentored contributors under Google Summer of Code (GSoC), guiding projects to production-ready completion`,
-        `Co-led governance initiative to standardize parser tooling architecture across multiple languages, improving
-maintainability and reducing duplication.`
+        `Took the official AsyncAPI CLI from an early skeleton to the standard tool for the spec (20,000+ downloads), putting the project's separate tools behind one command.`,
+        `Shipped AsyncAPI Bundler (16,000+ downloads), which resolves JSON $ref references across specification files into a single document.`,
+        `Maintained 3+ open-source projects, reviewed 185+ pull requests and brought two contributors up to maintainer.`,
+        `Mentored 3–5 Google Summer of Code contributors and co-led an effort to standardize parsers across languages.`,
+      ],
+    },
+    {
+      company: "AsyncAPI Initiative",
+      href: "https://www.asyncapi.com",
+      badges: ["Open Source"],
+      location: "Remote, Linux Foundation project",
+      title: "Maintainer",
+      logoUrl: "https://avatar.vercel.sh/asyncapi?size=40",
+      start: "Sep 2021",
+      end: undefined,
+      description: [
+        `Built asyncapi-mcp, an MCP server with four tools that lets AI agents work with AsyncAPI documents (Apache 2.0).`,
+        `Won the AsyncAPI Hackathon 2021 ($5,000 prize) with the Bundler, donated the project to AsyncAPI and still maintain it.`,
       ],
     },
     {
@@ -122,31 +151,48 @@ maintainability and reducing duplication.`
       href: "https://mage.ai",
       badges: ["Internship"],
       location: "Remote",
-      title: "Software Engineer Intern",
+      title: "Backend Developer Intern",
       logoUrl: "https://avatar.vercel.sh/mage?size=40",
-      start: "December 2021",
-      end: "January 2022",
+      start: "Nov 2021",
+      end: "Feb 2022",
       description: [
-        `Built microservices in Go to automate cloud infrastructure provisioning using templated configuration systems`,
-        `Developed a React-based low-code interface for generating and provisioning infrastructure on demand.`,
-        `Deployed containerized services using Docker and Kubernetes in cloud-native environments`
+        `Built Go microservices that provision cloud infrastructure from templated configuration and a React low-code interface for them, deployed with Docker and Kubernetes.`,
       ],
-    }
+    },
   ],
   projects: [
     {
+      "title": "angelone-mcp",
+      "href": "https://github.com/Souvikns/angelone-mcp",
+      "dates": "",
+      "active": true,
+      "description": "MCP server that connects Claude to an Angel One brokerage account (portfolio, orders, live market data), used on a live account to automate investing. Orders Claude proposes are sent only after approval in a desktop dialog.",
+      "technologies": [
+        "TypeScript",
+        "Bun",
+        "MCP",
+        "WebSockets"
+      ],
+      "links": [
+        {
+          "type": "Source",
+          "href": "https://github.com/Souvikns/angelone-mcp",
+          "icon": <Icons.github className="size-3" />,
+        }
+      ],
+      "image": "",
+    },
+    {
       "title": "JobScout",
-      "href": "https:findmejob.xyz",
+      "href": "https://findmejob.xyz",
       "dates": "August 2026",
       "active": true,
-      "description": "An cross platform desktop application that connects to your local AI agents like claude-code, codex and opencode and helps yor find jobs based on your resume.",
+      "description": "Cross-platform desktop app that uses LLMs to match job seekers with openings. Wellfound and Greenhouse scrapers refresh listings every 6 hours into a self-hosted backend.",
       "technologies": [
-        "wails",
-        "go",
-        "typescript",
-        "react",
-        "tailwindcss",
-        "docker"
+        "Go",
+        "Wails",
+        "LLMs",
+        "Scrapers"
       ],
       "links": [
         {
@@ -158,47 +204,17 @@ maintainability and reducing duplication.`
       "image": "/findmejob.png",
     },
     {
-      "title": "Notion Board",
-      "href": "https://souvikns.github.io/Notion-Board/index.html",
-      "dates": "March 2022 - April 2022",
-      "active": false,
-      "description": "A GH action that syncs Github Issues and PR into your notion database.",
+      "title": "Kitsu",
+      "href": "https://github.com/Souvikns/kitsu",
+      "dates": "March 2026 - April 2026",
+      "active": true,
+      "description": "AI agent packaged as a GitHub Action that reviews pull requests and writes summaries. It filters out low-signal changes and chunks large diffs to fit context limits.",
       "technologies": [
-        "Next.js",
-        "TypeScript",
-        "Notion API",
-        "GitHub API",
+        "LangGraph",
+        "deepagents",
         "GitHub Actions"
       ],
       "links": [
-        {
-          "type": "Website",
-          "href": "https://souvikns.github.io/Notion-Board/index.html",
-          "icon": <Icons.globe className="size-3" />,
-        },
-        {
-          "type": "Source",
-          "href": "https://github.com/Souvikns/Notion-Board",
-          "icon": <Icons.github className="size-3" />,
-        }
-      ],
-      "image": "/notion-board.png",
-    },
-    {
-      "title": "Kitsu",
-      "href": "https://souvikns.github.io/kitsu/",
-      "dates": "March 2026 - April 2026",
-      "active": true,
-      "description": "AI Powered code review for every pull request. Kitsu is a GitHub app that uses AI to review your code and provide feedback on your pull requests.",
-      "technologies": [
-        "TypeScript",
-        "OpenAI API",
-        "GitHub API",
-        "GitHub Actions",
-        "langchain",
-        "deepagents"
-      ],
-      links: [
         {
           "type": "Website",
           "href": "https://souvikns.github.io/kitsu/",
@@ -210,7 +226,7 @@ maintainability and reducing duplication.`
           "icon": <Icons.github className="size-3" />,
         }
       ],
-      image: "/kitsu.png",
+      "image": "/kitsu.png",
     },
   ],
 } as const;
